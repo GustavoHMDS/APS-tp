@@ -1,0 +1,16 @@
+ID: 0
+CPF: 12345678901
+Senha: Pedro123
+Tipo: Aluno
+ID: 1
+CPF: 45678912302
+Senha: Joao456
+Tipo: Professor
+ID: 2
+CPF: 78912345603
+Senha: Camila789
+Tipo: Admin
+ID: 3
+CPF: 0
+Senha: 0
+Tipo: Admin

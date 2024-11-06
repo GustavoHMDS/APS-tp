@@ -1,12 +1,14 @@
+package Visual;
+
+import Console.Sistema;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class InterfaceLogin extends JFrame {
-    public InterfaceLogin() {
+public class InterfaceLogin extends JPanel {
+    public InterfaceLogin(GerenciadorInterfaces geral) {
         // Configurações do JFrame
-        setTitle("Tela de Login");
         setSize(900, 600);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(9, 6, 10, 30)); // Organiza os componentes em uma grade
 
         // Rótulos e campos de texto
@@ -18,7 +20,7 @@ public class InterfaceLogin extends JFrame {
 
         JButton btnEntrar = new JButton("Entrar");
 
-        JLabel nomeApp = new JLabel("SIGEDU", SwingConstants.CENTER);
+        JLabel nomeApp = new JLabel("PlaceHolder", SwingConstants.CENTER);
         nomeApp.setFont(new Font("Arial", Font.PLAIN, 30));
         JLabel nomeCompletoApp = new JLabel("Sistema Integrado de Gestão Educacional", SwingConstants.CENTER);
         nomeCompletoApp.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -42,7 +44,7 @@ public class InterfaceLogin extends JFrame {
 
             // Verifica as credenciais (aqui você pode colocar uma verificação real)
             if (Sistema.sistemaLogin(usuario, senha)) {
-                JOptionPane.showMessageDialog(null, "Login bem-sucedido!");
+                geral.trocarParaTelaUsuario(Sistema.usuario.getClass().getName());
             } else {
                 JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos.", "Erro", JOptionPane.ERROR_MESSAGE);
             }
@@ -52,7 +54,7 @@ public class InterfaceLogin extends JFrame {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new InterfaceLogin().setVisible(true);
+                new InterfaceLogin(new GerenciadorInterfaces()).setVisible(true);
             }
         });
     }

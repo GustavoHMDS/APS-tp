@@ -1,28 +1,31 @@
 CPF: 12345678901
 Nome: Pedro
-Idade: 23
-ID: 0
-Tipo: Aluno
-Semestre: 5
-Historico: 0001, 0002, 0003
+Idade: 25/10/2000
+email: meuemail@gmail.com
+senha: Pedro123
+Tipo: Cliente
+numeroCartao: 567474574674
+codigoCartao: 977
+validadeCartao: 21/05/2034
+vencimento: 21/06/2034
+id: 01
 CPF: 45678912302
 Nome: Joao
-Idade: 34
+Idade: 25/10/2000
 ID: 1
-Tipo: Professor
+Tipo: Cliente
 Grau: Mestrado
 Salario: 4444,44
 Historico: 0001, 0002, 0003
 CPF: 789123456
 Nome: Camila
-Idade: 48
+Idade: 25/10/2000
 ID: 2
 Tipo: Admin
 Salario: 5555.55
 CPF: 0
 Nome: Teste
-Idade: 0
-ID: 3
-Tipo: Admin
+Idade: 25/10/2000
+ID: Admin
 Salario: 9999.99
 

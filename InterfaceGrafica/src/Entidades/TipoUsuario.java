@@ -1,5 +1,6 @@
+package Entidades;
+
 public enum TipoUsuario {
-    Aluno,
-    Professor,
+    Cliente,
     Admin
 }

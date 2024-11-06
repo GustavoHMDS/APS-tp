@@ -6,19 +6,19 @@ import javax.swing.*;
 import java.awt.*;
 
 public class InterfaceLogin extends JPanel {
-    public InterfaceLogin(GerenciadorInterfaces geral) {
+    public InterfaceLogin(GerenciadorInterfaces gerenciador) {
         // Configurações do JFrame
         setSize(900, 600);
         setLayout(new GridLayout(9, 6, 10, 30)); // Organiza os componentes em uma grade
 
         // Rótulos e campos de texto
-        JLabel labelUsuario = new JLabel("Usuário:");
+        JLabel labelUsuario = new JLabel("email:");
         JTextField campoUsuario = new JTextField(15);
 
         JLabel labelSenha = new JLabel("Senha:");
         JPasswordField campoSenha = new JPasswordField(15);
 
-        JButton btnEntrar = new JButton("Entrar");
+        JButton botaoEntrar = new JButton("Entrar");
 
         JLabel nomeApp = new JLabel("PlaceHolder", SwingConstants.CENTER);
         nomeApp.setFont(new Font("Arial", Font.PLAIN, 30));
@@ -34,17 +34,17 @@ public class InterfaceLogin extends JPanel {
         add(labelSenha);
         add(campoSenha);
         add(new JLabel()); // Espaço vazio
-        add(btnEntrar);
+        add(botaoEntrar);
 
         // Ação do botão "Entrar"
-        btnEntrar.addActionListener(_ -> {
+        botaoEntrar.addActionListener(_ -> {
             // Obtém o texto dos campos de login e senha
             String usuario = campoUsuario.getText();
             String senha = new String(campoSenha.getPassword());
 
             // Verifica as credenciais (aqui você pode colocar uma verificação real)
             if (Sistema.sistemaLogin(usuario, senha)) {
-                geral.trocarParaTelaUsuario(Sistema.usuario.getClass().getName());
+                gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL);
             } else {
                 JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos.", "Erro", JOptionPane.ERROR_MESSAGE);
             }

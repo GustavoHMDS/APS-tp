@@ -2,17 +2,37 @@ package Visual;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GerenciadorInterfaces extends JFrame {
-    protected InterfaceLogin login;
-    protected InterfaceMatriculaAluno aluno;
-    protected InterfaceMatriculaProfessor professor;
-    protected InterfaceMatriculaAdmin admin;
+    private InterfaceLogin login;
+    private InterfacePrincipal principal;
+    private InterfaceCatalogo verCatalogo;
+    private InterfaceRegistro registro;
+    private InterfaceDadosUsuario dadosUsuario;
+    private InterfaceEdicaoDadosUsuario editorDadosUsuario;
+    private InterfaceAdicaoAnime adicionadorAnime;
     private CardLayout cardLayout;
     private JPanel telaAtual;
 
+    // Mapa para armazenar as telas
+    private Map<String, JPanel> telas;
+    private List<Atualizavel> interfacesAtualizaveis;
+
+    // Constantes para os nomes das telas
+    static final String LOGIN = "login";
+    static final String CATALOGO = "verCatalogo";
+    static final String PRINCIPAL = "principal";
+    static final String REGISTRO = "registro";
+    static final String DADOS_USUARIO = "dadosUsuario";
+    static final String EDITOR_DADOS_USUARIO = "editorDadosUsuario";
+    static final String NOVO_ANIME = "adicionadorAnime";
+
     public GerenciadorInterfaces() {
-        setTitle("SIGEDU");
+        setTitle("PlaceHolder");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -21,41 +41,60 @@ public class GerenciadorInterfaces extends JFrame {
 
         // Inicialize as telas de login e interfaces de usuário
         login = new InterfaceLogin(this);
-        aluno = new InterfaceMatriculaAluno();
-        professor = new InterfaceMatriculaProfessor();
-        admin = new InterfaceMatriculaAdmin();
+        verCatalogo = new InterfaceCatalogo(this);
+        principal = new InterfacePrincipal(this);
+        registro = new InterfaceRegistro(this);
+        dadosUsuario = new InterfaceDadosUsuario(this);
+        editorDadosUsuario = new InterfaceEdicaoDadosUsuario(this);
+        adicionadorAnime = new InterfaceAdicaoAnime(this);
+
+        // Mapa de telas
+        telas = new HashMap<>();
+        telas.put(LOGIN, login);
+        telas.put(CATALOGO, verCatalogo);
+        telas.put(PRINCIPAL, principal);
+        telas.put(REGISTRO, registro);
+        telas.put(DADOS_USUARIO, dadosUsuario);
+        telas.put(EDITOR_DADOS_USUARIO, editorDadosUsuario);
+        telas.put(NOVO_ANIME, adicionadorAnime);
+
+        interfacesAtualizaveis = new ArrayList<>();
+        interfacesAtualizaveis.add(principal);
+        interfacesAtualizaveis.add(registro);
+        interfacesAtualizaveis.add(dadosUsuario);
+        interfacesAtualizaveis.add(editorDadosUsuario);
 
         // Adicione os painéis ao CardLayout
-        telaAtual.add(login, "login");
-        telaAtual.add(aluno, "aluno");
-        telaAtual.add(professor, "professor");
-        telaAtual.add(admin, "admin");
+        for (String key : telas.keySet()) {
+            telaAtual.add(telas.get(key), key);
+        }
 
         add(telaAtual);
-        cardLayout.show(telaAtual, "login"); // Exibe inicialmente a tela de login
+        cardLayout.show(telaAtual, PRINCIPAL); // Exibe inicialmente a tela de login
     }
 
     // Método para alternar a interface após login
-    public void trocarParaTelaUsuario(String tipoUsuario) {
-        switch (tipoUsuario) {
-            case "Aluno":
-                cardLayout.show(telaAtual, "aluno");
-                break;
-            case "Professor":
-                cardLayout.show(telaAtual, "professor");
-                break;
-            case "Admin":
-                cardLayout.show(telaAtual, "admin");
-                break;
-            default:
-                JOptionPane.showMessageDialog(this, "Tipo de usuário desconhecido.");
+    public void trocarParaTela(String novaTela) {
+        // Verifica se o nome da tela existe no mapa
+        if (telas.containsKey(novaTela)) {
+            System.out.println("Trocando de Tela");
+            atualizaInterfaces();
+            cardLayout.show(telaAtual, novaTela);
+        } else {
+            JOptionPane.showMessageDialog(this, "Tipo de tela desconhecido.");
+        }
+    }
+
+    private void atualizaInterfaces(){
+        for (Atualizavel interfaceAtualizavel : interfacesAtualizaveis) {
+            interfaceAtualizavel.atualizarInterface();
         }
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            GerenciadorInterfaces frame = new GerenciadorInterfaces();
-            frame.setVisible(true);
+            GerenciadorInterfaces gerenciador = new GerenciadorInterfaces();
+            gerenciador.setVisible(true);
         });
     }
 }

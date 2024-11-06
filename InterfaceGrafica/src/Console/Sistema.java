@@ -14,13 +14,15 @@ public class Sistema {
     public static boolean sistemaLogin(String usuario, String senha) {
         try (BufferedReader leitor = new BufferedReader(new FileReader("UsuariosLogin"))) {
             String linha;
+            String CPF = "vazio";
             while ((linha = leitor.readLine()) != null) {
                 String[] partes = linha.split(":");
-                if (partes.length >= 2 && partes[0].trim().equals("CPF") && partes[1].trim().equals(usuario)) {
-                    String CPF = partes[1].trim();
+                if (partes.length >= 2 && partes[0].trim().equals("email") && partes[1].trim().equals(usuario)) {
                     linha = leitor.readLine(); // Lê a linha de senha
                     if (linha != null && linha.split(":")[1].trim().equals(senha)) {
-                        System.out.println("CPF e senhas corretos. Buscando dados do usuario");
+                        linha = leitor.readLine();
+                        CPF = linha.split(":")[1].trim();
+                        System.out.println("email e senhas corretos. Buscando dados do usuario");
                         Sistema.usuario = buscaUsuario(CPF);
                         if (Sistema.usuario == null) {
                             System.out.println("Erro de sincronia entre UsuariosLogin e Usuarios para o CPF: " + CPF);
@@ -80,5 +82,19 @@ public class Sistema {
             return null;
         }
         return null;
+    }
+
+    public static void LogOffUsuario(){
+        Sistema.usuario = null;
+    }
+
+    public static String getTipoUsuario(){
+        if (Sistema.usuario instanceof Cliente) {
+            return "Cliente";
+        }
+        else if(Sistema.usuario instanceof Admin){
+            return "Admin";
+        }
+        else return "Guest";
     }
 }

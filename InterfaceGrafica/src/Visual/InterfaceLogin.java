@@ -22,7 +22,7 @@ public class InterfaceLogin extends JPanel {
 
         JLabel nomeApp = new JLabel("PlaceHolder", SwingConstants.CENTER);
         nomeApp.setFont(new Font("Arial", Font.PLAIN, 30));
-        JLabel nomeCompletoApp = new JLabel("Sistema Integrado de Gestão Educacional", SwingConstants.CENTER);
+        JLabel nomeCompletoApp = new JLabel("Placeholder", SwingConstants.CENTER);
         nomeCompletoApp.setFont(new Font("Arial", Font.PLAIN, 16));
 
         // Adiciona componentes ao JFrame

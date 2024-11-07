@@ -97,4 +97,10 @@ public class Sistema {
         }
         else return "Guest";
     }
+
+    public static String getNomeUuario(){
+        if (Sistema.usuario == null) {
+            return "Visitante";
+        } else return Sistema.usuario.getNome();
+    }
 }

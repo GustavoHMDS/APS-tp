@@ -23,7 +23,7 @@ public class InterfacePrincipal extends JPanel implements Atualizavel{
         topPanel.add(home, BorderLayout.WEST);
 
         // Painel central para os botões "Ver catálogo", "Login" e "Registrar" em uma coluna centralizada
-        centerPanel = new JPanel(new GridLayout(3, 1, 0, 50)); // 3 linhas, 1 coluna com espaço entre linhas
+        centerPanel = new JPanel(new GridLayout(3, 1, 10, 30)); // 3 linhas, 1 coluna com espaço entre linhas
         catalogo = CriaBotaoPreDefinido("Ver catálogo");
 
         // Inicializa os botões de acordo com o tipo de usuário
@@ -90,14 +90,19 @@ public class InterfacePrincipal extends JPanel implements Atualizavel{
         String tipoUsuario = Sistema.getTipoUsuario();
         centerPanel.removeAll();
 
+        // Criar um painel para empilhar os botões, usando BoxLayout vertical
+        JPanel empilhamentoPanel = new JPanel();
+        empilhamentoPanel.setLayout(new BoxLayout(empilhamentoPanel, BoxLayout.Y_AXIS));
+
         // Adicione os botões com base no tipo de usuário
-        centerPanel.add(catalogo);
+        empilhamentoPanel.add(catalogo);
+
         switch (tipoUsuario) {
             case "Cliente":
                 dadosUsuario = CriaBotaoPreDefinido("Ver dados Usuario");
                 sair = CriaBotaoPreDefinido("Sair");
-                centerPanel.add(dadosUsuario);
-                centerPanel.add(sair);
+                empilhamentoPanel.add(dadosUsuario);
+                empilhamentoPanel.add(sair);
                 InicializaBotoesUsuario();
                 break;
             case "Admin":
@@ -105,23 +110,28 @@ public class InterfacePrincipal extends JPanel implements Atualizavel{
                 registrar = CriaBotaoPreDefinido("Registrar novo administrador");
                 novoAnime = CriaBotaoPreDefinido("Adicionar Anime");
                 sair = CriaBotaoPreDefinido("Sair");
-                centerPanel.add(dadosUsuario);
-                centerPanel.add(sair);
-                centerPanel.add(registrar);
-                centerPanel.add(novoAnime);
+                empilhamentoPanel.add(dadosUsuario);
+                empilhamentoPanel.add(sair);
+                empilhamentoPanel.add(registrar);
+                empilhamentoPanel.add(novoAnime);
                 InicializaBotoesAdmin();
                 break;
             case "Guest":
                 login = CriaBotaoPreDefinido("Login");
                 registrar = CriaBotaoPreDefinido("Registrar");
-                centerPanel.add(login);
-                centerPanel.add(registrar);
+                empilhamentoPanel.add(login);
+                empilhamentoPanel.add(registrar);
                 InicializaBotoesGuest();
                 break;
             default:
                 JOptionPane.showMessageDialog(this, "Tipo de usuário desconhecido!");
                 return;
         }
+        // Adicionando o painel de botões empilhados no painel central
+        JLabel nomeApp = new JLabel("Bem vindo, " + Sistema.getNomeUuario() + "!", SwingConstants.CENTER);
+        nomeApp.setFont(new Font("Arial", Font.PLAIN, 30));
+        centerPanel.add(nomeApp);
+        centerPanel.add(empilhamentoPanel);
 
         // Revalida e repinta
         revalidate();

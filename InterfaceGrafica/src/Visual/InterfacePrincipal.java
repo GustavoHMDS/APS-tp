@@ -5,7 +5,7 @@ import Console.Sistema;
 import javax.swing.*;
 import java.awt.*;
 
-public class InterfacePrincipal extends JPanel implements Atualizavel{
+public class InterfacePrincipal extends JPanel implements Atualizavel {
     GerenciadorInterfaces gerenciador;
     JButton home, catalogo, dadosUsuario, sair, login, registrar, novoAnime;
     private JPanel centerPanel;
@@ -22,12 +22,9 @@ public class InterfacePrincipal extends JPanel implements Atualizavel{
         // Alinhando o título à esquerda e o botão à direita no painel superior
         topPanel.add(home, BorderLayout.WEST);
 
-        // Painel central para os botões "Ver catálogo", "Login" e "Registrar" em uma coluna centralizada
-        centerPanel = new JPanel(new GridLayout(3, 1, 10, 30)); // 3 linhas, 1 coluna com espaço entre linhas
-        catalogo = CriaBotaoPreDefinido("Ver catálogo");
-
-        // Inicializa os botões de acordo com o tipo de usuário
-        atualizarInterface();
+        // Painel central configurado com GridBagLayout para melhor controle de centralização
+        centerPanel = new JPanel(new GridBagLayout());
+        centerPanel.setPreferredSize(new Dimension(220, 300)); // Define o tamanho desejado para a área
 
         // Alinhando o painel central no centro
         JPanel centerWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -36,21 +33,25 @@ public class InterfacePrincipal extends JPanel implements Atualizavel{
         // Adicionando os painéis à interface principal
         add(topPanel, BorderLayout.NORTH);
         add(centerWrapper, BorderLayout.CENTER);
+
+        // Inicializa os botões de acordo com o tipo de usuário
+        atualizarInterface();
     }
 
-    private JButton CriaBotaoPreDefinido(String nomeBotao){
+    private JButton CriaBotaoPreDefinido(String nomeBotao) {
         JButton novoBotao = new JButton(nomeBotao);
-        // Aumentando o tamanho dos botões
-        Dimension buttonSize = new Dimension(200, 50); // Define uma largura e altura específicas
-        // Aumentando o tamanho da fonte
-        Font buttonFont = new Font("Arial", Font.BOLD, 16);
+        // Define o tamanho preferido e máximo para o botão
+        Dimension buttonSize = new Dimension(200, 50); // Define a largura e altura específicas
+        Font buttonFont = new Font("Arial", Font.BOLD, 16); // Aumenta o tamanho da fonte
 
         novoBotao.setPreferredSize(buttonSize);
+        novoBotao.setMaximumSize(buttonSize); // Garante o tamanho máximo
         novoBotao.setFont(buttonFont);
         return novoBotao;
     }
 
-    private void InicializaBotoesGerais(){
+
+    private void InicializaBotoesGerais() {
         catalogo.addActionListener(_ -> {
             gerenciador.trocarParaTela(GerenciadorInterfaces.CATALOGO);
         });
@@ -58,7 +59,8 @@ public class InterfacePrincipal extends JPanel implements Atualizavel{
             gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL);
         });
     }
-    private void InicializaBotoesUsuario(){
+
+    private void InicializaBotoesUsuario() {
         dadosUsuario.addActionListener(_ -> {
             gerenciador.trocarParaTela(GerenciadorInterfaces.DADOS_USUARIO);
         });
@@ -67,7 +69,8 @@ public class InterfacePrincipal extends JPanel implements Atualizavel{
             gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL);
         });
     }
-    private void InicializaBotoesAdmin(){
+
+    private void InicializaBotoesAdmin() {
         InicializaBotoesUsuario();
         registrar.addActionListener(_ -> {
             gerenciador.trocarParaTela(GerenciadorInterfaces.REGISTRO);
@@ -76,7 +79,8 @@ public class InterfacePrincipal extends JPanel implements Atualizavel{
             gerenciador.trocarParaTela(GerenciadorInterfaces.NOVO_ANIME);
         });
     }
-    private void InicializaBotoesGuest(){
+
+    private void InicializaBotoesGuest() {
         login.addActionListener(_ -> {
             gerenciador.trocarParaTela(GerenciadorInterfaces.LOGIN);
         });
@@ -93,8 +97,10 @@ public class InterfacePrincipal extends JPanel implements Atualizavel{
         // Criar um painel para empilhar os botões, usando BoxLayout vertical
         JPanel empilhamentoPanel = new JPanel();
         empilhamentoPanel.setLayout(new BoxLayout(empilhamentoPanel, BoxLayout.Y_AXIS));
+        empilhamentoPanel.setAlignmentX(Component.CENTER_ALIGNMENT); // Centralizar os botões dentro do empilhamentoPanel
 
         // Adicione os botões com base no tipo de usuário
+        catalogo = CriaBotaoPreDefinido("Ver catálogo");
         empilhamentoPanel.add(catalogo);
 
         switch (tipoUsuario) {
@@ -127,11 +133,13 @@ public class InterfacePrincipal extends JPanel implements Atualizavel{
                 JOptionPane.showMessageDialog(this, "Tipo de usuário desconhecido!");
                 return;
         }
-        // Adicionando o painel de botões empilhados no painel central
-        JLabel nomeApp = new JLabel("Bem vindo, " + Sistema.getNomeUuario() + "!", SwingConstants.CENTER);
-        nomeApp.setFont(new Font("Arial", Font.PLAIN, 30));
-        centerPanel.add(nomeApp);
-        centerPanel.add(empilhamentoPanel);
+
+        // Centraliza o painel de empilhamento no centerPanel usando GridBagLayout
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        centerPanel.add(empilhamentoPanel, gbc);
 
         // Revalida e repinta
         revalidate();

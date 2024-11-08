@@ -13,7 +13,7 @@ public class Sistema {
     private static LocalDate dataAtual;
 
     public static boolean sistemaLogin(String usuario, String senha) {
-        try (BufferedReader leitor = new BufferedReader(new FileReader("UsuariosLogin"))) {
+        try (BufferedReader leitor = new BufferedReader(new FileReader("src/UsuariosLogin"))) {
             String linha;
             String CPF = "vazio";
             while ((linha = leitor.readLine()) != null) {
@@ -41,7 +41,7 @@ public class Sistema {
     }
 
     public static Usuario buscaUsuario(String CPF) {
-        try (BufferedReader leitor = new BufferedReader(new FileReader("Usuarios"))) {
+        try (BufferedReader leitor = new BufferedReader(new FileReader("src/Usuarios"))) {
             String linha;
             System.out.println("Buscando Usuario...");
             while ((linha = leitor.readLine()) != null) {

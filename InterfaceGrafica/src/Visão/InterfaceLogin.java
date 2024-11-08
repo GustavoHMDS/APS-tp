@@ -1,6 +1,6 @@
-package Visual;
+package Visão;
 
-import Console.Sistema;
+import Controle.Sistema;
 
 import javax.swing.*;
 import java.awt.*;

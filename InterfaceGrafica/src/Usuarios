@@ -4,10 +4,11 @@ Idade: 25/10/2000
 email: pedro123@gmail.com
 senha: Pedro123
 Tipo: Cliente
-numeroCartao: 567474574674
-codigoCartao: 977
-validadeCartao: 21/05/2034
+numeroCartao: -1
+codigoCartao: -1
+validadeCartao: 01/01/0001
 vencimento: 21/06/2034
+id: 01
 CPF: 45678912302
 Nome: Joao
 Idade: 25/10/2000
@@ -18,7 +19,7 @@ numeroCartao: 481651816565
 codigoCartao: 115
 validadeCartao: 25/02/2033
 vencimento: 17/06/2034
-CPF: 789123456
+CPF: 78912345603
 Nome: Camila
 Idade: 25/10/2000
 email: camila789@gmail.com
@@ -32,5 +33,3 @@ email: 0
 senha: 0
 Tipo: Admin
 Id: 0
-
-

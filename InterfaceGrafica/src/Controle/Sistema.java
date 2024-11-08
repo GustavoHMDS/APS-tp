@@ -62,10 +62,12 @@ public class Sistema {
                     String tipo = leitor.readLine().split(":")[1].trim();
 
                     System.out.println("Tipo lido: " + tipo + "!");
+                    TipoUsuario tipoUsuario = TipoUsuario.valueOf(tipo);
 
                     // Criando o objeto de acordo com o tipo
-                    switch (tipo) {
-                        case "Cliente": {
+                    switch (tipoUsuario) {
+                        case TipoUsuario.Cliente: {
+                            System.out.println("Cliente encontrado!");
                             long numeroCartao = Long.parseLong(leitor.readLine().split(":")[1].trim());
                             int codigoCartao = Integer.parseInt(leitor.readLine().split(":")[1].trim());
                             data = leitor.readLine().split(":")[1].trim();
@@ -73,7 +75,12 @@ public class Sistema {
                             data = leitor.readLine().split(":")[1].trim();
                             LocalDate vencimento = LocalDate.parse(data, formatter);
                             int idAssinatura = Integer.parseInt(leitor.readLine().split(":")[1].trim());
-                            Cartao cartao = new Cartao(numeroCartao, codigoCartao, validadeCartao);
+                            System.out.println("Dados Lidos!");
+                            Cartao cartao;
+                            if(numeroCartao == -1){
+                                cartao = null;
+                            }
+                            else cartao = new Cartao(numeroCartao, codigoCartao, validadeCartao);
                             Assinatura assinaturaCliente = new Assinatura(vencimento, idAssinatura);
                             Cliente cliente = new Cliente(CPF, dataNascimento, nome, email, senha, assinaturaCliente, cartao);
 
@@ -83,7 +90,7 @@ public class Sistema {
                             return cliente;
                         }
 
-                        case "Admin": {
+                        case TipoUsuario.Admin: {
                             int id = Integer.parseInt(leitor.readLine().split(":")[1].trim());
                             Admin admin = new Admin(CPF, dataNascimento, nome, email, senha, id);
 

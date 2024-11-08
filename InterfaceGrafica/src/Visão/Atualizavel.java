@@ -1,4 +1,4 @@
-package Visual;
+package Visão;
 
 public interface Atualizavel {
     void atualizarInterface();

@@ -61,7 +61,7 @@ public class Sistema {
                     String senha = leitor.readLine().split(":")[1].trim();
                     String tipo = leitor.readLine().split(":")[1].trim();
 
-                    System.out.println("Tipo lido: " + tipo);
+                    System.out.println("Tipo lido: " + tipo + "!");
 
                     // Criando o objeto de acordo com o tipo
                     switch (tipo) {
@@ -73,9 +73,9 @@ public class Sistema {
                             data = leitor.readLine().split(":")[1].trim();
                             LocalDate vencimento = LocalDate.parse(data, formatter);
                             int idAssinatura = Integer.parseInt(leitor.readLine().split(":")[1].trim());
-
-                            Assinatura assinaturaCliente = new Assinatura(numeroCartao, codigoCartao, validadeCartao, vencimento, idAssinatura);
-                            Cliente cliente = new Cliente(CPF, dataNascimento, nome, email, senha, assinaturaCliente);
+                            Cartao cartao = new Cartao(numeroCartao, codigoCartao, validadeCartao);
+                            Assinatura assinaturaCliente = new Assinatura(vencimento, idAssinatura);
+                            Cliente cliente = new Cliente(CPF, dataNascimento, nome, email, senha, assinaturaCliente, cartao);
 
                             System.out.println("Cliente criado com sucesso: " + cliente.getNome());
 
@@ -133,6 +133,6 @@ public class Sistema {
         dataAtual = LocalDate.now();
     }
     public static LocalDate verificaData(){
-
+        return dataAtual;
     }
 }

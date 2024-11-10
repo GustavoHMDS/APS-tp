@@ -5,56 +5,46 @@ import Controle.Sistema;
 import javax.swing.*;
 import java.awt.*;
 
-public class InterfaceLogin extends JPanel {
+public class InterfaceLogin extends InterfaceComum {
+
     public InterfaceLogin(GerenciadorInterfaces gerenciador) {
-        // Configurações do JFrame
-        setSize(900, 600);
-        setLayout(new GridLayout(9, 6, 10, 30)); // Organiza os componentes em uma grade
+        // Chama o construtor da classe pai (InterfaceComum)
+        super(gerenciador);
+
+        // Configurações específicas do painel central para a tela de login
+        centerPanel.setLayout(new GridLayout(6, 1, 10, 15)); // Define uma grade para os componentes
 
         // Rótulos e campos de texto
-        JLabel labelUsuario = new JLabel("email:");
+        JLabel labelUsuario = new JLabel("Email:");
         JTextField campoUsuario = new JTextField(15);
 
         JLabel labelSenha = new JLabel("Senha:");
         JPasswordField campoSenha = new JPasswordField(15);
 
-        JButton botaoEntrar = new JButton("Entrar");
+        JButton botaoEntrar = CriaBotaoPreDefinido("Entrar");
 
-        JLabel nomeApp = new JLabel("PlaceHolder", SwingConstants.CENTER);
+        // Nome do app (pode ser substituído pelo nome real do seu aplicativo)
+        JLabel nomeApp = new JLabel(Sistema.nomeApp, SwingConstants.CENTER);
         nomeApp.setFont(new Font("Arial", Font.PLAIN, 30));
-        JLabel nomeCompletoApp = new JLabel("Placeholder", SwingConstants.CENTER);
-        nomeCompletoApp.setFont(new Font("Arial", Font.PLAIN, 16));
 
-        // Adiciona componentes ao JFrame
-        add(new JLabel()); // Espaço vazio
-        add(nomeApp);
-        add(nomeCompletoApp);
-        add(labelUsuario);
-        add(campoUsuario);
-        add(labelSenha);
-        add(campoSenha);
-        add(new JLabel()); // Espaço vazio
-        add(botaoEntrar);
+        // Adiciona os componentes ao painel central herdado
+        centerPanel.add(nomeApp);
+        centerPanel.add(labelUsuario);
+        centerPanel.add(campoUsuario);
+        centerPanel.add(labelSenha);
+        centerPanel.add(campoSenha);
+        centerPanel.add(botaoEntrar);
 
         // Ação do botão "Entrar"
         botaoEntrar.addActionListener(_ -> {
-            // Obtém o texto dos campos de login e senha
             String usuario = campoUsuario.getText();
             String senha = new String(campoSenha.getPassword());
 
-            // Verifica as credenciais (aqui você pode colocar uma verificação real)
+            // Verifica as credenciais
             if (Sistema.sistemaLogin(usuario, senha)) {
                 gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL);
             } else {
                 JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos.", "Erro", JOptionPane.ERROR_MESSAGE);
-            }
-        });
-    }
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new InterfaceLogin(new GerenciadorInterfaces()).setVisible(true);
             }
         });
     }

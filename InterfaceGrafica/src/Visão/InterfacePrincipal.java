@@ -17,9 +17,6 @@ public class InterfacePrincipal extends InterfaceComum implements Atualizavel {
         catalogo.addActionListener(_ -> {
             gerenciador.trocarParaTela(GerenciadorInterfaces.CATALOGO);
         });
-        home.addActionListener(_ -> {
-            gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL);
-        });
     }
 
     private void InicializaBotoesUsuario() {

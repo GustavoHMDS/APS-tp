@@ -4,12 +4,17 @@ import Modelo.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class Sistema {
     public static Usuario usuario;
+    public static final String nomeApp = "AniToons";
     private static LocalDate dataAtual;
 
     public static boolean sistemaLogin(String usuario, String senha) {
@@ -18,7 +23,7 @@ public class Sistema {
             String CPF = "vazio";
             while ((linha = leitor.readLine()) != null) {
                 String[] partes = linha.split(":");
-                if (partes.length >= 2 && partes[0].trim().equals("email") && partes[1].trim().equals(usuario)) {
+                if (partes.length >= 2 && partes[0].trim().equals("Email") && partes[1].trim().equals(usuario)) {
                     linha = leitor.readLine(); // Lê a linha de senha
                     if (linha != null && linha.split(":")[1].trim().equals(senha)) {
                         linha = leitor.readLine();
@@ -75,13 +80,14 @@ public class Sistema {
                             data = leitor.readLine().split(":")[1].trim();
                             LocalDate vencimento = LocalDate.parse(data, formatter);
                             int idAssinatura = Integer.parseInt(leitor.readLine().split(":")[1].trim());
+                            String tipoAssinatura = leitor.readLine().split(":")[1].trim();
                             System.out.println("Dados Lidos!");
                             Cartao cartao;
-                            if(numeroCartao == -1){
-                                cartao = null;
-                            }
+                            Assinatura assinaturaCliente;
+                            if(numeroCartao == -1) cartao = null;
                             else cartao = new Cartao(numeroCartao, codigoCartao, validadeCartao);
-                            Assinatura assinaturaCliente = new Assinatura(vencimento, idAssinatura);
+                            if(tipoAssinatura.equals("Premium")) assinaturaCliente = new Assinatura(vencimento, idAssinatura, true);
+                            else assinaturaCliente = new Assinatura(vencimento, idAssinatura, false);
                             Cliente cliente = new Cliente(CPF, dataNascimento, nome, email, senha, assinaturaCliente, cartao);
 
                             System.out.println("Cliente criado com sucesso: " + cliente.getNome());
@@ -116,7 +122,6 @@ public class Sistema {
         return null;
     }
 
-
     public static void LogOffUsuario(){
         Sistema.usuario = null;
     }
@@ -131,15 +136,157 @@ public class Sistema {
         else return "Guest";
     }
 
-    public static String getNomeUuario(){
+    private static int buscaIdDisponivel(String tipoUsuario){
+        try (BufferedReader leitor = new BufferedReader(new FileReader("src/Usuarios"))) {
+            String linha;
+            int id = -1;
+            while ((linha = leitor.readLine()) != null) {
+                String[] partes = linha.split(":");
+                if (tipoUsuario.equals("Cliente") && partes[0].equals("IdAssinatura")) {
+                    id = Integer.parseInt(partes[1].trim());
+                } else if(tipoUsuario.equals("Admin") && partes[0].equals("Id")){
+                    id = Integer.parseInt(partes[1].trim());
+                    }
+                }
+            return id + 1;
+            } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void adicionarUsuario(String cpf, String email, String senha, String nome, int diaN, int mesN, int anoN, String tipoRegistrando){
+        try (FileWriter escritor = new FileWriter("src/UsuariosLogin", true)) { // true para append
+            escritor.write("Email: " + email + "\n");
+            escritor.write("Senha: " + senha + "\n");
+            escritor.write("CPF: " + cpf + "\n");
+            System.out.println("Conteúdo adicionado com sucesso!");
+        } catch (IOException e) {
+            System.out.println("Erro ao adicionar conteúdo: " + e.getMessage());
+        }
+
+        // Formatação da data para o formato "dd/MM/yyyy"
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        // Calcula a validade do cartão (um mês após a data atual)
+        LocalDate vencimentoAssinatura = LocalDate.now().plusMonths(1);
+        String vencimentoFormatado = vencimentoAssinatura.format(formatter);
+        try (FileWriter escritor = new FileWriter("src/Usuarios", true)) { // true para append
+            escritor.write("CPF: " + cpf + "\n");
+            escritor.write("Nome: " + nome + "\n");
+            escritor.write("DataNascimento: " + diaN + "/" + mesN + "/" + anoN + "\n");
+            escritor.write("Email: " + email + "\n");
+            escritor.write("Senha: " + senha + "\n");
+            if(tipoRegistrando.equals("Guest")){
+                escritor.write("Tipo: Cliente \n");
+                escritor.write("NumeroCartao: -1 \n");
+                escritor.write("CodigoCartao: -1 \n");
+                escritor.write("ValidadeCartao: 01/01/0001 \n");
+                escritor.write("Vencimento: " + vencimentoFormatado + "\n");
+                escritor.write("IdAssinatura: " + Sistema.buscaIdDisponivel("Cliente") + "\n");
+                escritor.write("EstadoAssinatura: Free \n");
+            } else if(tipoRegistrando.equals("Admin")){
+                escritor.write("Tipo: Admin \n");
+                escritor.write("Id: " + Sistema.buscaIdDisponivel("Admin" + "\n"));
+            }
+            System.out.println("Conteúdo adicionado com sucesso!");
+        } catch (IOException e) {
+            System.out.println("Erro ao adicionar conteúdo: " + e.getMessage());
+        }
+
+    }
+
+    public static void editarUsuario(String cpf, String dadoEditado, String novoConteudo) {
+        editarArquivo("src/Usuarios", cpf, dadoEditado, novoConteudo);
+        if (dadoEditado.equals("email") || dadoEditado.equals("senha")){
+            editarArquivo("src/UsuariosLogin", cpf, dadoEditado, novoConteudo);
+        }
+        switch (dadoEditado){
+            case "Email":
+                Sistema.usuario.setEmail(novoConteudo);
+                break;
+            case "Senha":
+                Sistema.usuario.setSenha(novoConteudo);
+                break;
+            case "Nome":
+                Sistema.usuario.setNome(novoConteudo);
+                break;
+        }
+    }
+
+    public static void trocaCartaoUsuario(String numeroCartao, String codigoCartao, String diaV, String mesV, String anoV){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate vencimentoCartao = LocalDate.parse(diaV + "/" + mesV + "/" + anoV, formatter);
+        Cartao novoCartao = new Cartao(Long.parseLong(numeroCartao), Integer.parseInt(codigoCartao), vencimentoCartao);
+        if(Sistema.usuario instanceof Cliente cliente){
+            cliente.novoCartao(novoCartao);
+        }
+    }
+
+    private static void editarArquivo(String nomeArquivo, String cpf, String dadoEditado, String novoConteudo) {
+        try {
+            // Lê todas as linhas do arquivo
+            List<String> linhas = Files.readAllLines(Paths.get(nomeArquivo));
+            boolean encontrouCPF = false;
+
+            for (int i = 0; i < linhas.size(); i++) {
+                String linha = linhas.get(i);
+
+                // Verifica se encontrou o CPF
+                if (linha.contains("CPF: " + cpf)) {
+                    encontrouCPF = true;
+                }
+
+                // Se o CPF foi encontrado, busca o dado a ser editado
+                if (encontrouCPF && linha.contains(dadoEditado + ":")) {
+                    // Faz o split na linha encontrada para pegar a chave e o valor
+                    String[] partes = linha.split(":");
+                    if (partes.length == 2) {
+                        // Substitui o valor antigo pelo novo
+                        String novaLinha = partes[0] + ": " + novoConteudo;
+                        linhas.set(i, novaLinha);
+                        System.out.println("Informação editada com sucesso!");
+                    }
+                    break; // Sai do loop após editar
+                }
+            }
+            // Reescreve o arquivo com o conteúdo atualizado
+            Files.write(Paths.get(nomeArquivo), linhas);
+        } catch (IOException e) {
+            System.out.println("Erro ao editar o arquivo: " + e.getMessage());
+        }
+    }
+
+    public static String getNomeUsuario(){
         if (Sistema.usuario == null) {
             return "Visitante";
         } else return Sistema.usuario.getNome();
     }
+
     public static void defineDataAtual(){
         dataAtual = LocalDate.now();
     }
+
     public static LocalDate verificaData(){
         return dataAtual;
+    }
+
+    public static void fazPagamento(){
+        if (Sistema.usuario instanceof Cliente cliente) {
+            cliente.realizarPagamento();
+        }
+    }
+
+    public static Cliente getCliente(){
+        if(Sistema.usuario instanceof Cliente cliente){
+            return cliente;
+        }
+        else return null;
+    }
+
+    public static Admin getAdmin(){
+        if(Sistema.usuario instanceof Admin admin){
+            return admin;
+        }
+        else return null;
     }
 }

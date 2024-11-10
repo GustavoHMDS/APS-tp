@@ -7,9 +7,10 @@ public class Assinatura {
     int id;
     boolean assinaturaPremium;
 
-    public Assinatura(LocalDate vencimento, int id){
+    public Assinatura(LocalDate vencimento, int id, boolean assinaturaPremium){
         this.vencimento = vencimento;
         this.id = id;
+        this.assinaturaPremium = assinaturaPremium;
     }
     public void semPagamento(){
         assinaturaPremium = false;

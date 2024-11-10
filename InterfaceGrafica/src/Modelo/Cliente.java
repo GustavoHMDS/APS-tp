@@ -20,4 +20,10 @@ public class Cliente extends Usuario{
             assinatura.foiPago();
         }
     }
+    public void novoCartao(Cartao cartao){
+        this.cartaoPagamento = cartao;
+    }
+    public Cartao getCartaoPagamento() {
+        return cartaoPagamento;
+    }
 }

@@ -12,4 +12,14 @@ public class Cartao {
         this.codigoCartao = codigoCartao;
         this.validadeCartao = validadeCartao;
     }
+
+    public long getNumeroCartao() {
+        return numeroCartao;
+    }
+    public int getCodigoCartao() {
+        return codigoCartao;
+    }
+    public LocalDate getValidadeCartao() {
+        return validadeCartao;
+    }
 }

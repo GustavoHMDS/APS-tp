@@ -1,11 +1,17 @@
 package Visão;
 
+import Controle.Sistema;
+
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalDate;
 
 public class InterfaceComum extends JPanel {
     GerenciadorInterfaces gerenciador;
     JButton home;
+    protected JTextField campoDia;
+    protected JTextField campoMes;
+    protected JTextField campoAno;
     protected JPanel centerPanel;
     public InterfaceComum(GerenciadorInterfaces gerenciador) {
         this.gerenciador = gerenciador;
@@ -14,7 +20,10 @@ public class InterfaceComum extends JPanel {
 
         // Painel superior para o nome do programa e o botão "Home"
         JPanel topPanel = new JPanel(new BorderLayout());
-        home = CriaBotaoPreDefinido("PlaceHolder");
+        home = CriaBotaoPreDefinido(Sistema.nomeApp);
+
+        // Ação do botão "Home" herdado
+        home.addActionListener(e -> gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL));
 
         // Alinhando o título à esquerda e o botão à direita no painel superior
         topPanel.add(home, BorderLayout.WEST);
@@ -32,6 +41,17 @@ public class InterfaceComum extends JPanel {
         add(centerWrapper, BorderLayout.CENTER);
 
     }
+    protected JButton CriaBotaoPreDefinido(String nomeBotao, int largura, int altura, int fonte) {
+        JButton novoBotao = new JButton(nomeBotao);
+        // Define o tamanho preferido e máximo para o botão
+        Dimension buttonSize = new Dimension(largura, altura); // Define a largura e altura específicas
+        Font buttonFont = new Font("Arial", Font.BOLD, fonte); // Aumenta o tamanho da fonte
+
+        novoBotao.setPreferredSize(buttonSize);
+        novoBotao.setMaximumSize(buttonSize); // Garante o tamanho máximo
+        novoBotao.setFont(buttonFont);
+        return novoBotao;
+    }
     protected JButton CriaBotaoPreDefinido(String nomeBotao) {
         JButton novoBotao = new JButton(nomeBotao);
         // Define o tamanho preferido e máximo para o botão
@@ -42,5 +62,35 @@ public class InterfaceComum extends JPanel {
         novoBotao.setMaximumSize(buttonSize); // Garante o tamanho máximo
         novoBotao.setFont(buttonFont);
         return novoBotao;
+    }
+    protected JPanel painelData(){
+        JPanel painelData = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
+
+        campoDia = new JTextField(2);
+        campoMes = new JTextField(2);
+        campoAno = new JTextField(4);
+
+        painelData.add(campoDia);
+        painelData.add(new JLabel("/"));
+        painelData.add(campoMes);
+        painelData.add(new JLabel("/"));
+        painelData.add(campoAno);
+
+        return painelData;
+    }
+    protected JPanel painelData(LocalDate data){
+        JPanel painelData = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
+
+        campoDia = new JTextField(data.getDayOfMonth());
+        campoMes = new JTextField(data.getMonthValue());
+        campoAno = new JTextField(data.getYear());
+
+        painelData.add(campoDia);
+        painelData.add(new JLabel("/"));
+        painelData.add(campoMes);
+        painelData.add(new JLabel("/"));
+        painelData.add(campoAno);
+
+        return painelData;
     }
 }

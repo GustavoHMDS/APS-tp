@@ -13,8 +13,8 @@ public class GerenciadorInterfaces extends JFrame {
     private InterfaceCatalogo verCatalogo;
     private InterfaceRegistro registro;
     private InterfaceDadosUsuario dadosUsuario;
-    private InterfaceEdicaoDadosUsuario editorDadosUsuario;
     private InterfaceAdicaoAnime adicionadorAnime;
+    private InterfaceRegistraCartao registraCartao;
     private CardLayout cardLayout;
     private JPanel telaAtual;
 
@@ -30,6 +30,7 @@ public class GerenciadorInterfaces extends JFrame {
     static final String DADOS_USUARIO = "dadosUsuario";
     static final String EDITOR_DADOS_USUARIO = "editorDadosUsuario";
     static final String NOVO_ANIME = "adicionadorAnime";
+    static final String NOVO_CARTAO = "registraCartao";
 
     public GerenciadorInterfaces() {
         setTitle("PlaceHolder");
@@ -45,8 +46,8 @@ public class GerenciadorInterfaces extends JFrame {
         principal = new InterfacePrincipal(this);
         registro = new InterfaceRegistro(this);
         dadosUsuario = new InterfaceDadosUsuario(this);
-        editorDadosUsuario = new InterfaceEdicaoDadosUsuario(this);
         adicionadorAnime = new InterfaceAdicaoAnime(this);
+        registraCartao = new InterfaceRegistraCartao(this);
 
         // Mapa de telas
         telas = new HashMap<>();
@@ -55,14 +56,14 @@ public class GerenciadorInterfaces extends JFrame {
         telas.put(PRINCIPAL, principal);
         telas.put(REGISTRO, registro);
         telas.put(DADOS_USUARIO, dadosUsuario);
-        telas.put(EDITOR_DADOS_USUARIO, editorDadosUsuario);
         telas.put(NOVO_ANIME, adicionadorAnime);
+        telas.put(NOVO_CARTAO, registraCartao);
 
         interfacesAtualizaveis = new ArrayList<>();
         interfacesAtualizaveis.add(principal);
         interfacesAtualizaveis.add(registro);
         interfacesAtualizaveis.add(dadosUsuario);
-        interfacesAtualizaveis.add(editorDadosUsuario);
+        interfacesAtualizaveis.add(registraCartao);
 
         // Adicione os painéis ao CardLayout
         for (String key : telas.keySet()) {
@@ -91,10 +92,4 @@ public class GerenciadorInterfaces extends JFrame {
         }
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            GerenciadorInterfaces gerenciador = new GerenciadorInterfaces();
-            gerenciador.setVisible(true);
-        });
-    }
 }

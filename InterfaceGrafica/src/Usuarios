@@ -84,3 +84,15 @@ ValidadeCartao: 01/01/0001
 Vencimento: 09/12/2024
 IdAssinatura: 2
 EstadoAssinatura: Free 
+CPF: 1234353234
+Nome: trevor
+DataNascimento: 1/12/2013
+Email: trevor123@gmail.com
+Senha: trevor123
+Tipo: Cliente 
+NumeroCartao: -1 
+CodigoCartao: -1 
+ValidadeCartao: 01/01/0001 
+Vencimento: 10/12/2024
+IdAssinatura: 3
+EstadoAssinatura: Free 

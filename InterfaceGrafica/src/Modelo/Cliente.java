@@ -15,10 +15,12 @@ public class Cliente extends Usuario{
         this.assinatura = assinatura;
     }
 
-    public void realizarPagamento(){
+    public boolean realizarPagamento(){
         if(cartaoPagamento != null && Sistema.verificaData().isBefore(cartaoPagamento.validadeCartao)){
             assinatura.foiPago();
+            return true;
         }
+        return false;
     }
     public void novoCartao(Cartao cartao){
         this.cartaoPagamento = cartao;

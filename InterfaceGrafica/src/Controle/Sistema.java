@@ -270,10 +270,11 @@ public class Sistema {
         return dataAtual;
     }
 
-    public static void fazPagamento(){
+    public static boolean fazPagamento(){
         if (Sistema.usuario instanceof Cliente cliente) {
-            cliente.realizarPagamento();
+            return cliente.realizarPagamento();
         }
+        return false;
     }
 
     public static Cliente getCliente(){

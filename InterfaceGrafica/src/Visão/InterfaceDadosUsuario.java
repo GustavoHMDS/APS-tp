@@ -61,7 +61,10 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
                 JButton realizarPagamento = CriaBotaoPreDefinido("Realizar pagamento", 200, 25, 16);
 
                 cadastrarCartao.addActionListener(e -> gerenciador.trocarParaTela(GerenciadorInterfaces.NOVO_CARTAO));
-                realizarPagamento.addActionListener(e -> Sistema.fazPagamento());
+                realizarPagamento.addActionListener(e -> {
+                    if(Sistema.fazPagamento()) JOptionPane.showMessageDialog(null, "Pagamento Realizado com sucesso", "Pagamento aprovado", JOptionPane.INFORMATION_MESSAGE);
+                    else JOptionPane.showMessageDialog(null, "O pagamento não foi aprovado, confira a validade do cartão", "Pagamento recusado", JOptionPane.ERROR_MESSAGE);
+                });
 
                 empilhamentoPanel.add(cadastrarCartao);
                 empilhamentoPanel.add(realizarPagamento);

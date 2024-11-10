@@ -12,8 +12,10 @@ public class Assinatura {
         this.id = id;
         this.assinaturaPremium = assinaturaPremium;
     }
-    public void semPagamento(){
-        assinaturaPremium = false;
+    public void semPagamento(LocalDate data){
+        if(this.vencimento.isAfter(data)) {
+            assinaturaPremium = false;
+        }
     }
     public void foiPago(){
         assinaturaPremium = true;

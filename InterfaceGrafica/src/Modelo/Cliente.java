@@ -28,4 +28,7 @@ public class Cliente extends Usuario{
     public Cartao getCartaoPagamento() {
         return cartaoPagamento;
     }
+    public Assinatura getAssinatura() {
+        return assinatura;
+    }
 }

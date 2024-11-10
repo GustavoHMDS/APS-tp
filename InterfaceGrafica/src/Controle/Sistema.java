@@ -34,6 +34,7 @@ public class Sistema {
                             System.out.println("Erro de sincronia entre UsuariosLogin e Usuarios para o CPF: " + CPF);
                             return false;
                         }
+                        if (Sistema.usuario instanceof Cliente) Sistema.verificaAssinatura();
                         return true;
                     }
                 }
@@ -289,5 +290,11 @@ public class Sistema {
             return admin;
         }
         else return null;
+    }
+
+    public static void verificaAssinatura(){
+        if(Sistema.usuario instanceof Cliente cliente){
+           cliente.getAssinatura().semPagamento(Sistema.dataAtual);
+        }
     }
 }

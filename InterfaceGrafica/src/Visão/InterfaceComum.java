@@ -27,6 +27,12 @@ public class InterfaceComum extends JPanel {
 
         // Alinhando o título à esquerda e o botão à direita no painel superior
         topPanel.add(home, BorderLayout.WEST);
+        home.setBorderPainted(false);
+        home.setContentAreaFilled(false);
+        home.setOpaque(false);
+        home.setFont(new Font("Cambria", Font.BOLD, 30));
+        home.setFocusable(false);
+        home.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         // Painel central configurado com GridBagLayout para melhor controle de centralização
         centerPanel = new JPanel(new GridBagLayout());
@@ -45,8 +51,12 @@ public class InterfaceComum extends JPanel {
         JButton novoBotao = new JButton(nomeBotao);
         // Define o tamanho preferido e máximo para o botão
         Dimension buttonSize = new Dimension(largura, altura); // Define a largura e altura específicas
-        Font buttonFont = new Font("Arial", Font.BOLD, fonte); // Aumenta o tamanho da fonte
-
+        Font buttonFont = new Font("Cambria", Font.BOLD, fonte); // Aumenta o tamanho da fonte
+        novoBotao.setBorderPainted(false);
+        novoBotao.setContentAreaFilled(false);
+        novoBotao.setOpaque(false);
+        novoBotao.setFocusable(false);
+        novoBotao.setCursor(new Cursor(Cursor.HAND_CURSOR));
         novoBotao.setPreferredSize(buttonSize);
         novoBotao.setMaximumSize(buttonSize); // Garante o tamanho máximo
         novoBotao.setFont(buttonFont);
@@ -56,8 +66,13 @@ public class InterfaceComum extends JPanel {
         JButton novoBotao = new JButton(nomeBotao);
         // Define o tamanho preferido e máximo para o botão
         Dimension buttonSize = new Dimension(200, 50); // Define a largura e altura específicas
-        Font buttonFont = new Font("Arial", Font.BOLD, 16); // Aumenta o tamanho da fonte
+        Font buttonFont = new Font("Cambria", Font.BOLD, 16); // Aumenta o tamanho da fonte
 
+        novoBotao.setBorderPainted(false);
+        novoBotao.setContentAreaFilled(false);
+        novoBotao.setOpaque(false);
+        novoBotao.setFocusable(false);
+        novoBotao.setCursor(new Cursor(Cursor.HAND_CURSOR));
         novoBotao.setPreferredSize(buttonSize);
         novoBotao.setMaximumSize(buttonSize); // Garante o tamanho máximo
         novoBotao.setFont(buttonFont);

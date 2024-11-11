@@ -7,7 +7,6 @@ import java.time.LocalDate;
 public class Cliente extends Usuario{
     Cartao cartaoPagamento;
     Assinatura assinatura;
-    boolean premium;
 
     public Cliente(String CPF, LocalDate dataNascimento, String nome, String email, String senha, Assinatura assinatura, Cartao cartaoPagamento) {
         super(CPF, dataNascimento, nome, email, senha);

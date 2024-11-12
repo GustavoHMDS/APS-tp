@@ -14,48 +14,56 @@ public class InterfaceComum extends JPanel {
     protected JTextField campoMes;
     protected JTextField campoAno;
     protected JPanel centerPanel;
+
+
     public InterfaceComum(GerenciadorInterfaces gerenciador) {
         this.gerenciador = gerenciador;
         setSize(900, 600);
         setLayout(new BorderLayout());
-        setBackground(new Color(147, 128, 215));
-        setOpaque(true);
+        setBackground(new Color(147, 128, 215)); // Cor de fundo da InterfaceComum
+        setOpaque(true); // Garantir que o fundo seja desenhado
 
         // Painel superior para o nome do programa e o botão "Home"
         JPanel topPanel = new JPanel(new BorderLayout());
-        topPanel.setBackground(new Color(0,0,0));
+        topPanel.setOpaque(false); // Tornar transparente para herdar a cor do pai
+
         home = CriaBotaoPreDefinido(Sistema.nomeApp);
         ImageIcon logo = new ImageIcon("./src/Imagens/anitoons-logo.png");
         home.setIcon(logo);
-        if(home.getIcon() != null) {
+        if (home.getIcon() != null) {
             home.setText("");
-            home.setPreferredSize(new Dimension(250,120));
+            home.setPreferredSize(new Dimension(250, 120));
         }
 
-        // Ação do botão "Home" herdado
+        // Ação do botão "Home"
         home.addActionListener(e -> gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL));
-
-        // Alinhando o título à esquerda e o botão à direita no painel superior
         topPanel.add(home, BorderLayout.WEST);
         home.setBorderPainted(false);
         home.setContentAreaFilled(false);
-        home.setOpaque(false);
+        home.setOpaque(false); // Tornar o botão transparente
         home.setFont(new Font("Cambria", Font.BOLD, 30));
         home.setFocusable(false);
         home.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        // Painel central configurado com GridBagLayout para melhor controle de centralização
+        // Painel central configurado com GridBagLayout
         centerPanel = new JPanel(new GridBagLayout());
-        centerPanel.setPreferredSize(new Dimension(220, 300)); // Define o tamanho desejado para a área
-        centerPanel.setBackground(new Color(0,0,0));
+        centerPanel.setPreferredSize(new Dimension(220, 300));
+        centerPanel.setOpaque(false); // Tornar transparente para herdar a cor do pai
+
         // Alinhando o painel central no centro
         JPanel centerWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        centerWrapper.setOpaque(false); // Tornar transparente para herdar a cor do pai
         centerWrapper.add(centerPanel);
+
         // Adicionando os painéis à interface principal
         add(topPanel, BorderLayout.NORTH);
         add(centerWrapper, BorderLayout.CENTER);
 
+        revalidate();
+        repaint();
     }
+
+
     protected JButton CriaBotaoPreDefinido(String nomeBotao, int largura, int altura, int fonte) {
         JButton novoBotao = new JButton(nomeBotao);
         // Define o tamanho preferido e máximo para o botão

@@ -2,6 +2,7 @@ package Visão;
 
 import Controle.Sistema;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
@@ -17,10 +18,19 @@ public class InterfaceComum extends JPanel {
         this.gerenciador = gerenciador;
         setSize(900, 600);
         setLayout(new BorderLayout());
+        setBackground(new Color(147, 128, 215));
+        setOpaque(true);
 
         // Painel superior para o nome do programa e o botão "Home"
         JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.setBackground(new Color(0,0,0));
         home = CriaBotaoPreDefinido(Sistema.nomeApp);
+        ImageIcon logo = new ImageIcon("./src/Imagens/anitoons-logo.png");
+        home.setIcon(logo);
+        if(home.getIcon() != null) {
+            home.setText("");
+            home.setPreferredSize(new Dimension(250,120));
+        }
 
         // Ação do botão "Home" herdado
         home.addActionListener(e -> gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL));
@@ -37,11 +47,10 @@ public class InterfaceComum extends JPanel {
         // Painel central configurado com GridBagLayout para melhor controle de centralização
         centerPanel = new JPanel(new GridBagLayout());
         centerPanel.setPreferredSize(new Dimension(220, 300)); // Define o tamanho desejado para a área
-
+        centerPanel.setBackground(new Color(0,0,0));
         // Alinhando o painel central no centro
         JPanel centerWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
         centerWrapper.add(centerPanel);
-
         // Adicionando os painéis à interface principal
         add(topPanel, BorderLayout.NORTH);
         add(centerWrapper, BorderLayout.CENTER);
@@ -52,7 +61,7 @@ public class InterfaceComum extends JPanel {
         // Define o tamanho preferido e máximo para o botão
         Dimension buttonSize = new Dimension(largura, altura); // Define a largura e altura específicas
         Font buttonFont = new Font("Cambria", Font.BOLD, fonte); // Aumenta o tamanho da fonte
-        novoBotao.setBorderPainted(false);
+        //novoBotao.setBorderPainted(false);
         novoBotao.setContentAreaFilled(false);
         novoBotao.setOpaque(false);
         novoBotao.setFocusable(false);
@@ -66,9 +75,9 @@ public class InterfaceComum extends JPanel {
         JButton novoBotao = new JButton(nomeBotao);
         // Define o tamanho preferido e máximo para o botão
         Dimension buttonSize = new Dimension(200, 50); // Define a largura e altura específicas
-        Font buttonFont = new Font("Cambria", Font.BOLD, 16); // Aumenta o tamanho da fonte
+        Font buttonFont = new Font("Cambria", Font.BOLD, 25); // Aumenta o tamanho da fonte
 
-        novoBotao.setBorderPainted(false);
+        //novoBotao.setBorderPainted(false);
         novoBotao.setContentAreaFilled(false);
         novoBotao.setOpaque(false);
         novoBotao.setFocusable(false);

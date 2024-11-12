@@ -69,7 +69,6 @@ public class GerenciadorInterfaces extends JFrame {
         for (String key : telas.keySet()) {
             telaAtual.add(telas.get(key), key);
         }
-
         add(telaAtual);
         cardLayout.show(telaAtual, PRINCIPAL); // Exibe inicialmente a tela de login
     }

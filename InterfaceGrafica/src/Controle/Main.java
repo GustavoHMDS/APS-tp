@@ -10,6 +10,8 @@ public class Main {
         SwingUtilities.invokeLater(() -> {
             GerenciadorInterfaces gerenciador = new GerenciadorInterfaces();
             gerenciador.setVisible(true);
+            ImageIcon icone = new ImageIcon("./src/Imagens/image.png");
+            gerenciador.setIconImage(icone.getImage());
         });
     }
 }

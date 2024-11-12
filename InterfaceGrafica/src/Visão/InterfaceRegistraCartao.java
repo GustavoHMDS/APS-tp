@@ -22,6 +22,7 @@ public class InterfaceRegistraCartao extends InterfaceComum implements Atualizav
         JPanel empilhamentoPanel = new JPanel();
         empilhamentoPanel.setLayout(new BoxLayout(empilhamentoPanel, BoxLayout.Y_AXIS));
         empilhamentoPanel.setAlignmentX(Component.CENTER_ALIGNMENT); // Centralizar os botões dentro do empilhamentoPanel
+        empilhamentoPanel.setBackground(new Color(64, 44, 94));
         JLabel labelNumeroCartao;
         JTextField campoNumeroCartao;
         JLabel labelcodigoCartao;
@@ -43,7 +44,15 @@ public class InterfaceRegistraCartao extends InterfaceComum implements Atualizav
             campoCodigoCartao = new JTextField(15);
             painelDataValidade = painelData();
         }
-
+        labelNumeroCartao.setForeground(new Color(254, 244, 129));
+        labelcodigoCartao.setForeground(new Color(254, 244, 129));
+        labelDataValidade.setForeground(new Color(254, 244, 129));
+        campoNumeroCartao.setBackground(new Color(Transparency.TRANSLUCENT));
+        campoNumeroCartao.setForeground(new Color(255,255,255));
+        campoNumeroCartao.setBorder(null);
+        campoCodigoCartao.setBackground(new Color(Transparency.TRANSLUCENT));
+        campoCodigoCartao.setForeground(new Color(255,255,255));
+        campoCodigoCartao.setBorder(null);
 
         JButton salvarCartao = CriaBotaoPreDefinido("Salvar", 200, 25, 16);
         JButton cancelar = CriaBotaoPreDefinido("Cancelar", 200, 25, 16);

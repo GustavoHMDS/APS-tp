@@ -20,7 +20,7 @@ public class InterfaceComum extends JPanel {
         this.gerenciador = gerenciador;
         setSize(900, 600);
         setLayout(new BorderLayout());
-        setBackground(new Color(147, 128, 215)); // Cor de fundo da InterfaceComum
+        setBackground(new Color(64, 44, 94)); // Cor de fundo da InterfaceComum
         setOpaque(true); // Garantir que o fundo seja desenhado
 
         // Painel superior para o nome do programa e o botão "Home"
@@ -77,6 +77,10 @@ public class InterfaceComum extends JPanel {
         novoBotao.setPreferredSize(buttonSize);
         novoBotao.setMaximumSize(buttonSize); // Garante o tamanho máximo
         novoBotao.setFont(buttonFont);
+        novoBotao.setBackground(new Color(254, 244, 129)); // Define a cor de fundo (Cornflower Blue)
+        novoBotao.setForeground(new Color(64, 44, 94)); // Define a cor do texto
+        novoBotao.setContentAreaFilled(true); // Preencher o conteúdo com a cor de fundo
+        novoBotao.setBorderPainted(false); // Remove a borda
         return novoBotao;
     }
     protected JButton CriaBotaoPreDefinido(String nomeBotao) {
@@ -93,6 +97,10 @@ public class InterfaceComum extends JPanel {
         novoBotao.setPreferredSize(buttonSize);
         novoBotao.setMaximumSize(buttonSize); // Garante o tamanho máximo
         novoBotao.setFont(buttonFont);
+        novoBotao.setBackground(new Color(254, 244, 129)); // Define a cor de fundo (Cornflower Blue)
+        novoBotao.setForeground(new Color(64, 44, 94)); // Define a cor do texto
+        novoBotao.setContentAreaFilled(true); // Preencher o conteúdo com a cor de fundo
+        novoBotao.setBorderPainted(false); // Remove a borda
         return novoBotao;
     }
     protected JPanel painelData(){

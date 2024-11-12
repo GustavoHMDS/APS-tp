@@ -16,19 +16,27 @@ public class InterfaceLogin extends InterfaceComum {
 
         // Rótulos e campos de texto
         JLabel labelUsuario = new JLabel("Email:");
-        JTextField campoUsuario = new JTextField(15);
+        labelUsuario.setForeground(new Color(254, 244, 129));
+        JTextField campoUsuario = new JTextField(20);
+        campoUsuario.setBackground(new Color(Transparency.TRANSLUCENT));
+        campoUsuario.setForeground(new Color(255,255,255));
+        campoUsuario.setBorder(null);
 
         JLabel labelSenha = new JLabel("Senha:");
-        JPasswordField campoSenha = new JPasswordField(15);
+        labelSenha.setForeground(new Color(254, 244, 129));
+        JPasswordField campoSenha = new JPasswordField(20);
+        campoSenha.setBackground(new Color(Transparency.TRANSLUCENT));
+        campoSenha.setForeground(new Color(255,255,255));
+        campoSenha.setBorder(null);
 
         JButton botaoEntrar = CriaBotaoPreDefinido("Entrar");
 
         // Nome do app (pode ser substituído pelo nome real do seu aplicativo)
-        JLabel nomeApp = new JLabel(Sistema.nomeApp, SwingConstants.CENTER);
-        nomeApp.setFont(new Font("Arial", Font.PLAIN, 30));
+        //JLabel nomeApp = new JLabel(Sistema.nomeApp, SwingConstants.CENTER);
+        //nomeApp.setFont(new Font("Arial", Font.PLAIN, 30));
 
         // Adiciona os componentes ao painel central herdado
-        centerPanel.add(nomeApp);
+        //centerPanel.add(nomeApp);
         centerPanel.add(labelUsuario);
         centerPanel.add(campoUsuario);
         centerPanel.add(labelSenha);

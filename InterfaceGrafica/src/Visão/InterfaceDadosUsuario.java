@@ -76,7 +76,7 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
 
                 cadastrarCartao.addActionListener(e -> gerenciador.trocarParaTela(GerenciadorInterfaces.NOVO_CARTAO));
                 realizarPagamento.addActionListener(e -> {
-                    if(Sistema.fazPagamento()) JOptionPane.showMessageDialog(null, "Pagamento Realizado com sucesso", "Pagamento aprovado", JOptionPane.INFORMATION_MESSAGE);
+                    if(Sistema.fazPagamento(0)) JOptionPane.showMessageDialog(null, "Pagamento Realizado com sucesso", "Pagamento aprovado", JOptionPane.INFORMATION_MESSAGE);
                     else JOptionPane.showMessageDialog(null, "O pagamento não foi aprovado, confira a validade do cartão", "Pagamento recusado", JOptionPane.ERROR_MESSAGE);
                 });
 

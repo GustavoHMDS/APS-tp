@@ -23,19 +23,24 @@ public class InterfaceRegistraCartao extends InterfaceComum implements Atualizav
         empilhamentoPanel.setLayout(new BoxLayout(empilhamentoPanel, BoxLayout.Y_AXIS));
         empilhamentoPanel.setAlignmentX(Component.CENTER_ALIGNMENT); // Centralizar os botões dentro do empilhamentoPanel
         empilhamentoPanel.setBackground(new Color(64, 44, 94));
+        String[] seletores = new String[10];
+        int qtd = (cliente == null) ? 2 : cliente.getCartoes().length;
+        for(int i = 0; i < qtd; i++) seletores[i] = String.valueOf(i+1);
+        JComboBox cartaoSelect = new JComboBox(seletores);
+        int selecionado = 1;
         JLabel labelNumeroCartao;
         JTextField campoNumeroCartao;
         JLabel labelcodigoCartao;
         JTextField campoCodigoCartao;
         JLabel labelDataValidade;
         JPanel painelDataValidade;
-        if(cliente != null && cliente.getCartaoPagamento() != null) {
-            labelNumeroCartao = new JLabel("Numero do cartao: " + cliente.getCartaoPagamento().getNumeroCartao());
-            labelcodigoCartao = new JLabel("Codigo do cartao: " + cliente.getCartaoPagamento().getCodigoCartao());
-            labelDataValidade = new JLabel("Data de validade: " + cliente.getCartaoPagamento().getCodigoCartao());
-            campoNumeroCartao = new JTextField(String.valueOf(cliente.getCartaoPagamento().getNumeroCartao()));
-            campoCodigoCartao = new JTextField(cliente.getCartaoPagamento().getCodigoCartao());
-            painelDataValidade = painelData(cliente.getCartaoPagamento().getValidadeCartao());
+        if(cliente != null && cliente.getCartaoPagamento(selecionado - 1) != null) {
+            labelNumeroCartao = new JLabel("Numero do cartao: " + cliente.getCartaoPagamento(selecionado-1).getNumeroCartao());
+            labelcodigoCartao = new JLabel("Codigo do cartao: " + cliente.getCartaoPagamento(selecionado-1).getCodigoCartao());
+            labelDataValidade = new JLabel("Data de validade: " + cliente.getCartaoPagamento(selecionado-1).getCodigoCartao());
+            campoNumeroCartao = new JTextField(String.valueOf(cliente.getCartaoPagamento(selecionado-1).getNumeroCartao()));
+            campoCodigoCartao = new JTextField(cliente.getCartaoPagamento(selecionado-1).getCodigoCartao());
+            painelDataValidade = painelData(cliente.getCartaoPagamento(selecionado-1).getValidadeCartao());
         } else {
             labelNumeroCartao = new JLabel("Numero do cartao: ");
             labelcodigoCartao = new JLabel("Codigo do cartao: ");
@@ -62,6 +67,7 @@ public class InterfaceRegistraCartao extends InterfaceComum implements Atualizav
         });
         cancelar.addActionListener(e -> gerenciador.trocarParaTela(GerenciadorInterfaces.DADOS_USUARIO));
 
+        empilhamentoPanel.add(cartaoSelect);
         empilhamentoPanel.add(labelNumeroCartao);
         empilhamentoPanel.add(campoNumeroCartao);
         empilhamentoPanel.add(labelcodigoCartao);

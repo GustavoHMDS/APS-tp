@@ -89,7 +89,8 @@ public class Sistema {
                             else cartao = new Cartao(numeroCartao, codigoCartao, validadeCartao);
                             if(tipoAssinatura.equals("Premium")) assinaturaCliente = new Assinatura(vencimento, idAssinatura, true);
                             else assinaturaCliente = new Assinatura(vencimento, idAssinatura, false);
-                            Cliente cliente = new Cliente(CPF, dataNascimento, nome, email, senha, assinaturaCliente, cartao);
+                            Cliente cliente = new Cliente(CPF, dataNascimento, nome, email, senha);
+
 
                             System.out.println("Cliente criado com sucesso: " + cliente.getNome());
 
@@ -219,7 +220,7 @@ public class Sistema {
         LocalDate vencimentoCartao = LocalDate.parse(diaV + "/" + mesV + "/" + anoV, formatter);
         Cartao novoCartao = new Cartao(Long.parseLong(numeroCartao), Integer.parseInt(codigoCartao), vencimentoCartao);
         if(Sistema.usuario instanceof Cliente cliente){
-            cliente.novoCartao(novoCartao);
+            cliente.adicionarCartao(novoCartao);
         }
     }
 
@@ -271,9 +272,9 @@ public class Sistema {
         return dataAtual;
     }
 
-    public static boolean fazPagamento(){
+    public static boolean fazPagamento(int cartao){
         if (Sistema.usuario instanceof Cliente cliente) {
-            return cliente.realizarPagamento();
+            return cliente.realizarPagamento(cartao);
         }
         return false;
     }
@@ -294,7 +295,10 @@ public class Sistema {
 
     public static void verificaAssinatura(){
         if(Sistema.usuario instanceof Cliente cliente){
-           cliente.getAssinatura().semPagamento(Sistema.dataAtual);
+           if(cliente.isPremium()) {
+               boolean vencido = cliente.getVencimento().isAfter(LocalDate.now());
+               if(vencido) cliente.removerAssinatura();
+           }
         }
     }
 }

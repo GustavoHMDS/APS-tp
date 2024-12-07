@@ -45,7 +45,7 @@ public class InterfaceLogin extends InterfaceComum {
             String senha = new String(campoSenha.getPassword());
 
             // Verifica as credenciais
-            if (Sistema.sistemaLogin(usuario, senha)) {
+            if (Sistema.login(usuario, senha)) {
                 gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL);
             } else {
                 JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos.", "Erro", JOptionPane.ERROR_MESSAGE);

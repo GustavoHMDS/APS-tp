@@ -1,0 +1,7 @@
+CPF: 123456
+Nome: novoAdmin
+DataNascimento: 02/02/2000
+Email: novoAdm
+Senha: adm
+Tipo: Admin
+ID: 2

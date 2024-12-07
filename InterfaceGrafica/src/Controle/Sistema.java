@@ -2,10 +2,8 @@ package Controle;
 
 import Modelo.*;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import javax.swing.*;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
@@ -17,111 +15,102 @@ public class Sistema {
     public static final String nomeApp = "AniToons";
     private static LocalDate dataAtual;
 
-    public static boolean sistemaLogin(String usuario, String senha) {
-        try (BufferedReader leitor = new BufferedReader(new FileReader("src/UsuariosLogin"))) {
-            String linha;
-            String CPF = "vazio";
-            while ((linha = leitor.readLine()) != null) {
-                String[] partes = linha.split(":");
-                if (partes.length >= 2 && partes[0].trim().equals("Email") && partes[1].trim().equals(usuario)) {
-                    linha = leitor.readLine(); // Lê a linha de senha
-                    if (linha != null && linha.split(":")[1].trim().equals(senha)) {
-                        linha = leitor.readLine();
-                        CPF = linha.split(":")[1].trim();
-                        System.out.println("email e senhas corretos. Buscando dados do usuario");
-                        Sistema.usuario = buscaUsuario(CPF);
-                        if (Sistema.usuario == null) {
-                            System.out.println("Erro de sincronia entre UsuariosLogin e Usuarios para o CPF: " + CPF);
-                            return false;
-                        }
-                        if (Sistema.usuario instanceof Cliente) Sistema.verificaAssinatura();
-                        return true;
-                    }
-                }
-            }
-        } catch (IOException ex) {
-            System.err.println("Erro ao ler o arquivo de usuários: " + ex.getMessage());
+    public static boolean login(String email, String senha){
+        String basePath = "usuarios"; // Diretório base para usuários
+        File pastaUsuario = new File(basePath, email);
+
+        // Verifica se o usuário existe
+        if (!pastaUsuario.exists() || !pastaUsuario.isDirectory()) {
             return false;
         }
-        return false;
-    }
 
-    public static Usuario buscaUsuario(String CPF) {
-        try (BufferedReader leitor = new BufferedReader(new FileReader("src/Usuarios"))) {
+        // Lê o arquivo de dados do usuário
+        File arquivoDados = new File(pastaUsuario, "dados.txt");
+        if (!arquivoDados.exists()) {
+            System.out.println("Arquivo de dados para o email " + email + " não encontrado.");
+            return false;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(arquivoDados))) {
             String linha;
-            System.out.println("Buscando Usuario...");
-            while ((linha = leitor.readLine()) != null) {
-                System.out.println("Linha atual: " + linha); // Debug
+            String cpf = null;
+            String nome = null;
+            String dataNascimento = null;
+            String tipo = null;
+            boolean premium = false;
+            LocalDate vencimento = null;
+            int id = -1;
+
+            while ((linha = reader.readLine()) != null) {
                 String[] partes = linha.split(":");
+                if (partes.length < 2) continue;
 
-                // Verifica se encontramos o CPF correto
-                if (partes.length >= 2 && partes[0].trim().equals("CPF") && partes[1].trim().equals(CPF)) {
-                    System.out.println("Usuario encontrado! lendo dados...");
+                String chave = partes[0].trim();
+                String valor = partes[1].trim();
+                System.out.println(linha);
 
-                    // Lendo os dados comuns a todos os usuários
-                    String nome = leitor.readLine().split(":")[1].trim();
-                    String data = leitor.readLine().split(":")[1].trim();
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                    LocalDate dataNascimento = LocalDate.parse(data, formatter);
-                    String email = leitor.readLine().split(":")[1].trim();
-                    String senha = leitor.readLine().split(":")[1].trim();
-                    String tipo = leitor.readLine().split(":")[1].trim();
-
-                    System.out.println("Tipo lido: " + tipo + "!");
-                    TipoUsuario tipoUsuario = TipoUsuario.valueOf(tipo);
-
-                    // Criando o objeto de acordo com o tipo
-                    switch (tipoUsuario) {
-                        case TipoUsuario.Cliente: {
-                            System.out.println("Cliente encontrado!");
-                            long numeroCartao = Long.parseLong(leitor.readLine().split(":")[1].trim());
-                            int codigoCartao = Integer.parseInt(leitor.readLine().split(":")[1].trim());
-                            data = leitor.readLine().split(":")[1].trim();
-                            LocalDate validadeCartao = LocalDate.parse(data, formatter);
-                            data = leitor.readLine().split(":")[1].trim();
-                            LocalDate vencimento = LocalDate.parse(data, formatter);
-                            String tipoAssinatura = leitor.readLine().split(":")[1].trim();
-                            System.out.println("Dados Lidos!");
-                            Cartao cartao;
-                            if(numeroCartao == -1) cartao = null;
-                            else cartao = new Cartao(numeroCartao, codigoCartao, validadeCartao);
-                            Cliente cliente = new Cliente(CPF, dataNascimento, nome, email, senha, tipoAssinatura.equals("premium"), vencimento);
-                            cliente.adicionarCartao(cartao);
-
-                            System.out.println("Cliente criado com sucesso: " + cliente.getNome());
-
-                            // Retornar imediatamente
-                            return cliente;
+                switch (chave) { //switch case para não precisar usar if else com tipo de usuario
+                    case "CPF":
+                        cpf = valor;
+                        break;
+                    case "Nome":
+                        nome = valor;
+                        break;
+                    case "DataNascimento":
+                        dataNascimento = valor;
+                        break;
+                    case "Email":
+                        if (!valor.equals(email)) {
+                            System.out.println("Email não bate com o nome do folder");
+                            return false;
                         }
-
-                        case TipoUsuario.Admin: {
-                            int id = Integer.parseInt(leitor.readLine().split(":")[1].trim());
-                            Admin admin = new Admin(CPF, dataNascimento, nome, email, senha, id);
-
-                            System.out.println("Admin criado com sucesso: " + admin.getNome());
-
-                            // Retornar imediatamente
-                            return admin;
+                        break;
+                    case "Senha":
+                        if (!valor.equals(senha)) {
+                            return false;
                         }
-
-                        default:
-                            System.out.println("Erro de formatação no tipo de usuário: " + tipo);
-                            return null;
-                    }
+                        break;
+                    case "Tipo":
+                        tipo = valor;
+                        break;
+                    case "ID":
+                        id = Integer.parseInt(valor);
+                        break;
+                    case "Assinatura":
+                        premium = valor.equalsIgnoreCase("true");
+                        break;
+                    case "Vencimento":
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
+                        vencimento = LocalDate.parse(valor, formatter);
+                        break;
                 }
             }
-        } catch (IOException ex) {
-            System.err.println("Erro ao ler o arquivo de usuários: " + ex.getMessage());
-        } catch (Exception e) {
-            System.err.println("Erro inesperado: " + e.getMessage());
-            e.printStackTrace(); // Adiciona rastreamento de pilha para entender o erro
+
+            // Validação de dados obrigatórios
+            if (cpf == null || nome == null || dataNascimento == null || tipo == null) {
+                System.out.println("Dados do usuário incompletos.");
+                return false;
+            }
+            LocalDate data = LocalDate.parse(dataNascimento, DateTimeFormatter.ofPattern("d/M/yyyy"));
+
+            // Retorna o objeto apropriado
+            if ("Admin".equalsIgnoreCase(tipo)) {
+                Sistema.usuario = new Admin(cpf, data, nome, email, senha, id);
+                return true;
+            } else if ("Cliente".equalsIgnoreCase(tipo)) {
+                Sistema.usuario =  new Cliente(cpf, data, nome, email, senha, premium, vencimento);
+                return true;
+            } else {
+                System.out.println("Tipo de usuário desconhecido.");
+                return false;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        System.out.println("Usuario não encontrado.");
-        return null;
     }
 
     public static void LogOffUsuario(){
-        Sistema.usuario = null;
+        Sistema.usuario = new Convidado();
     }
 
     public static String getTipoUsuario(){
@@ -134,90 +123,190 @@ public class Sistema {
         else return "Guest";
     }
 
-    private static int buscaIdDisponivel(String tipoUsuario){
-        try (BufferedReader leitor = new BufferedReader(new FileReader("src/Usuarios"))) {
-            String linha;
-            int id = -1;
-            while ((linha = leitor.readLine()) != null) {
-                String[] partes = linha.split(":");
-                if (tipoUsuario.equals("Cliente") && partes[0].equals("IdAssinatura")) {
-                    id = Integer.parseInt(partes[1].trim());
-                } else if(tipoUsuario.equals("Admin") && partes[0].equals("Id")){
-                    id = Integer.parseInt(partes[1].trim());
+    private static int buscaIdDisponivel(String tipoUsuario) {
+        String basePath = "usuarios"; // Diretório base para os usuários
+        File pastaBase = new File(basePath);
+
+        if (!pastaBase.exists() || !pastaBase.isDirectory()) {
+            throw new RuntimeException("Diretório de usuários não encontrado.");
+        }
+
+        int maxId = 0; // Inicializamos o ID máximo como 0
+
+        // Iterar sobre as pastas de usuários
+        File[] pastasUsuarios = pastaBase.listFiles(File::isDirectory);
+        if (pastasUsuarios == null) {
+            throw new RuntimeException("Erro ao listar pastas de usuários.");
+        }
+
+        for (File pastaUsuario : pastasUsuarios) {
+            File arquivoDados = new File(pastaUsuario, "dados.txt");
+            if (arquivoDados.exists() && arquivoDados.isFile()) {
+                try (BufferedReader leitor = new BufferedReader(new FileReader(arquivoDados))) {
+                    String linha;
+                    while ((linha = leitor.readLine()) != null) {
+                        String[] partes = linha.split(":");
+                        if (partes[0].trim().equals("Tipo") && partes[1].trim().equals(tipoUsuario)) {
+                            // Verificar se o tipo é igual ao solicitado
+                            while ((linha = leitor.readLine()) != null) {
+                                partes = linha.split(":");
+                                if (partes[0].trim().equals("ID")) {
+                                    int id = Integer.parseInt(partes[1].trim());
+                                    maxId = Math.max(maxId, id);
+                                    break; // ID encontrado, parar de ler o arquivo atual
+                                }
+                            }
+                        }
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException("Erro ao ler o arquivo: " + arquivoDados.getAbsolutePath(), e);
+                }
+            }
+        }
+
+        // Retorna o próximo ID disponível
+        return maxId + 1;
+    }
+
+    public static void criarUsuario(String cpf, String nome, String dataNascimento, String email, String senha, String tipo) throws Exception {
+        String basePath = "usuarios"; // Diretório base para usuários
+        File pastaBase = new File(basePath);
+
+        // Verifica se a pasta base existe, senão cria
+        if (!pastaBase.exists()) {
+            if (!pastaBase.mkdirs()) {
+                System.out.println("Não foi possível criar a pasta base: " + basePath);
+                return;
+            }
+        }
+
+        // Verifica se já existe um usuário com o mesmo CPF
+        File pastaUsuario = new File(pastaBase, email);
+        if (pastaUsuario.exists()) {
+            throw new Exception("Usuário com CPF " + email + " já existe.");
+        }
+
+        // Cria a pasta do usuário
+        if (!pastaUsuario.mkdirs()) {
+            throw new IOException("Não foi possível criar a pasta para o CPF: " + email);
+        }
+
+        // Criar o arquivo de dados
+        File arquivoDados = new File(pastaUsuario, "dados.txt");
+        try (FileWriter writer = new FileWriter(arquivoDados)) {
+            writer.write("CPF: " + cpf + "\n");
+            writer.write("Nome: " + nome + "\n");
+            writer.write("DataNascimento: " + dataNascimento + "\n");
+            writer.write("Email: " + email + "\n");
+            writer.write("Senha: " + senha + "\n");
+            writer.write("Tipo: " + tipo + "\n");
+            if(tipo.equals("Admin")) writer.write("ID: " + buscaIdDisponivel(tipo) + "\n");
+            else{
+                writer.write("Assinatura: falso\n");
+                LocalDate data = LocalDate.now();
+                writer.write("Vencimento: " + data.getDayOfMonth() + "/" + data.getMonthValue() + "/" + data.getYear() + "\n");
+                // Criar as subpastas "cartões" e "assinaturas"
+                File pastaCartoes = new File(pastaUsuario, "cartoes");
+                File pastaAssinaturas = new File(pastaUsuario, "assinaturas");
+
+                if (!pastaCartoes.mkdirs()) {
+                    throw new IOException("Não foi possível criar a pasta de cartões para o CPF: " + cpf);
+                }
+                if (!pastaAssinaturas.mkdirs()) {
+                    throw new IOException("Não foi possível criar a pasta de assinaturas para o CPF: " + cpf);
+                }
+            }
+        }
+
+        System.out.println("Usuário criado com sucesso: " + cpf);
+    }
+
+    public static void AdminFailSafe() throws Exception {
+        String nome = "AdminFS";
+        String email = "AdminFS";
+        String senha = "AdminFS";
+        String cpf = "00000000000"; // Você pode escolher um CPF fictício
+        String dataNascimento = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String tipo = "Admin"; // Tipo do usuário
+
+        String basePath = "usuarios"; // Diretório base para usuários
+        File pastaBase = new File(basePath);
+
+        // Verifica se a pasta base de usuários existe
+        if (!pastaBase.exists()) {
+            if (!pastaBase.mkdirs()) {
+                throw new IOException("Não foi possível criar a pasta base: " + basePath);
+            }
+        }
+
+        // Verifica se o Admin já existe, baseado no email (nome da pasta)
+        File pastaUsuario = new File(pastaBase, email);
+        if (!pastaUsuario.exists()) {
+            System.out.println("Acionando FailSafe, criando um Admin...\nEmail: AdminFS\nSenha: AdminFS");
+            criarUsuario(cpf, nome, dataNascimento, email, senha, tipo);
+        }
+    }
+
+    public static void deletarUsuario(String email) throws Exception {
+        String basePath = "usuarios"; // Diretório base para usuários
+        File pastaUsuario = new File(basePath, email);
+
+        // Verifica se a pasta existe
+        if (!pastaUsuario.exists()) {
+            throw new Exception("Usuário com o email " + email + " não encontrado.");
+        }
+
+        // Deletar a pasta e todo o seu conteúdo
+        if (deletarPastaRecursivamente(pastaUsuario)) {
+            System.out.println("Usuário com o email " + email + " deletado com sucesso.");
+        } else {
+            throw new Exception("Falha ao deletar o usuário com o email " + email + ".");
+        }
+    }
+
+    // Método auxiliar para deletar pastas recursivamente
+    private static boolean deletarPastaRecursivamente(File pasta) {
+        if (pasta.isDirectory()) {
+            // Deleta todos os arquivos e subpastas
+            File[] arquivos = pasta.listFiles();
+            if (arquivos != null) {
+                for (File arquivo : arquivos) {
+                    if (!deletarPastaRecursivamente(arquivo)) {
+                        return false;
                     }
                 }
-            return id + 1;
-            } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static void adicionarUsuario(String cpf, String email, String senha, String nome, int diaN, int mesN, int anoN, String tipoRegistrando){
-        try (FileWriter escritor = new FileWriter("src/UsuariosLogin", true)) { // true para append
-            escritor.write("Email: " + email + "\n");
-            escritor.write("Senha: " + senha + "\n");
-            escritor.write("CPF: " + cpf + "\n");
-            System.out.println("Conteúdo adicionado com sucesso!");
-        } catch (IOException e) {
-            System.out.println("Erro ao adicionar conteúdo: " + e.getMessage());
-        }
-
-        // Formatação da data para o formato "dd/MM/yyyy"
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-        // Calcula a validade do cartão (um mês após a data atual)
-        LocalDate vencimentoAssinatura = LocalDate.now().plusMonths(1);
-        String vencimentoFormatado = vencimentoAssinatura.format(formatter);
-        try (FileWriter escritor = new FileWriter("src/Usuarios", true)) { // true para append
-            escritor.write("CPF: " + cpf + "\n");
-            escritor.write("Nome: " + nome + "\n");
-            escritor.write("DataNascimento: " + diaN + "/" + mesN + "/" + anoN + "\n");
-            escritor.write("Email: " + email + "\n");
-            escritor.write("Senha: " + senha + "\n");
-            if(tipoRegistrando.equals("Guest")){
-                escritor.write("Tipo: Cliente \n");
-                escritor.write("NumeroCartao: -1 \n");
-                escritor.write("CodigoCartao: -1 \n");
-                escritor.write("ValidadeCartao: 01/01/0001 \n");
-                escritor.write("Vencimento: " + vencimentoFormatado + "\n");
-                escritor.write("IdAssinatura: " + Sistema.buscaIdDisponivel("Cliente") + "\n");
-                escritor.write("EstadoAssinatura: Free \n");
-            } else if(tipoRegistrando.equals("Admin")){
-                escritor.write("Tipo: Admin \n");
-                escritor.write("Id: " + Sistema.buscaIdDisponivel("Admin" + "\n"));
             }
-            System.out.println("Conteúdo adicionado com sucesso!");
-        } catch (IOException e) {
-            System.out.println("Erro ao adicionar conteúdo: " + e.getMessage());
         }
-
+        // Deleta o próprio arquivo ou pasta
+        return pasta.delete();
     }
 
-    public static void editarUsuario(String cpf, String dadoEditado, String novoConteudo) {
-        editarArquivo("src/Usuarios", cpf, dadoEditado, novoConteudo);
-        if (dadoEditado.equals("email") || dadoEditado.equals("senha")){
-            editarArquivo("src/UsuariosLogin", cpf, dadoEditado, novoConteudo);
-        }
-        switch (dadoEditado){
-            case "Email":
-                Sistema.usuario.setEmail(novoConteudo);
-                break;
-            case "Senha":
-                Sistema.usuario.setSenha(novoConteudo);
-                break;
-            case "Nome":
-                Sistema.usuario.setNome(novoConteudo);
-                break;
-        }
-    }
+    public static void adicionarCartao(String email, Cartao cartao) throws Exception {
+        String basePath = "usuarios"; // Diretório base
+        File pastaCartoes = new File(basePath + "/" + email + "/cartoes");
 
-    public static void trocaCartaoUsuario(String numeroCartao, String codigoCartao, String diaV, String mesV, String anoV){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate vencimentoCartao = LocalDate.parse(diaV + "/" + mesV + "/" + anoV, formatter);
-        Cartao novoCartao = new Cartao(Long.parseLong(numeroCartao), Integer.parseInt(codigoCartao), vencimentoCartao);
-        if(Sistema.usuario instanceof Cliente cliente){
-            cliente.adicionarCartao(novoCartao);
+        // Verifica se a pasta do cliente existe
+        if (!pastaCartoes.exists() || !pastaCartoes.isDirectory()) {
+            throw new Exception("Usuário com o email " + email + " não encontrado ou pasta de cartões inexistente.");
         }
+
+        // Lista os cartões existentes
+        File[] arquivosCartoes = pastaCartoes.listFiles((dir, name) -> name.endsWith(".txt"));
+        if (arquivosCartoes != null && arquivosCartoes.length >= 10) {
+            throw new Exception("Usuário já possui o número máximo de cartões (10).");
+        }
+
+        // Cria um novo arquivo para o cartão
+        String nomeArquivoCartao = "cartao_" + (arquivosCartoes != null ? arquivosCartoes.length + 1 : 1) + ".txt";
+        File arquivoCartao = new File(pastaCartoes, nomeArquivoCartao);
+
+        try (FileWriter writer = new FileWriter(arquivoCartao)) {
+            writer.write("Numero: " + cartao.getNumeroCartao() + "\n");
+            writer.write("Codigo: " + cartao.getCodigoCartao() + "\n");
+            writer.write("Validade: " + cartao.getValidadeCartao() + "\n");
+        }
+
+        System.out.println("Cartão adicionado com sucesso para o usuário: " + email);
     }
 
     private static void editarArquivo(String nomeArquivo, String cpf, String dadoEditado, String novoConteudo) {

@@ -1,0 +1,8 @@
+CPF: 123456
+Nome: cliente
+DataNascimento: 10/01/0101
+Email: novoCliente
+Senha: cliente
+Tipo: Cliente
+Assinatura: falso
+Vencimento: 7/12/2024

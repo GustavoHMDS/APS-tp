@@ -1,10 +1,13 @@
 package Visão;
 
 import Controle.Sistema;
+import Modelo.Cartao;
 import Modelo.Cliente;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class InterfaceRegistraCartao extends InterfaceComum implements Atualizavel {
     public InterfaceRegistraCartao(GerenciadorInterfaces gerenciador) {
@@ -62,7 +65,14 @@ public class InterfaceRegistraCartao extends InterfaceComum implements Atualizav
         JButton salvarCartao = CriaBotaoPreDefinido("Salvar", 1300, 25, 16);
         JButton cancelar = CriaBotaoPreDefinido("Cancelar", 1300, 25, 16);
         salvarCartao.addActionListener(e -> {
-            Sistema.trocaCartaoUsuario(campoNumeroCartao.getText(), campoCodigoCartao.getText(), campoDia.getText(), campoMes.getText(), campoAno.getText());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate data = LocalDate.parse(campoDia.getText() + campoMes.getText() + campoAno.getText(), formatter);
+            Cartao cartao = new Cartao(Integer.parseInt(campoNumeroCartao.getText()), Integer.parseInt(campoCodigoCartao.getText()), data);
+            try {
+                Sistema.adicionarCartao(Sistema.usuario.getEmail(), cartao);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
             gerenciador.trocarParaTela(gerenciador.DADOS_USUARIO);
         });
         cancelar.addActionListener(e -> gerenciador.trocarParaTela(GerenciadorInterfaces.DADOS_USUARIO));

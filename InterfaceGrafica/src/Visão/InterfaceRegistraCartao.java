@@ -59,8 +59,8 @@ public class InterfaceRegistraCartao extends InterfaceComum implements Atualizav
         campoCodigoCartao.setForeground(new Color(255,255,255));
         campoCodigoCartao.setBorder(null);
 
-        JButton salvarCartao = CriaBotaoPreDefinido("Salvar", 200, 25, 16);
-        JButton cancelar = CriaBotaoPreDefinido("Cancelar", 200, 25, 16);
+        JButton salvarCartao = CriaBotaoPreDefinido("Salvar", 1300, 25, 16);
+        JButton cancelar = CriaBotaoPreDefinido("Cancelar", 1300, 25, 16);
         salvarCartao.addActionListener(e -> {
             Sistema.trocaCartaoUsuario(campoNumeroCartao.getText(), campoCodigoCartao.getText(), campoDia.getText(), campoMes.getText(), campoAno.getText());
             gerenciador.trocarParaTela(gerenciador.DADOS_USUARIO);

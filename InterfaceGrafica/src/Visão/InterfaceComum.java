@@ -70,37 +70,20 @@ public class InterfaceComum extends JPanel {
         Dimension buttonSize = new Dimension(largura, altura); // Define a largura e altura específicas
         Font buttonFont = new Font("Cambria", Font.BOLD, fonte); // Aumenta o tamanho da fonte
         //novoBotao.setBorderPainted(false);
-        novoBotao.setContentAreaFilled(false);
-        novoBotao.setOpaque(false);
-        novoBotao.setFocusable(false);
-        novoBotao.setCursor(new Cursor(Cursor.HAND_CURSOR));
         novoBotao.setPreferredSize(buttonSize);
         novoBotao.setMaximumSize(buttonSize); // Garante o tamanho máximo
-        novoBotao.setFont(buttonFont);
-        novoBotao.setBackground(new Color(254, 244, 129)); // Define a cor de fundo (Cornflower Blue)
-        novoBotao.setForeground(new Color(64, 44, 94)); // Define a cor do texto
-        novoBotao.setContentAreaFilled(true); // Preencher o conteúdo com a cor de fundo
-        novoBotao.setBorderPainted(false); // Remove a borda
+        Styles.setButtonStyle(novoBotao);
         return novoBotao;
     }
     protected JButton CriaBotaoPreDefinido(String nomeBotao) {
         JButton novoBotao = new JButton(nomeBotao);
         // Define o tamanho preferido e máximo para o botão
         Dimension buttonSize = new Dimension(200, 50); // Define a largura e altura específicas
-        Font buttonFont = new Font("Cambria", Font.BOLD, 25); // Aumenta o tamanho da fonte
 
         //novoBotao.setBorderPainted(false);
-        novoBotao.setContentAreaFilled(false);
-        novoBotao.setOpaque(false);
-        novoBotao.setFocusable(false);
-        novoBotao.setCursor(new Cursor(Cursor.HAND_CURSOR));
         novoBotao.setPreferredSize(buttonSize);
         novoBotao.setMaximumSize(buttonSize); // Garante o tamanho máximo
-        novoBotao.setFont(buttonFont);
-        novoBotao.setBackground(new Color(254, 244, 129)); // Define a cor de fundo (Cornflower Blue)
-        novoBotao.setForeground(new Color(64, 44, 94)); // Define a cor do texto
-        novoBotao.setContentAreaFilled(true); // Preencher o conteúdo com a cor de fundo
-        novoBotao.setBorderPainted(false); // Remove a borda
+        Styles.setButtonStyle(novoBotao);
         return novoBotao;
     }
     protected JPanel painelData(){
@@ -109,6 +92,10 @@ public class InterfaceComum extends JPanel {
         campoDia = new JTextField(2);
         campoMes = new JTextField(2);
         campoAno = new JTextField(4);
+
+        Styles.setTextFielStyle(campoDia);
+        Styles.setTextFielStyle(campoMes);
+        Styles.setTextFielStyle(campoAno);
 
         painelData.add(campoDia);
         painelData.add(new JLabel("/"));

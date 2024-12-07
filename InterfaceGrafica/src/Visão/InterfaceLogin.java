@@ -16,18 +16,14 @@ public class InterfaceLogin extends InterfaceComum {
 
         // Rótulos e campos de texto
         JLabel labelUsuario = new JLabel("Email:");
-        labelUsuario.setForeground(new Color(254, 244, 129));
         JTextField campoUsuario = new JTextField(20);
-        campoUsuario.setBackground(new Color(Transparency.TRANSLUCENT));
-        campoUsuario.setForeground(new Color(255,255,255));
-        campoUsuario.setBorder(null);
-
         JLabel labelSenha = new JLabel("Senha:");
-        labelSenha.setForeground(new Color(254, 244, 129));
         JPasswordField campoSenha = new JPasswordField(20);
-        campoSenha.setBackground(new Color(Transparency.TRANSLUCENT));
-        campoSenha.setForeground(new Color(255,255,255));
-        campoSenha.setBorder(null);
+
+        Styles.setLabelStyle(labelUsuario);
+        Styles.setLabelStyle(labelSenha);
+        Styles.setTextFielStyle(campoUsuario);
+        Styles.setTextFielStyle(campoSenha);
 
         JButton botaoEntrar = CriaBotaoPreDefinido("Entrar");
 

@@ -80,17 +80,13 @@ public class Sistema {
                             LocalDate validadeCartao = LocalDate.parse(data, formatter);
                             data = leitor.readLine().split(":")[1].trim();
                             LocalDate vencimento = LocalDate.parse(data, formatter);
-                            int idAssinatura = Integer.parseInt(leitor.readLine().split(":")[1].trim());
                             String tipoAssinatura = leitor.readLine().split(":")[1].trim();
                             System.out.println("Dados Lidos!");
                             Cartao cartao;
-                            Assinatura assinaturaCliente;
                             if(numeroCartao == -1) cartao = null;
                             else cartao = new Cartao(numeroCartao, codigoCartao, validadeCartao);
-                            if(tipoAssinatura.equals("Premium")) assinaturaCliente = new Assinatura(vencimento, idAssinatura, true);
-                            else assinaturaCliente = new Assinatura(vencimento, idAssinatura, false);
-                            Cliente cliente = new Cliente(CPF, dataNascimento, nome, email, senha);
-
+                            Cliente cliente = new Cliente(CPF, dataNascimento, nome, email, senha, tipoAssinatura.equals("premium"), vencimento);
+                            cliente.adicionarCartao(cartao);
 
                             System.out.println("Cliente criado com sucesso: " + cliente.getNome());
 

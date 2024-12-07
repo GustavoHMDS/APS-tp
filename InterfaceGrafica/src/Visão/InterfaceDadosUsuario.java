@@ -25,27 +25,22 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
         empilhamentoPanel.setBackground(new Color(64, 44, 94));
         if(Sistema.usuario != null) {
             JLabel labelNome = new JLabel("Nome:");
-            labelNome.setForeground(new Color(254, 244, 129));
             JTextField campoNome = new JTextField(Sistema.usuario.getNome());
-            campoNome.setBackground(new Color(Transparency.TRANSLUCENT));
-            campoNome.setForeground(new Color(255,255,255));
-            campoNome.setBorder(null);
             JLabel labelCPF = new JLabel("CPF: " + Sistema.usuario.getCPF());
-            labelCPF.setForeground(new Color(254, 244, 129));
             JLabel labelEmail = new JLabel("Email: ");
-            labelEmail.setForeground(new Color(254, 244, 129));
             JTextField campoEmail = new JTextField(Sistema.usuario.getEmail());
-            campoEmail.setBackground(new Color(Transparency.TRANSLUCENT));
-            campoEmail.setForeground(new Color(255,255,255));
-            campoEmail.setBorder(null);
             JLabel labelSenha = new JLabel("Senha:");
-            labelSenha.setForeground(new Color(254, 244, 129));
             JTextField campoSenha = new JTextField(Sistema.usuario.getSenha());
-            campoSenha.setBackground(new Color(Transparency.TRANSLUCENT));
-            campoSenha.setForeground(new Color(255,255,255));
-            campoSenha.setBorder(null);
             LocalDate data = Sistema.usuario.getDataNascimento();
             JLabel labelDataNascimento = new JLabel("Data Nascimento: " + data.getDayOfMonth() + "/" + data.getMonthValue() + "/" + data.getYear());
+
+            Styles.setLabelStyle(labelNome);
+            Styles.setLabelStyle(labelCPF);
+            Styles.setLabelStyle(labelSenha);
+            Styles.setLabelStyle(labelDataNascimento);
+            Styles.setTextFielStyle(campoNome);
+            Styles.setTextFielStyle(campoEmail);
+            Styles.setTextFielStyle(campoSenha);
 
             JButton salvarNome = CriaBotaoPreDefinido("Salvar nome", 200, 25, 16);
             JButton salvarEmail = CriaBotaoPreDefinido("Salvar email", 200, 25, 16);
@@ -81,7 +76,7 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
                 });
 
                 empilhamentoPanel.add(cadastrarCartao);
-                empilhamentoPanel.add(realizarPagamento);
+                if(Sistema.getCliente().getCartoes().length > 0)empilhamentoPanel.add(realizarPagamento);
             }
         }
         centerPanel.add(empilhamentoPanel);

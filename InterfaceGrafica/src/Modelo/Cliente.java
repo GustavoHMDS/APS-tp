@@ -12,9 +12,11 @@ public class Cliente extends Usuario{
     boolean premium;
     LocalDate vencimento;
 
-    public Cliente(String CPF, LocalDate dataNascimento, String nome, String email, String senha) {
+    public Cliente(String CPF, LocalDate dataNascimento, String nome, String email, String senha, boolean premium, LocalDate vencimento) {
         super(CPF, dataNascimento, nome, email, senha);
         this.cartoes = new Cartao[10];
+        this.premium = premium;
+        this.vencimento =vencimento;
     }
 
     public boolean realizarPagamento(int cartao){

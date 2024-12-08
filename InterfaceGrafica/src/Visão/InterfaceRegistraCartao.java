@@ -66,7 +66,7 @@ public class InterfaceRegistraCartao extends InterfaceComum implements Atualizav
         JButton cancelar = CriaBotaoPreDefinido("Cancelar", 1300, 25, 16);
         salvarCartao.addActionListener(e -> {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate data = LocalDate.parse(campoDia.getText() + campoMes.getText() + campoAno.getText(), formatter);
+            LocalDate data = LocalDate.parse(campoDia.getText() + "/" + campoMes.getText() + "/" + campoAno.getText(), formatter);
             Cartao cartao = new Cartao(Integer.parseInt(campoNumeroCartao.getText()), Integer.parseInt(campoCodigoCartao.getText()), data);
             try {
                 Sistema.adicionarCartao(Sistema.usuario.getEmail(), cartao);

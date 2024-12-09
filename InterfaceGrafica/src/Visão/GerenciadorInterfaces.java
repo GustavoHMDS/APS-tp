@@ -1,5 +1,7 @@
 package Visão;
 
+import Controle.Sistema;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
@@ -34,7 +36,7 @@ public class GerenciadorInterfaces extends JFrame {
 
     public GerenciadorInterfaces() {
         setTitle("PlaceHolder");
-        setSize(800, 600);
+        setSize(Sistema.screenSize.width, Sistema.screenSize.height);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         cardLayout = new CardLayout();

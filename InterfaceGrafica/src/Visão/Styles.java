@@ -1,5 +1,7 @@
 package Visão;
 
+import Controle.Sistema;
+
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicBorders;
 import java.awt.*;
@@ -9,6 +11,8 @@ public class Styles {
 
     public static void setLabelStyle(JLabel label) {
         label.setForeground(new Color(254, 244, 129));
+        label.setFont(new Font("Coimbra", Font.PLAIN, 25));
+        label.setAlignmentX(Component.LEFT_ALIGNMENT);
     }
 
     public static void setTextFielStyle(JTextField textField) {
@@ -18,6 +22,7 @@ public class Styles {
         textField.setCaretColor(Color.YELLOW);
         textField.setSelectionColor(Color.YELLOW);
         textField.setBorder(new BasicBorders.FieldBorder(background,background,Color.YELLOW,background));
+        textField.setFont(new Font("Coimbra", Font.PLAIN, 18));
     }
 
     public static void setButtonStyle(JButton button) {
@@ -30,5 +35,6 @@ public class Styles {
         button.setForeground(new Color(64, 44, 94)); // Define a cor do texto
         button.setContentAreaFilled(true); // Preencher o conteúdo com a cor de fundo
         button.setBorderPainted(false); // Remove a borda
+        button.setMaximumSize(new Dimension((Sistema.screenSize.width * 6)/10, 50));
     }
 }

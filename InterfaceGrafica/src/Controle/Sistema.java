@@ -3,6 +3,7 @@ package Controle;
 import Modelo.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -14,6 +15,7 @@ public class Sistema {
     public static Usuario usuario;
     public static final String nomeApp = "AniToons";
     private static LocalDate dataAtual;
+    public static Dimension screenSize;
 
     public static boolean login(String email, String senha){
         String basePath = "usuarios"; // Diretório base para usuários
@@ -283,7 +285,7 @@ public class Sistema {
 
     public static void adicionarCartao(String email, Cartao cartao) throws Exception {
         String basePath = "usuarios"; // Diretório base
-        File pastaCartoes = new File(basePath + "/" + email + "/cartoes");
+        File pastaCartoes = new File(basePath + "/" + email + "/cartoes/");
 
         // Verifica se a pasta do cliente existe
         if (!pastaCartoes.exists() || !pastaCartoes.isDirectory()) {

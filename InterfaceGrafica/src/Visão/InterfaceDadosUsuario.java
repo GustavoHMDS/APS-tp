@@ -51,8 +51,6 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
             //salvarEmail.addActionListener(e -> Sistema.editarUsuario(Sistema.usuario.getCPF(), "Email", campoEmail.getText()));
             //salvarSenha.addActionListener(e -> Sistema.editarUsuario(Sistema.usuario.getCPF(), "Senha", campoSenha.getText()));
 
-
-
             empilhamentoPanel.add(labelNome);
             empilhamentoPanel.add(campoNome);
             empilhamentoPanel.add(salvarNome);

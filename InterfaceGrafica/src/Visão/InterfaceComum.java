@@ -18,9 +18,9 @@ public class InterfaceComum extends JPanel {
 
     public InterfaceComum(GerenciadorInterfaces gerenciador) {
         this.gerenciador = gerenciador;
-        setSize(900, 600);
+        setSize(1300, 800);
         setLayout(new BorderLayout());
-        setBackground(new Color(64, 44, 94)); // Cor de fundo da InterfaceComum
+        setBackground(Styles.background); // Cor de fundo da InterfaceComum
         setOpaque(true); // Garantir que o fundo seja desenhado
 
         // Painel superior para o nome do programa e o botão "Home"
@@ -47,11 +47,10 @@ public class InterfaceComum extends JPanel {
 
         // Painel central configurado com GridBagLayout
         centerPanel = new JPanel(new GridBagLayout());
-        centerPanel.setPreferredSize(new Dimension(220, 300));
         centerPanel.setOpaque(false); // Tornar transparente para herdar a cor do pai
 
         // Alinhando o painel central no centro
-        JPanel centerWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel centerWrapper = new JPanel(new FlowLayout());
         centerWrapper.setOpaque(false); // Tornar transparente para herdar a cor do pai
         centerWrapper.add(centerPanel);
 
@@ -69,7 +68,6 @@ public class InterfaceComum extends JPanel {
         // Define o tamanho preferido e máximo para o botão
         Dimension buttonSize = new Dimension(largura, altura); // Define a largura e altura específicas
         Font buttonFont = new Font("Cambria", Font.BOLD, fonte); // Aumenta o tamanho da fonte
-        //novoBotao.setBorderPainted(false);
         novoBotao.setPreferredSize(buttonSize);
         novoBotao.setMaximumSize(buttonSize); // Garante o tamanho máximo
         Styles.setButtonStyle(novoBotao);
@@ -80,7 +78,6 @@ public class InterfaceComum extends JPanel {
         // Define o tamanho preferido e máximo para o botão
         Dimension buttonSize = new Dimension(200, 50); // Define a largura e altura específicas
 
-        //novoBotao.setBorderPainted(false);
         novoBotao.setPreferredSize(buttonSize);
         novoBotao.setMaximumSize(buttonSize); // Garante o tamanho máximo
         Styles.setButtonStyle(novoBotao);
@@ -97,10 +94,15 @@ public class InterfaceComum extends JPanel {
         Styles.setTextFielStyle(campoMes);
         Styles.setTextFielStyle(campoAno);
 
+        JLabel barra1 = new JLabel("/");
+        JLabel barra2 = new JLabel("/");
+        Styles.setLabelStyle(barra1);
+        Styles.setLabelStyle(barra2);
+
         painelData.add(campoDia);
-        painelData.add(new JLabel("/"));
+        painelData.add(barra1);
         painelData.add(campoMes);
-        painelData.add(new JLabel("/"));
+        painelData.add(barra2);
         painelData.add(campoAno);
 
         return painelData;

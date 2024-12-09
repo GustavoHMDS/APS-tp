@@ -24,34 +24,29 @@ public class InterfaceRegistro extends InterfaceComum implements Atualizavel {
         JPanel empilhamentoPanel = new JPanel();
         empilhamentoPanel.setBackground(new Color(64, 44, 94));
         empilhamentoPanel.setLayout(new BoxLayout(empilhamentoPanel, BoxLayout.Y_AXIS));
-        empilhamentoPanel.setAlignmentX(Component.CENTER_ALIGNMENT); // Centralizar os botões dentro do empilhamentoPanel
+        //empilhamentoPanel.setAlignmentX(Component.CENTER_ALIGNMENT); // Centralizar os botões dentro do empilhamentoPanel
         // Sempre adiciona:
         JLabel labelNome = new JLabel("Nome:");
-        labelNome.setForeground(new Color(254, 244, 129));
         JTextField campoNome = new JTextField(15);
-        campoNome.setBackground(new Color(Transparency.TRANSLUCENT));
-        campoNome.setForeground(new Color(255,255,255));
-        campoNome.setBorder(null);
         JLabel labelCPF = new JLabel("CPF:");
-        labelCPF.setForeground(new Color(254, 244, 129));
         JTextField campoCPF = new JTextField(15);
-        campoCPF.setBackground(new Color(Transparency.TRANSLUCENT));
-        campoCPF.setForeground(new Color(255,255,255));
-        campoCPF.setBorder(null);
         JLabel labelEmail = new JLabel("Email:");
-        labelEmail.setForeground(new Color(254, 244, 129));
         JTextField campoEmail = new JTextField(15);
-        campoEmail.setBackground(new Color(Transparency.TRANSLUCENT));
-        campoEmail.setForeground(new Color(255,255,255));
-        campoEmail.setBorder(null);
         JLabel labelSenha = new JLabel("Senha:");
-        labelSenha.setForeground(new Color(254, 244, 129));
         JTextField campoSenha = new JTextField(15);
-        campoSenha.setBackground(new Color(Transparency.TRANSLUCENT));
-        campoSenha.setForeground(new Color(255,255,255));
-        campoSenha.setBorder(null);
         JLabel labelDataNascimento = new JLabel("Data Nascimento:");
         JPanel painelDataNascimento = painelData();
+
+        Styles.setLabelStyle(labelNome);
+        Styles.setLabelStyle(labelCPF);
+        Styles.setLabelStyle(labelEmail);
+        Styles.setLabelStyle(labelSenha);
+        Styles.setLabelStyle(labelDataNascimento);
+        Styles.setTextFielStyle(campoNome);
+        Styles.setTextFielStyle(campoCPF);
+        Styles.setTextFielStyle(campoEmail);
+        Styles.setTextFielStyle(campoSenha);
+        painelDataNascimento.setBackground(Styles.background);
 
         empilhamentoPanel.add(labelNome);
         empilhamentoPanel.add(campoNome);
@@ -81,8 +76,8 @@ public class InterfaceRegistro extends InterfaceComum implements Atualizavel {
             gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL);
         });
         centerPanel.add(empilhamentoPanel);
-        empilhamentoPanel.setMaximumSize(new Dimension(400, 500));
-        empilhamentoPanel.setPreferredSize(new Dimension(350, 400));
-        centerPanel.setPreferredSize(new Dimension(600, 500));
+        empilhamentoPanel.setMaximumSize(new Dimension(800, 500));
+        empilhamentoPanel.setPreferredSize(new Dimension(550, 400));
+        centerPanel.setPreferredSize(new Dimension(800, 500));
     }
 }

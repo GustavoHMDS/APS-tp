@@ -26,7 +26,7 @@ public class InterfaceLogin extends InterfaceComum {
         Styles.setTextFielStyle(campoSenha);
 
         JButton botaoEntrar = CriaBotaoPreDefinido("Entrar");
-
+        botaoEntrar.setMaximumSize(new Dimension(300,50));
         // Nome do app (pode ser substituído pelo nome real do seu aplicativo)
         //JLabel nomeApp = new JLabel(Sistema.nomeApp, SwingConstants.CENTER);
         //nomeApp.setFont(new Font("Arial", Font.PLAIN, 30));

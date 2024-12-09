@@ -56,7 +56,7 @@ public class InterfacePrincipal extends InterfaceComum implements Atualizavel {
         // Criar um painel para empilhar os botões, usando BoxLayout vertical
         JPanel empilhamentoPanel = new JPanel();
         empilhamentoPanel.setLayout(new BoxLayout(empilhamentoPanel, BoxLayout.Y_AXIS));
-        empilhamentoPanel.setAlignmentX(Component.CENTER_ALIGNMENT); // Centralizar os botões dentro do empilhamentoPanel
+        //empilhamentoPanel.setAlignmentX(Component.CENTER_ALIGNMENT); // Centralizar os botões dentro do empilhamentoPanel
 
         // Adicione os botões com base no tipo de usuário
         catalogo = CriaBotaoPreDefinido("Ver catálogo");

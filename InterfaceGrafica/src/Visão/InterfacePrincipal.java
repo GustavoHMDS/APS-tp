@@ -64,14 +64,14 @@ public class InterfacePrincipal extends InterfaceComum implements Atualizavel {
 
         switch (tipoUsuario) {
             case "Cliente":
-                dadosUsuario = CriaBotaoPreDefinido("Ver dados Usuario");
+                dadosUsuario = CriaBotaoPreDefinido("Meus dados");
                 sair = CriaBotaoPreDefinido("Sair");
                 empilhamentoPanel.add(dadosUsuario);
                 empilhamentoPanel.add(sair);
                 InicializaBotoesUsuario();
                 break;
             case "Admin":
-                dadosUsuario = CriaBotaoPreDefinido("Ver dados Usuario");
+                dadosUsuario = CriaBotaoPreDefinido("Meus dados");
                 registrar = CriaBotaoPreDefinido("Registrar novo administrador");
                 novoAnime = CriaBotaoPreDefinido("Adicionar Anime");
                 sair = CriaBotaoPreDefinido("Sair");

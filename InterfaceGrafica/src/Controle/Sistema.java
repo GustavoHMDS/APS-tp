@@ -345,6 +345,14 @@ public class Sistema {
         }
     }
 
+    public static int editarUsuario(String email, String[] dados) {
+        File pastaUsuario = new File("usuarios/" + email);
+        if(!pastaUsuario.exists()) return 0;
+        File arquivoDados = new File(pastaUsuario, "dados.txt");
+        for(int i = 0; i < dados.length; i++) System.out.println(dados[i]);
+        return 1;
+    }
+
     public static String getNomeUsuario(){
         if (Sistema.usuario == null) {
             return "Visitante";

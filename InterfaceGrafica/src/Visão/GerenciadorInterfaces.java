@@ -15,6 +15,7 @@ public class GerenciadorInterfaces extends JFrame {
     private InterfaceCatalogo verCatalogo;
     private InterfaceRegistro registro;
     private InterfaceDadosUsuario dadosUsuario;
+    private InterfaceEditorDadosUsuario editorDadosUSuario;
     private InterfaceAdicaoAnime adicionadorAnime;
     private InterfaceRegistraCartao registraCartao;
     private CardLayout cardLayout;
@@ -48,6 +49,7 @@ public class GerenciadorInterfaces extends JFrame {
         principal = new InterfacePrincipal(this);
         registro = new InterfaceRegistro(this);
         dadosUsuario = new InterfaceDadosUsuario(this);
+        editorDadosUSuario = new InterfaceEditorDadosUsuario(this);
         adicionadorAnime = new InterfaceAdicaoAnime(this);
         registraCartao = new InterfaceRegistraCartao(this);
 
@@ -58,6 +60,7 @@ public class GerenciadorInterfaces extends JFrame {
         telas.put(PRINCIPAL, principal);
         telas.put(REGISTRO, registro);
         telas.put(DADOS_USUARIO, dadosUsuario);
+        telas.put(EDITOR_DADOS_USUARIO, editorDadosUSuario);
         telas.put(NOVO_ANIME, adicionadorAnime);
         telas.put(NOVO_CARTAO, registraCartao);
 
@@ -65,6 +68,7 @@ public class GerenciadorInterfaces extends JFrame {
         interfacesAtualizaveis.add(principal);
         interfacesAtualizaveis.add(registro);
         interfacesAtualizaveis.add(dadosUsuario);
+        interfacesAtualizaveis.add(editorDadosUSuario);
         interfacesAtualizaveis.add(registraCartao);
 
         // Adicione os painéis ao CardLayout

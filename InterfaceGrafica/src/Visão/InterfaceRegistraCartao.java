@@ -59,11 +59,11 @@ public class InterfaceRegistraCartao extends InterfaceComum implements Atualizav
         JButton salvarCartao = CriaBotaoPreDefinido("Salvar", 1300, 25, 16);
         JButton cancelar = CriaBotaoPreDefinido("Cancelar", 1300, 25, 16);
         salvarCartao.addActionListener(e -> {
-            //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             int dia = Integer.parseInt(campoDia.getText());
             int mes = Integer.parseInt(campoMes.getText());
             int ano = Integer.parseInt(campoAno.getText());
-            LocalDate data = LocalDate.of(ano,mes,dia);
+            //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy"); Tirei o formatter pq dá erro se colocar dia e mês com um dígito só, ass: Rafa
+            LocalDate data = LocalDate.of(ano, mes, dia);
             Cartao cartao = new Cartao(Integer.parseInt(campoNumeroCartao.getText()), Integer.parseInt(campoCodigoCartao.getText()), data);
             try {
                 Sistema.adicionarCartao(Sistema.usuario.getEmail(), cartao);

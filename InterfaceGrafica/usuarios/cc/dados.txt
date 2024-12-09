@@ -1,0 +1,8 @@
+CPF: 456464
+Nome: cliente2
+DataNascimento: 12/12/1111
+Email: cc
+Senha: cc
+Tipo: Cliente
+Assinatura: falso
+Vencimento: 8/12/2024

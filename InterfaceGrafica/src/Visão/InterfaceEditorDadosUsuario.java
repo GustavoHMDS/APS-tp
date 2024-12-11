@@ -25,18 +25,15 @@ public class InterfaceEditorDadosUsuario extends InterfaceComum implements Atual
         if(Sistema.usuario != null) {
             JLabel labelNome = new JLabel("Nome:");
             JTextField campoNome = new JTextField(Sistema.usuario.getNome());
-            JLabel labelCPF = new JLabel("CPF:");
-            JTextField campoCPF = new JTextField(Sistema.usuario.getCPF());
             JLabel labelEmail = new JLabel("Email:");
             JTextField campoEmail = new JTextField(Sistema.usuario.getEmail());
             JLabel labelSenha = new JLabel("Senha:");
             JTextField campoSenha = new JTextField(Sistema.usuario.getSenha());
 
             Styles.setLabelStyle(labelNome);
-            Styles.setLabelStyle(labelCPF);
+            Styles.setLabelStyle(labelEmail);
             Styles.setLabelStyle(labelSenha);
             Styles.setTextFielStyle(campoNome);
-            Styles.setTextFielStyle(campoCPF);
             Styles.setTextFielStyle(campoEmail);
             Styles.setTextFielStyle(campoSenha);
 
@@ -44,6 +41,12 @@ public class InterfaceEditorDadosUsuario extends InterfaceComum implements Atual
             salvar.addActionListener(e -> {
                 String[] dados = {campoNome.getText(), campoEmail.getText(),campoSenha.getText()};
                 Sistema.editarUsuario(Sistema.usuario.getEmail(),dados);
+                gerenciador.trocarParaTela(gerenciador.DADOS_USUARIO);
+            });
+
+            JButton cancelar = CriaBotaoPreDefinido("Cancelar", 200, 25, 16);
+            cancelar.addActionListener(e -> {
+                gerenciador.trocarParaTela((gerenciador.DADOS_USUARIO));
             });
 
             //salvarNome.addActionListener(e -> Sistema.editarUsuario(Sistema.usuario.getCPF(), "Nome", campoNome.getText()));
@@ -52,21 +55,12 @@ public class InterfaceEditorDadosUsuario extends InterfaceComum implements Atual
 
             empilhamentoPanel.add(labelNome);
             empilhamentoPanel.add(campoNome);
-            empilhamentoPanel.add(labelCPF);
-            empilhamentoPanel.add(campoCPF);
             empilhamentoPanel.add(labelEmail);
             empilhamentoPanel.add(campoEmail);
             empilhamentoPanel.add(labelSenha);
             empilhamentoPanel.add(campoSenha);
             empilhamentoPanel.add(salvar);
-
-            if(Sistema.getTipoUsuario().equals("Cliente")) {
-                JButton cadastrarCartao = CriaBotaoPreDefinido("Cadastrar cartao", 200, 25, 16);
-
-                cadastrarCartao.addActionListener(e -> gerenciador.trocarParaTela(GerenciadorInterfaces.NOVO_CARTAO));
-
-                empilhamentoPanel.add(cadastrarCartao);
-            }
+            empilhamentoPanel.add(cancelar);
         }
         centerPanel.add(empilhamentoPanel);
         empilhamentoPanel.setMaximumSize(new Dimension(400, 500));

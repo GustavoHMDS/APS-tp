@@ -26,7 +26,7 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
         if(Sistema.usuario != null) {
             JLabel labelNome = new JLabel("Nome: " + Sistema.usuario.getNome());
             JLabel labelCPF = new JLabel("CPF: " + Sistema.usuario.getCPF());
-            JLabel labelEmail = new JLabel("Email: " + Sistema.usuario.getCPF());
+            JLabel labelEmail = new JLabel("Email: " + Sistema.usuario.getEmail());
             String senha = "";
             for(int i = 0; i < Sistema.usuario.getSenha().length(); i++) senha += '*';
             JLabel labelSenha = new JLabel("Senha: " + senha);
@@ -35,6 +35,7 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
 
             Styles.setLabelStyle(labelNome);
             Styles.setLabelStyle(labelCPF);
+            Styles.setLabelStyle(labelEmail);
             Styles.setLabelStyle(labelSenha);
             Styles.setLabelStyle(labelDataNascimento);
 

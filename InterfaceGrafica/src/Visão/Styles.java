@@ -12,6 +12,7 @@ public class Styles {
     public static void setLabelStyle(JLabel label) {
         label.setForeground(new Color(254, 244, 129));
         label.setFont(new Font("Coimbra", Font.PLAIN, 25));
+        label.setCursor(new Cursor(Cursor.TEXT_CURSOR));
         label.setAlignmentX(Component.LEFT_ALIGNMENT);
     }
 

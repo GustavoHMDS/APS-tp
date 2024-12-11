@@ -348,8 +348,34 @@ public class Sistema {
     public static int editarUsuario(String email, String[] dados) {
         File pastaUsuario = new File("usuarios/" + email);
         if(!pastaUsuario.exists()) return 0;
-        File arquivoDados = new File(pastaUsuario, "dados.txt");
+        File arquivo = new File(pastaUsuario, "dados.txt");
         for(int i = 0; i < dados.length; i++) System.out.println(dados[i]);
+        try{
+            List<String> arquivoLinhas = Files.readAllLines(arquivo.toPath());
+            for(int i = 0; i < arquivoLinhas.size(); i++) {
+                boolean mudancaEmail = false;
+                String dadoTipo = arquivoLinhas.get(i).split(": ")[0];
+                switch(dadoTipo) {
+                    case "Nome":
+                        arquivoLinhas.set(i, "Nome: " + dados[0]);
+                        break;
+                    case "Email":
+                        arquivoLinhas.set(i, "Email: " + dados[1].replace(" ", ""));
+                        if(Sistema.usuario.getEmail().equals(dados[1].replace(" ", ""))) mudancaEmail = true;
+                        break;
+                    case "Senha":
+                        arquivoLinhas.set(i, "Senha: " + dados[2]);
+                        break;
+                }
+                Files.write(arquivo.toPath(), arquivoLinhas);
+                if(mudancaEmail) pastaUsuario.renameTo(new File("usuarios/" + dados[1].replace(" ", "")));
+                Sistema.usuario.setNome(dados[0]);
+                Sistema.usuario.setEmail(dados[1].replace(" ", ""));
+                Sistema.usuario.setSenha(dados[2]);
+            }
+        } catch(Exception e) {
+            System.out.println("Não foi possível salvar alterações." + e);
+        }
         return 1;
     }
 

@@ -2,7 +2,6 @@ package Controle;
 
 import Modelo.*;
 
-import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.nio.file.Files;
@@ -17,7 +16,7 @@ public class Sistema {
     private static LocalDate dataAtual;
     public static Dimension screenSize;
 
-    public static boolean login(String email, String senha){
+    public static boolean login(String email, String senha) {
         String basePath = "usuarios"; // Diretório base para usuários
         File pastaUsuario = new File(basePath, email);
 
@@ -49,9 +48,8 @@ public class Sistema {
 
                 String chave = partes[0].trim();
                 String valor = partes[1].trim();
-                System.out.println(linha);
 
-                switch (chave) { //switch case para não precisar usar if else com tipo de usuario
+                switch (chave) { // Switch case para organizar os dados do usuário
                     case "CPF":
                         cpf = valor;
                         break;
@@ -63,7 +61,7 @@ public class Sistema {
                         break;
                     case "Email":
                         if (!valor.equals(email)) {
-                            System.out.println("Email não bate com o nome do folder");
+                            System.out.println("Email não bate com o nome do folder.");
                             return false;
                         }
                         break;
@@ -95,20 +93,61 @@ public class Sistema {
             }
             LocalDate data = LocalDate.parse(dataNascimento, DateTimeFormatter.ofPattern("d/M/yyyy"));
 
-            // Retorna o objeto apropriado
+            // Criação do objeto correspondente
             if ("Admin".equalsIgnoreCase(tipo)) {
                 Sistema.usuario = new Admin(cpf, data, nome, email, senha, id);
                 return true;
             } else if ("Cliente".equalsIgnoreCase(tipo)) {
-                Sistema.usuario =  new Cliente(cpf, data, nome, email, senha, premium, vencimento);
+                Cliente cliente = new Cliente(cpf, data, nome, email, senha, premium, vencimento);
+                // Lê os cartões do cliente
+                File pastaCartoes = new File(pastaUsuario, "cartoes");
+                if (pastaCartoes.exists() && pastaCartoes.isDirectory()) {
+                    File[] arquivosCartoes = pastaCartoes.listFiles((_, name) -> name.startsWith("cartao_") && name.endsWith(".txt"));
+                    if (arquivosCartoes != null) {
+                        for (File arquivoCartao : arquivosCartoes) {
+                            try (BufferedReader cartaoReader = new BufferedReader(new FileReader(arquivoCartao))) {
+                                String numero = null;
+                                String codigo = null;
+                                String validade = null;
+
+                                while ((linha = cartaoReader.readLine()) != null) {
+                                    String[] partes = linha.split(":");
+                                    if (partes.length < 2) continue;
+
+                                    String chave = partes[0].trim();
+                                    String valor = partes[1].trim();
+
+                                    switch (chave) {
+                                        case "Numero":
+                                            numero = valor;
+                                            break;
+                                        case "Codigo":
+                                            codigo = valor;
+                                            break;
+                                        case "Validade":
+                                            validade = valor;
+                                            break;
+                                    }
+                                }
+
+                                if (numero != null && codigo != null && validade != null) {
+                                    LocalDate dataValidade = LocalDate.parse(validade, DateTimeFormatter.ofPattern("yyyy/M/d"));
+                                    cliente.adicionarCartao(new Cartao(Integer.parseInt(numero), Integer.parseInt(codigo), dataValidade));
+                                }
+                            } catch (IOException e) {
+                                System.out.println("Erro ao ler o cartão: " + arquivoCartao.getName());
+                            }
+                        }
+                    }
+                }
+                Sistema.usuario = cliente;
                 return true;
-            } else {
-                System.out.println("Tipo de usuário desconhecido.");
-                return false;
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        return false;
     }
 
     public static void LogOffUsuario(){
@@ -209,13 +248,8 @@ public class Sistema {
                 writer.write("Vencimento: " + data.getDayOfMonth() + "/" + data.getMonthValue() + "/" + data.getYear() + "\n");
                 // Criar as subpastas "cartões" e "assinaturas"
                 File pastaCartoes = new File(pastaUsuario, "cartoes");
-                File pastaAssinaturas = new File(pastaUsuario, "assinaturas");
-
                 if (!pastaCartoes.mkdirs()) {
                     throw new IOException("Não foi possível criar a pasta de cartões para o CPF: " + cpf);
-                }
-                if (!pastaAssinaturas.mkdirs()) {
-                    throw new IOException("Não foi possível criar a pasta de assinaturas para o CPF: " + cpf);
                 }
             }
         }
@@ -349,7 +383,7 @@ public class Sistema {
         File pastaUsuario = new File("usuarios/" + email);
         if(!pastaUsuario.exists()) return 0;
         File arquivo = new File(pastaUsuario, "dados.txt");
-        for(int i = 0; i < dados.length; i++) System.out.println(dados[i]);
+        for (String dado : dados) System.out.println(dado);
         try{
             List<String> arquivoLinhas = Files.readAllLines(arquivo.toPath());
             for(int i = 0; i < arquivoLinhas.size(); i++) {
@@ -377,12 +411,6 @@ public class Sistema {
             System.out.println("Não foi possível salvar alterações." + e);
         }
         return 1;
-    }
-
-    public static String getNomeUsuario(){
-        if (Sistema.usuario == null) {
-            return "Visitante";
-        } else return Sistema.usuario.getNome();
     }
 
     public static void defineDataAtual(){

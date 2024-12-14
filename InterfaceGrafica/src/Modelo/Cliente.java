@@ -7,6 +7,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Cliente extends Usuario{
+    public static int MAX_CARTOES = 10;
+
     Cartao[] cartoes;
     private int cartoesQuantidade;
     boolean premium;
@@ -14,7 +16,8 @@ public class Cliente extends Usuario{
 
     public Cliente(String CPF, LocalDate dataNascimento, String nome, String email, String senha, boolean premium, LocalDate vencimento) {
         super(CPF, dataNascimento, nome, email, senha);
-        this.cartoes = new Cartao[10];
+        this.cartoes = new Cartao[MAX_CARTOES];
+        this.cartoesQuantidade = 0;
         this.premium = premium;
         this.vencimento =vencimento;
     }
@@ -62,4 +65,8 @@ public class Cliente extends Usuario{
     public LocalDate getVencimento() {
         return this.vencimento;
     }
+    public int getCartoesQuantidade() {
+        return cartoesQuantidade;
+    }
+
 }

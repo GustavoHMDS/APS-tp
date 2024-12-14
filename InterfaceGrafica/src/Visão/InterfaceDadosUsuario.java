@@ -1,7 +1,8 @@
 package Visão;
 
 import Controle.Sistema;
-import Modelo.Usuario;
+import Modelo.Admin;
+import Modelo.Cliente;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +16,6 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
 
     @Override
     public void atualizarInterface() {
-        String tipoUsuario = Sistema.getTipoUsuario();
         super.centerPanel.removeAll();
 
         // Criar um painel para empilhar os botões, usando BoxLayout vertical
@@ -49,6 +49,17 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
             empilhamentoPanel.add(labelSenha);
             empilhamentoPanel.add(labelDataNascimento);
 
+            if(Sistema.usuario instanceof Cliente cliente) {
+                JLabel labelNumCartoes = new JLabel("Quantidade de cartões: " + cliente.getCartoesQuantidade());
+                Styles.setLabelStyle(labelNumCartoes);
+                empilhamentoPanel.add(labelNumCartoes);
+            }
+            else if(Sistema.usuario instanceof Admin admin) {
+                JLabel labelID = new JLabel("Quantidade de cartões: " + admin.getId());
+                Styles.setLabelStyle(labelID);
+                empilhamentoPanel.add(labelID);
+            }
+
             if(Sistema.getTipoUsuario().equals("Cliente")) {
                 JButton cadastrarCartao = CriaBotaoPreDefinido("Cadastrar cartao", 200, 25, 16);
                 JButton realizarPagamento = CriaBotaoPreDefinido("Realizar pagamento", 200, 25, 16);
@@ -56,8 +67,7 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
 
                 cadastrarCartao.addActionListener(e -> gerenciador.trocarParaTela(GerenciadorInterfaces.NOVO_CARTAO));
                 realizarPagamento.addActionListener(e -> {
-                    if(Sistema.fazPagamento(0)) JOptionPane.showMessageDialog(null, "Pagamento Realizado com sucesso", "Pagamento aprovado", JOptionPane.INFORMATION_MESSAGE);
-                    else JOptionPane.showMessageDialog(null, "O pagamento não foi aprovado, confira a validade do cartão", "Pagamento recusado", JOptionPane.ERROR_MESSAGE);
+                    gerenciador.trocarParaTela(GerenciadorInterfaces.NOVO_PAGAMENTO);
                 });
                 editarDados.addActionListener((e -> gerenciador.trocarParaTela(GerenciadorInterfaces.EDITOR_DADOS_USUARIO)));
                 empilhamentoPanel.add(cadastrarCartao);

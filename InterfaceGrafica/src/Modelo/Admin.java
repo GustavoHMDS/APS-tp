@@ -9,4 +9,8 @@ public class Admin extends Usuario{
         super(CPF, dataNascimento, nome, email, senha);
         this.id = id;
     }
+    public int getId() {
+        return id;
+    }
+
 }

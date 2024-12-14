@@ -75,6 +75,19 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
                 empilhamentoPanel.add(editarDados);
             }
         }
+
+        JButton excluirConta = CriaBotaoPreDefinido("Excluir conta", 200, 25, 16);
+        excluirConta.addActionListener(e -> {
+            try {
+                Sistema.deletarUsuario(Sistema.usuario.getEmail());
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+            Sistema.LogOffUsuario();
+            gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL);
+        });
+        empilhamentoPanel.add(excluirConta);
+
         centerPanel.add(empilhamentoPanel);
         empilhamentoPanel.setMaximumSize(new Dimension(400, 800));
         empilhamentoPanel.setPreferredSize(new Dimension(350, 600));

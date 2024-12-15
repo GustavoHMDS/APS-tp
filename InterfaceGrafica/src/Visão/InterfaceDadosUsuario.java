@@ -67,7 +67,21 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
                     }
                     JComboBox cartaoSelect = new JComboBox(str);
                     cartaoSelect.setSize(400, 20);
+                    //cartaoSelect.paintComponents();
+                    int selecionado = Integer.parseInt(cartaoSelect.getSelectedItem().toString());
+                    LocalDate validadeCartao = cliente.getCartoes()[selecionado-1].getValidadeCartao();
+                    JLabel labelNumeroCartao = new JLabel("Número do cartão: " + cliente.getCartoes()[selecionado - 1].getNumeroCartao());
+                    JLabel labelCodigoCartao = new JLabel("Código do cartão: " + cliente.getCartoes()[selecionado - 1].getCodigoCartao());
+                    JLabel labelValidadeCartao = new JLabel("Validade do cartão" + validadeCartao.getDayOfMonth() + "/" + validadeCartao.getMonthValue() + "/" + validadeCartao.getYear());
+
+                    Styles.setLabelStyle(labelNumeroCartao);
+                    Styles.setLabelStyle(labelCodigoCartao);
+                    Styles.setLabelStyle(labelValidadeCartao);
+
                     empilhamentoPanel.add(cartaoSelect);
+                    empilhamentoPanel.add(labelNumeroCartao);
+                    empilhamentoPanel.add(labelCodigoCartao);
+                    empilhamentoPanel.add(labelValidadeCartao);
                 }
             }
             else if(Sistema.usuario instanceof Admin admin) {

@@ -5,6 +5,7 @@ import Modelo.Admin;
 import Modelo.Cliente;
 
 import javax.swing.*;
+import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.time.LocalDate;
 
@@ -50,9 +51,24 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
             empilhamentoPanel.add(labelDataNascimento);
 
             if(Sistema.usuario instanceof Cliente cliente) {
+                String assinatura = (cliente.isPremium()) ? "Premium" : "Free";
+                JLabel labelAssinatura = new JLabel("Assinatura: " + assinatura);
                 JLabel labelNumCartoes = new JLabel("Quantidade de cartões: " + cliente.getCartoesQuantidade());
+
+                Styles.setLabelStyle(labelAssinatura);
                 Styles.setLabelStyle(labelNumCartoes);
+                empilhamentoPanel.add(labelAssinatura);
                 empilhamentoPanel.add(labelNumCartoes);
+
+                if(cliente.getCartoesQuantidade() > 0) {
+                    String[] str = new String[cliente.getCartoesQuantidade()];
+                    for(int i = 0; i < cliente.getCartoesQuantidade(); i++) {
+                        str[i] = String.valueOf(i + 1);
+                    }
+                    JComboBox cartaoSelect = new JComboBox(str);
+                    cartaoSelect.setSize(400, 20);
+                    empilhamentoPanel.add(cartaoSelect);
+                }
             }
             else if(Sistema.usuario instanceof Admin admin) {
                 JLabel labelID = new JLabel("Quantidade de cartões: " + admin.getId());

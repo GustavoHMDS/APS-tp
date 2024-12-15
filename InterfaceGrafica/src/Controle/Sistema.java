@@ -131,7 +131,8 @@ public class Sistema {
                                 }
 
                                 if (numero != null && codigo != null && validade != null) {
-                                    LocalDate dataValidade = LocalDate.parse(validade, DateTimeFormatter.ofPattern("yyyy/M/d"));
+                                    String[] dataLida = validade.split("-");
+                                    LocalDate dataValidade = LocalDate.of(Integer.parseInt(dataLida[0]), Integer.parseInt(dataLida[1]), Integer.parseInt(dataLida[2]));
                                     cliente.adicionarCartao(new Cartao(Integer.parseInt(numero), Integer.parseInt(codigo), dataValidade));
                                 }
                             } catch (IOException e) {

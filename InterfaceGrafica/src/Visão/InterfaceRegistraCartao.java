@@ -26,14 +26,10 @@ public class InterfaceRegistraCartao extends InterfaceComum implements Atualizav
         empilhamentoPanel.setLayout(new BoxLayout(empilhamentoPanel, BoxLayout.Y_AXIS));
         empilhamentoPanel.setAlignmentX(Component.CENTER_ALIGNMENT); // Centralizar os botões dentro do empilhamentoPanel
         empilhamentoPanel.setBackground(new Color(64, 44, 94));
-        String[] seletores = new String[10];
-        int qtd = (cliente == null) ? 2 : cliente.getCartoes().length;
-        for(int i = 0; i < qtd; i++) seletores[i] = String.valueOf(i+1);
-        JComboBox cartaoSelect = new JComboBox(seletores);
-        int selecionado = 1;
         JLabel labelNumeroCartao, labelCodigoCartao, labelDataValidade;
         JTextField campoNumeroCartao, campoCodigoCartao;
         JPanel painelDataValidade;
+        /*
         if(cliente != null && cliente.getCartaoPagamento(selecionado - 1) != null) {
             labelNumeroCartao = new JLabel("Numero do cartao: " + cliente.getCartaoPagamento(selecionado-1).getNumeroCartao());
             labelCodigoCartao = new JLabel("Codigo do cartao: " + cliente.getCartaoPagamento(selecionado-1).getCodigoCartao());
@@ -41,16 +37,16 @@ public class InterfaceRegistraCartao extends InterfaceComum implements Atualizav
             campoNumeroCartao = new JTextField(String.valueOf(cliente.getCartaoPagamento(selecionado-1).getNumeroCartao()));
             campoCodigoCartao = new JTextField(cliente.getCartaoPagamento(selecionado-1).getCodigoCartao());
             painelDataValidade = painelData(cliente.getCartaoPagamento(selecionado-1).getValidadeCartao());
-        } else {
-            labelNumeroCartao = new JLabel("Numero do cartao: ");
-            labelCodigoCartao = new JLabel("Codigo do cartao: ");
-            labelDataValidade = new JLabel("Data de validade: ");
-            campoNumeroCartao = new JTextField(15);
-            campoCodigoCartao = new JTextField(15);
-            painelDataValidade = painelData();
-        }
-        Styles.setLabelStyle(labelNumeroCartao);
-        Styles.setLabelStyle(labelCodigoCartao);
+            */
+
+        labelNumeroCartao = new JLabel("Numero do cartao: ");
+        labelCodigoCartao = new JLabel("Codigo do cartao: ");
+        labelDataValidade = new JLabel("Data de validade: ");
+        campoNumeroCartao = new JTextField(15);
+        campoCodigoCartao = new JTextField(15);
+        painelDataValidade = painelData();
+
+        Styles.setLabelStyle(labelNumeroCartao);Styles.setLabelStyle(labelCodigoCartao);
         Styles.setLabelStyle(labelDataValidade);
         Styles.setTextFielStyle(campoNumeroCartao);
         Styles.setTextFielStyle(campoCodigoCartao);
@@ -62,11 +58,11 @@ public class InterfaceRegistraCartao extends InterfaceComum implements Atualizav
             int dia = Integer.parseInt(campoDia.getText());
             int mes = Integer.parseInt(campoMes.getText());
             int ano = Integer.parseInt(campoAno.getText());
-            //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy"); Tirei o formatter pq dá erro se colocar dia e mês com um dígito só, ass: Rafa
             LocalDate data = LocalDate.of(ano, mes, dia);
             Cartao cartao = new Cartao(Integer.parseInt(campoNumeroCartao.getText()), Integer.parseInt(campoCodigoCartao.getText()), data);
             try {
                 Sistema.adicionarCartao(Sistema.usuario.getEmail(), cartao);
+                Sistema.getCliente().adicionarCartao(cartao);
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
@@ -74,7 +70,7 @@ public class InterfaceRegistraCartao extends InterfaceComum implements Atualizav
         });
         cancelar.addActionListener(e -> gerenciador.trocarParaTela(GerenciadorInterfaces.DADOS_USUARIO));
 
-        empilhamentoPanel.add(cartaoSelect);
+        //empilhamentoPanel.add(cartaoSelect);
         empilhamentoPanel.add(labelNumeroCartao);
         empilhamentoPanel.add(campoNumeroCartao);
         empilhamentoPanel.add(labelCodigoCartao);

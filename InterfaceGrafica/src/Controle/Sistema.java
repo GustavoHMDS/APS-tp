@@ -366,6 +366,24 @@ public class Sistema {
         return 1;
     }
 
+    public static int removerCartao(String email, int cartaoIndice) {
+        File cartoesUsuario = new File("usuarios/" + email + "/cartoes");
+        if(!cartoesUsuario.exists()) return 0;
+        File[] cartoes = cartoesUsuario.listFiles();
+        int cartaoNumero = 0;
+        for(File cartao : cartoes) {
+            if(cartaoNumero > 0) {
+                cartao.renameTo(new File("usuarios/" + email + "/cartoes/cartao_" + cartaoIndice + ".txt"));
+                cartaoNumero++;
+            }
+            if(cartao.getName().contains(""+cartaoIndice)) {
+                cartao.delete();
+                cartaoNumero = cartaoIndice;
+            }
+        }
+        return 1;
+    }
+
     private static void editarArquivo(String nomeArquivo, String cpf, String dadoEditado, String novoConteudo) {
         try {
             // Lê todas as linhas do arquivo

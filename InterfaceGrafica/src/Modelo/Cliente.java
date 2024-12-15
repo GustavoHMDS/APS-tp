@@ -49,6 +49,14 @@ public class Cliente extends Usuario{
         }
     }
 
+    public void removerCartao(int indice) {
+        if(this.cartoesQuantidade == 0 || indice > this.cartoesQuantidade) return;
+        for(int i = indice; i < this.cartoesQuantidade-1; i++) {
+            this.cartoes[i] = this.cartoes[i+1];
+        }
+        this.cartoesQuantidade--;
+    }
+
     public Cartao[] getCartoes() {
         return cartoes;
     }

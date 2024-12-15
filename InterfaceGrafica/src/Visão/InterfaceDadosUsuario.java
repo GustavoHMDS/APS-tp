@@ -72,6 +72,7 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
                     JLabel labelNumeroCartao = new JLabel("Número do cartão: " + cliente.getCartoes()[selecionado - 1].getNumeroCartao());
                     JLabel labelCodigoCartao = new JLabel("Código do cartão: " + cliente.getCartoes()[selecionado - 1].getCodigoCartao());
                     JLabel labelValidadeCartao = new JLabel("Validade do cartão" + validadeCartao.getDayOfMonth() + "/" + validadeCartao.getMonthValue() + "/" + validadeCartao.getYear());
+                    JButton excluirCartao = CriaBotaoPreDefinido("Excluir cartão", 200, 30, 16);
 
                     Styles.setLabelStyle(labelNumeroCartao);
                     Styles.setLabelStyle(labelCodigoCartao);
@@ -86,10 +87,18 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
                         System.out.println(labelNumeroCartao.getText());
                     });
 
+                    excluirCartao.addActionListener(e -> {
+                        int cartao = Integer.parseInt(cartaoSelect.getSelectedItem().toString());
+                        cliente.removerCartao(cartao-1);
+                        Sistema.removerCartao(cliente.getEmail(), cartao);
+                    });
+
                     empilhamentoPanel.add(cartaoSelect);
                     empilhamentoPanel.add(labelNumeroCartao);
                     empilhamentoPanel.add(labelCodigoCartao);
                     empilhamentoPanel.add(labelValidadeCartao);
+                    empilhamentoPanel.add(excluirCartao);
+                    empilhamentoPanel.add(Box.createVerticalStrut(10));
                 }
             }
             else if(Sistema.usuario instanceof Admin admin) {
@@ -99,7 +108,7 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
             }
 
             if(Sistema.getTipoUsuario().equals("Cliente")) {
-                JButton cadastrarCartao = CriaBotaoPreDefinido("Cadastrar cartao", 200, 30, 16);
+                JButton cadastrarCartao = CriaBotaoPreDefinido("Adicionar novo cartao", 200, 30, 16);
                 JButton realizarPagamento = CriaBotaoPreDefinido("Realizar pagamento", 200, 30, 16);
                 JButton editarDados = CriaBotaoPreDefinido("Editar Dados", 200, 30, 16);
 

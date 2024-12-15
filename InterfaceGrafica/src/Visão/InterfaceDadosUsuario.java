@@ -78,6 +78,15 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
                     Styles.setLabelStyle(labelCodigoCartao);
                     Styles.setLabelStyle(labelValidadeCartao);
 
+                    cartaoSelect.addActionListener(e -> {
+                        int cartao = Integer.parseInt(cartaoSelect.getSelectedItem().toString());
+                        LocalDate validade = cliente.getCartoes()[cartao - 1].getValidadeCartao();
+                        labelNumeroCartao.setText("Número do cartão: " + cliente.getCartoes()[cartao - 1].getNumeroCartao());
+                        labelCodigoCartao.setText("Código do cartão: " + cliente.getCartoes()[cartao - 1].getCodigoCartao());
+                        labelValidadeCartao.setText("Validade do cartão: " + validade.getDayOfMonth() + "/" + validade.getMonthValue() + "/" + validade.getYear());
+                        System.out.println(labelNumeroCartao.getText());
+                    });
+
                     empilhamentoPanel.add(cartaoSelect);
                     empilhamentoPanel.add(labelNumeroCartao);
                     empilhamentoPanel.add(labelCodigoCartao);

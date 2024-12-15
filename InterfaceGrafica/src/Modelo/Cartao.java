@@ -22,4 +22,6 @@ public class Cartao {
     public LocalDate getValidadeCartao() {
         return validadeCartao;
     }
+    public void setNumeroCartao(int numeroCartao) { this.numeroCartao = numeroCartao; }
+    public void setCodigoCartao(int codigoCartao) { this.codigoCartao = codigoCartao; }
 }

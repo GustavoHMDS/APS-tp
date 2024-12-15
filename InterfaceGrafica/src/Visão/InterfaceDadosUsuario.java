@@ -66,7 +66,6 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
                         str[i] = String.valueOf(i + 1);
                     }
                     JComboBox cartaoSelect = new JComboBox(str);
-                    cartaoSelect.setSize(400, 20);
                     //cartaoSelect.paintComponents();
                     int selecionado = Integer.parseInt(cartaoSelect.getSelectedItem().toString());
                     LocalDate validadeCartao = cliente.getCartoes()[selecionado-1].getValidadeCartao();
@@ -100,9 +99,9 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
             }
 
             if(Sistema.getTipoUsuario().equals("Cliente")) {
-                JButton cadastrarCartao = CriaBotaoPreDefinido("Cadastrar cartao", 200, 25, 16);
-                JButton realizarPagamento = CriaBotaoPreDefinido("Realizar pagamento", 200, 25, 16);
-                JButton editarDados = CriaBotaoPreDefinido("Editar Dados", 200, 25, 16);
+                JButton cadastrarCartao = CriaBotaoPreDefinido("Cadastrar cartao", 200, 30, 16);
+                JButton realizarPagamento = CriaBotaoPreDefinido("Realizar pagamento", 200, 30, 16);
+                JButton editarDados = CriaBotaoPreDefinido("Editar Dados", 200, 30, 16);
 
                 cadastrarCartao.addActionListener(e -> gerenciador.trocarParaTela(GerenciadorInterfaces.NOVO_CARTAO));
                 realizarPagamento.addActionListener(e -> {
@@ -110,12 +109,17 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
                 });
                 editarDados.addActionListener((e -> gerenciador.trocarParaTela(GerenciadorInterfaces.EDITOR_DADOS_USUARIO)));
                 empilhamentoPanel.add(cadastrarCartao);
-                if(Sistema.getCliente().getCartoes().length > 0)empilhamentoPanel.add(realizarPagamento);
+                empilhamentoPanel.add(Box.createVerticalStrut(10));
+                if(Sistema.getCliente().getCartoes().length > 0){
+                    empilhamentoPanel.add(realizarPagamento);
+                    empilhamentoPanel.add(Box.createVerticalStrut(10));
+                }
                 empilhamentoPanel.add(editarDados);
+                empilhamentoPanel.add(Box.createVerticalStrut(10));
             }
         }
 
-        JButton excluirConta = CriaBotaoPreDefinido("Excluir conta", 200, 25, 16);
+        JButton excluirConta = CriaBotaoPreDefinido("Excluir conta", 200, 30, 16);
         excluirConta.addActionListener(e -> {
             try {
                 Sistema.deletarUsuario(Sistema.usuario.getEmail());
@@ -126,10 +130,18 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
             gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL);
         });
         empilhamentoPanel.add(excluirConta);
+        empilhamentoPanel.add(Box.createVerticalStrut(10));
+
+        JButton voltar = CriaBotaoPreDefinido("Voltar", 250, 30, 16);
+        voltar.addActionListener(e -> {
+            gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL);
+        });
+        empilhamentoPanel.add(voltar);
 
         centerPanel.add(empilhamentoPanel);
-        empilhamentoPanel.setMaximumSize(new Dimension(400, 800));
-        empilhamentoPanel.setPreferredSize(new Dimension(350, 600));
-        centerPanel.setPreferredSize(new Dimension(600, 500));
+        empilhamentoPanel.setSize(new Dimension(800, Sistema.screenSize.height - 120));
+        //empilhamentoPanel.setPreferredSize(new Dimension(350, 600));
+        centerPanel.setPreferredSize(new Dimension(600, 600));
+        centerPanel.setMaximumSize(new Dimension(800, Sistema.screenSize.height - 120));
     }
 }

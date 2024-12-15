@@ -346,6 +346,26 @@ public class Sistema {
         System.out.println("Cartão adicionado com sucesso para o usuário: " + email);
     }
 
+    public static int editarCartao(String email, int cartaoIndice, long numeroCartao, int codigoCartao){
+        File cartoesUsuario = new File("usuarios/" + email + "/cartoes");
+        if(!cartoesUsuario.exists()) return 0;
+        File[] cartoes = cartoesUsuario.listFiles();
+        for(File cartao : cartoes) {
+            if(cartao.getName().contains(""+cartaoIndice)) {
+                try {
+                    List<String> arquivoLinhas = Files.readAllLines(cartao.toPath());
+                    arquivoLinhas.set(0, "Numero: " + numeroCartao);
+                    arquivoLinhas.set(1, "Codigo: " + codigoCartao);
+                    Files.write(cartao.toPath(), arquivoLinhas);
+                    break;
+                } catch (Exception e) {
+                    System.out.println("Não foi possível ler arquivo " + cartao.getAbsolutePath()+"." + e);
+                }
+            }
+        }
+        return 1;
+    }
+
     private static void editarArquivo(String nomeArquivo, String cpf, String dadoEditado, String novoConteudo) {
         try {
             // Lê todas as linhas do arquivo

@@ -1,5 +1,6 @@
 package Controle;
 
+import Modelo.Catalogo;
 import Modelo.Convidado;
 import Visão.GerenciadorInterfaces;
 
@@ -12,6 +13,7 @@ public class Main {
         Sistema.usuario = new Convidado();
         Sistema.AdminFailSafe();
         Sistema.screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Sistema.animes = new Catalogo();
         SwingUtilities.invokeLater(() -> {
             GerenciadorInterfaces gerenciador = new GerenciadorInterfaces();
             gerenciador.setVisible(true);

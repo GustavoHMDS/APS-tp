@@ -15,6 +15,7 @@ public class Sistema {
     public static final String nomeApp = "AniToons";
     private static LocalDate dataAtual;
     public static Dimension screenSize;
+    public static Catalogo animes;
 
     public static boolean login(String email, String senha) {
         String basePath = "usuarios"; // Diretório base para usuários

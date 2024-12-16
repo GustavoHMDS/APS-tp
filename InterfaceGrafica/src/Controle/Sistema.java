@@ -461,9 +461,36 @@ public class Sistema {
             try{
                 File[] animes = pastaAnimes.listFiles();
                 for(File arquivo : animes) {
-                    if(arquivo.isDirectory() == false) continue;
-                    String nome = arquivo.getName();
-                    System.out.println(nome);
+                    System.out.println(arquivo.getName());
+                    if(!arquivo.isDirectory()) continue;
+                    File arquivoDados = new File(arquivo, "dados.txt");
+                    if(!arquivoDados.exists()) continue;
+                    try {
+                        List<String> dados = Files.readAllLines(arquivoDados.toPath());
+                        String nome = null, path = null;
+                        int codigo = -1, temporadasQtd = -1;
+                        for (String dado : dados) {
+                            String[] linha = dado.split(": ");
+                            switch (linha[0]) {
+                                case "Nome":
+                                    nome = linha[1];
+                                    break;
+                                case "Codigo":
+                                    codigo = Integer.parseInt(linha[1]);
+                                    break;
+                                case "Temporadas":
+                                    temporadasQtd = Integer.parseInt(linha[1]);
+                                    break;
+                                case "Path":
+                                    path = linha[1];
+                                    break;
+                            }
+                        }
+                        Sistema.catalogo.animes.add(new Anime(nome, codigo, temporadasQtd, path));
+                    } catch (Exception e) {
+                        System.out.println("Não foi possível recuparar dados do anime. " + e);
+                    }
+
                 }
 
             } catch(Exception e) {

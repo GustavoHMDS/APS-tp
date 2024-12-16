@@ -5,12 +5,12 @@ import java.io.File;
 public class Episodio {
     private String nome;
     private int codigo;
-    private File video;
+    private String path;
 
-    Episodio(String nome, int codigo, File video) {
+    Episodio(String nome, int codigo, String path) {
         this.nome = nome;
         this.codigo = codigo;
-        this.video = video;
+        this.path = path;
     }
 
     public String getNome() {
@@ -21,8 +21,8 @@ public class Episodio {
         return codigo;
     }
 
-    public File getVideo() {
-        return video;
+    public String getPath() {
+        return path;
     }
 
     public void setNome(String nome) {
@@ -33,9 +33,7 @@ public class Episodio {
         this.codigo = codigo;
     }
 
-    public void setVideo(File video) {
-        this.video = video;
+    public void setPath(String path) {
+        this.path = path;
     }
-
-
 }

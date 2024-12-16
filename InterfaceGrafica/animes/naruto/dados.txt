@@ -1,0 +1,4 @@
+Nome: naruto
+Codigo: 9
+Temporadas: 0
+Path: animes/naruto/

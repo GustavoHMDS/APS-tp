@@ -1,31 +1,45 @@
 package Modelo;
 
+import java.io.File;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Anime {
     private String nome;
-    private String path;
-    public List<Temporada> temporadas;
     private int codigo;
+    private int temporadasQuantidade;
+    private String path;
 
-    Anime(String nome, int codigo, String path) {
+    public Anime(String nome, int codigo, int temporadasQuantidade, String path) {
         this.nome = nome;
         this.codigo = codigo;
+        this.temporadasQuantidade = temporadasQuantidade;
         this.path = path;
-        this.temporadas = new ArrayList<Temporada>();
     }
 
-    public int adicionarTemporada(String nome, int codigo) {
-        this.temporadas.add(new Temporada(nome, codigo));
-        return 1;
+    public void adicionarTemporada(String nome, int codigo) {
+        File arquivo = new File(this.path);
+        if(arquivo.exists() && arquivo.isDirectory()) {
+            String temporadaPath = this.path + "temporada" + this.temporadasQuantidade+1 + "/";
+            File novaTemporada = new File(path);
+            if(novaTemporada.mkdir()) {
+                File temporadaDados = new File(temporadaPath + "dados.txt");
+                try{
+                    temporadaDados.createNewFile();
+                    List<String> dados = new ArrayList<>();
+                    dados.add("Nome: " + nome);
+                    dados.add("Codigo: "+ codigo);
+                    dados.add("Episodios: 0");
+                    dados.add("Path: " + temporadaPath);
+                    Files.write(temporadaDados.toPath(), dados);
+                } catch (Exception e) {
+                    System.out.println("Não foi possivel salvar dados da temporada. " + e);
+                }
+            }
+        }
     }
 
-    public int removerTemporada(int indice) {
-        if(codigo > this.temporadas.size()) return 0;
-        this.temporadas.remove(indice);
-        return 1;
-    }
 
     public void setPath(String path) {
         this.path = path;

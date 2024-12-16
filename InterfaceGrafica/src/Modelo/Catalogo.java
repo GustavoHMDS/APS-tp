@@ -1,6 +1,7 @@
 package Modelo;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,13 +11,26 @@ public class Catalogo {
     public int adicionaAnime(String nome, int codigo) {
         File pastaAnimes = new File("animes/");
         if(!pastaAnimes.exists()) {
-            if(pastaAnimes.mkdir() == false) return 0;
+            if(!pastaAnimes.mkdir()) return 0;
         }
         File anime = new File(pastaAnimes, nome.replace(" ", "-") + "/");
-        if(anime.mkdir() == false) {
+        if(!anime.mkdir()) {
             return 0;
         }
-        this.animes.add(new Anime(nome, codigo, nome.replace(" ", "-") + "/"));
+        File dadosAnime = new File(anime, "dados.txt");
+        try{
+            dadosAnime.createNewFile();
+            List<String> dados = new ArrayList<>();
+            dados.add("Nome: " + nome);
+            dados.add("Codigo: " + codigo);
+            dados.add("Temporadas: " + 0);
+            dados.add("Path: animes/" + nome.replace(" ", "-") + "/");
+            Files.write(dadosAnime.toPath(), dados);
+
+            this.animes.add(new Anime(nome, codigo, 0,"animes/" + nome.replace(" ", "-") + "/"));
+        } catch (Exception e) {
+            System.out.println("Não foi possível salvar dados do anime! " + e);
+        }
 
         return 1;
     }

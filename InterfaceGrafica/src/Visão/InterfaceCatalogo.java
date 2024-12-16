@@ -19,9 +19,13 @@ public class InterfaceCatalogo extends InterfaceComum implements Atualizavel{
         super.centerPanel.removeAll();
         JPanel empilhamentoPanel = new JPanel();
         empilhamentoPanel.setBackground(Styles.background);
+        if(!Sistema.catalogo.animes.isEmpty()) {
+            for(int i = 0; i < Sistema.catalogo.animes.size(); i++) {
+                JLabel animeNome = new JLabel(Sistema.catalogo.animes.get(i).getNome());
+                Styles.setLabelStyle(animeNome);
+                empilhamentoPanel.add(animeNome);
 
-        if(Sistema.catalogo.getSize() > 0) {
-            System.out.println(Sistema.catalogo.animes.get(0).getNome());
+            }
         } else {
             JLabel mensagem = new JLabel("Não há animes disponíveis no momento");
             Styles.setLabelStyle(mensagem);

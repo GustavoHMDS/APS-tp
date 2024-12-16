@@ -71,7 +71,7 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
                     LocalDate validadeCartao = cliente.getCartoes()[selecionado-1].getValidadeCartao();
                     JLabel labelNumeroCartao = new JLabel("Número do cartão: " + cliente.getCartoes()[selecionado - 1].getNumeroCartao());
                     JLabel labelCodigoCartao = new JLabel("Código do cartão: " + cliente.getCartoes()[selecionado - 1].getCodigoCartao());
-                    JLabel labelValidadeCartao = new JLabel("Validade do cartão" + validadeCartao.getDayOfMonth() + "/" + validadeCartao.getMonthValue() + "/" + validadeCartao.getYear());
+                    JLabel labelValidadeCartao = new JLabel("Validade do cartão: " + validadeCartao.getDayOfMonth() + "/" + validadeCartao.getMonthValue() + "/" + validadeCartao.getYear());
                     JButton excluirCartao = CriaBotaoPreDefinido("Excluir cartão", 200, 30, 16);
 
                     Styles.setLabelStyle(labelNumeroCartao);
@@ -79,18 +79,38 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
                     Styles.setLabelStyle(labelValidadeCartao);
 
                     cartaoSelect.addActionListener(e -> {
-                        int cartao = Integer.parseInt(cartaoSelect.getSelectedItem().toString());
-                        LocalDate validade = cliente.getCartoes()[cartao - 1].getValidadeCartao();
-                        labelNumeroCartao.setText("Número do cartão: " + cliente.getCartoes()[cartao - 1].getNumeroCartao());
-                        labelCodigoCartao.setText("Código do cartão: " + cliente.getCartoes()[cartao - 1].getCodigoCartao());
-                        labelValidadeCartao.setText("Validade do cartão: " + validade.getDayOfMonth() + "/" + validade.getMonthValue() + "/" + validade.getYear());
-                        System.out.println(labelNumeroCartao.getText());
+                        if(cartaoSelect.getSelectedItem() != null) {
+                            int cartao = Integer.parseInt(cartaoSelect.getSelectedItem().toString());
+                            LocalDate validade = cliente.getCartoes()[cartao - 1].getValidadeCartao();
+                            labelNumeroCartao.setText("Número do cartão: " + cliente.getCartoes()[cartao - 1].getNumeroCartao());
+                            labelCodigoCartao.setText("Código do cartão: " + cliente.getCartoes()[cartao - 1].getCodigoCartao());
+                            labelValidadeCartao.setText("Validade do cartão: " + validade.getDayOfMonth() + "/" + validade.getMonthValue() + "/" + validade.getYear());
+                        } else{
+                            labelNumeroCartao.setText("");
+                            labelCodigoCartao.setText("");
+                            labelValidadeCartao.setText("");
+                        }
                     });
 
                     excluirCartao.addActionListener(e -> {
-                        int cartao = Integer.parseInt(cartaoSelect.getSelectedItem().toString());
-                        cliente.removerCartao(cartao-1);
-                        Sistema.removerCartao(cliente.getEmail(), cartao);
+                        if(cliente.getCartoesQuantidade() > 0) {
+                            int cartao = Integer.parseInt(cartaoSelect.getSelectedItem().toString());
+                            cartaoSelect.removeItemAt(cartaoSelect.getItemCount() - 1);
+                            cliente.removerCartao(cartao-1);
+                            if(Sistema.removerCartao(cliente.getEmail(), cartao) == 1) {
+                                labelNumCartoes.setText("Quantidade de cartões: " + cliente.getCartoesQuantidade());
+                            }
+                            if(cartaoSelect.getItemCount() > 0) {
+                                cartaoSelect.setSelectedIndex(0);
+                            } else {
+                                cartaoSelect.setSelectedIndex(-1);
+                                labelNumeroCartao.setText("");
+                                labelCodigoCartao.setText("");
+                                labelValidadeCartao.setText("");
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Você não tem cartões cadastrados para excluir!");
+                        }
                     });
 
                     empilhamentoPanel.add(cartaoSelect);
@@ -99,6 +119,31 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
                     empilhamentoPanel.add(labelValidadeCartao);
                     empilhamentoPanel.add(excluirCartao);
                     empilhamentoPanel.add(Box.createVerticalStrut(10));
+
+                }
+                    JButton cadastrarCartao = CriaBotaoPreDefinido("Adicionar novo cartao", 200, 30, 16);
+                    JButton realizarPagamento = CriaBotaoPreDefinido("Realizar pagamento", 200, 30, 16);
+                    JButton editarDados = CriaBotaoPreDefinido("Editar Dados", 200, 30, 16);
+
+                    cadastrarCartao.addActionListener(e -> {
+                        if(cliente.getCartoesQuantidade() < 10) {
+                            gerenciador.trocarParaTela(GerenciadorInterfaces.NOVO_CARTAO);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Você já atingiu o número máximo de cartões cadastrados!");
+                        }
+                    });
+                    realizarPagamento.addActionListener(e -> {
+                        gerenciador.trocarParaTela(GerenciadorInterfaces.NOVO_PAGAMENTO);
+                    });
+                    editarDados.addActionListener((e -> gerenciador.trocarParaTela(GerenciadorInterfaces.EDITOR_DADOS_USUARIO)));
+                    empilhamentoPanel.add(cadastrarCartao);
+                    empilhamentoPanel.add(Box.createVerticalStrut(10));
+                    if(Sistema.getCliente().getCartoes().length > 0){
+                        empilhamentoPanel.add(realizarPagamento);
+                        empilhamentoPanel.add(Box.createVerticalStrut(10));
+                    }
+                    empilhamentoPanel.add(editarDados);
+                    empilhamentoPanel.add(Box.createVerticalStrut(10));
                 }
             }
             else if(Sistema.usuario instanceof Admin admin) {
@@ -106,27 +151,6 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
                 Styles.setLabelStyle(labelID);
                 empilhamentoPanel.add(labelID);
             }
-
-            if(Sistema.getTipoUsuario().equals("Cliente")) {
-                JButton cadastrarCartao = CriaBotaoPreDefinido("Adicionar novo cartao", 200, 30, 16);
-                JButton realizarPagamento = CriaBotaoPreDefinido("Realizar pagamento", 200, 30, 16);
-                JButton editarDados = CriaBotaoPreDefinido("Editar Dados", 200, 30, 16);
-
-                cadastrarCartao.addActionListener(e -> gerenciador.trocarParaTela(GerenciadorInterfaces.NOVO_CARTAO));
-                realizarPagamento.addActionListener(e -> {
-                    gerenciador.trocarParaTela(GerenciadorInterfaces.NOVO_PAGAMENTO);
-                });
-                editarDados.addActionListener((e -> gerenciador.trocarParaTela(GerenciadorInterfaces.EDITOR_DADOS_USUARIO)));
-                empilhamentoPanel.add(cadastrarCartao);
-                empilhamentoPanel.add(Box.createVerticalStrut(10));
-                if(Sistema.getCliente().getCartoes().length > 0){
-                    empilhamentoPanel.add(realizarPagamento);
-                    empilhamentoPanel.add(Box.createVerticalStrut(10));
-                }
-                empilhamentoPanel.add(editarDados);
-                empilhamentoPanel.add(Box.createVerticalStrut(10));
-            }
-        }
 
         JButton excluirConta = CriaBotaoPreDefinido("Excluir conta", 200, 30, 16);
         excluirConta.addActionListener(e -> {

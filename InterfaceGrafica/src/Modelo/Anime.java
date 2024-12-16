@@ -5,12 +5,14 @@ import java.util.List;
 
 public class Anime {
     private String nome;
+    private String path;
     public List<Temporada> temporadas;
     private int codigo;
 
-    Anime(String nome, int codigo) {
+    Anime(String nome, int codigo, String path) {
         this.nome = nome;
         this.codigo = codigo;
+        this.path = path;
         this.temporadas = new ArrayList<Temporada>();
     }
 
@@ -25,6 +27,10 @@ public class Anime {
         return 1;
     }
 
+    public void setPath(String path) {
+        this.path = path;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -33,4 +39,7 @@ public class Anime {
         return codigo;
     }
 
+    public String getPath() {
+        return path;
+    }
 }

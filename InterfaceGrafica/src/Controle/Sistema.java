@@ -9,6 +9,8 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Stream;
 
 public class Sistema {
     public static Usuario usuario;
@@ -451,6 +453,23 @@ public class Sistema {
             System.out.println("Não foi possível salvar alterações." + e);
         }
         return 1;
+    }
+
+    public static void preencheCatalogo() {
+        File pastaAnimes = new File("animes/");
+        if(pastaAnimes.exists() && pastaAnimes.isDirectory()) {
+            try{
+                File[] animes = pastaAnimes.listFiles();
+                for(File arquivo : animes) {
+                    if(arquivo.isDirectory() == false) continue;
+                    String nome = arquivo.getName();
+                    System.out.println(nome);
+                }
+
+            } catch(Exception e) {
+                System.out.println("Não foi possível acessar os animes! " + e);
+            }
+        }
     }
 
     public static void defineDataAtual(){

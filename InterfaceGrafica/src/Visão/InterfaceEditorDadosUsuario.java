@@ -15,7 +15,6 @@ public class InterfaceEditorDadosUsuario extends InterfaceComum implements Atual
 
     @Override
     public void atualizarInterface() {
-        String tipoUsuario = Sistema.getTipoUsuario();
         super.centerPanel.removeAll();
 
         // Criar um painel para empilhar os botões, usando BoxLayout vertical

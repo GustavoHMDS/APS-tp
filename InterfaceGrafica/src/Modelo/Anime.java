@@ -40,6 +40,39 @@ public class Anime {
         }
     }
 
+    public Temporada getTemporada(int indice) {
+        if(indice > this.temporadasQuantidade) return null;
+        File pastaTemporada = new File(this.path + "temporada" + indice + "/");
+        if(!pastaTemporada.exists() || !pastaTemporada.isDirectory()) return null;
+        File dados = new File(pastaTemporada, "dados.txt");
+        if(!dados.exists()) return null;
+        try{
+            List <String> linhas = Files.readAllLines(dados.toPath());
+            String nome = null, path = null;
+            int codigo = 0, episodios =  -1;
+            for(String linha : linhas) {
+                String[] linhaDados = linha.split(": ");
+                switch (linhaDados[0]) {
+                    case "Nome":
+                        nome = linhaDados[1];
+                        break;
+                    case "Codigo":
+                        codigo = Integer.parseInt(linhaDados[1]);
+                        break;
+                    case "Episodios":
+                        episodios = Integer.parseInt(linhaDados[1]);
+                        break;
+                    case "Path":
+                        path = linhaDados[1];
+                        break;
+                }
+                return new Temporada(nome, codigo, episodios, path);
+            }
+        } catch (Exception e) {
+            System.out.println("Não foi possível ler dados da temporada. " + e);
+        }
+        return null;
+    }
 
     public void setPath(String path) {
         this.path = path;
@@ -47,6 +80,10 @@ public class Anime {
 
     public String getNome() {
         return nome;
+    }
+
+    public int getTemporadasQuantidade() {
+        return temporadasQuantidade;
     }
 
     public int getCodigo() {

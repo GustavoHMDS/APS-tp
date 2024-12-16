@@ -76,7 +76,7 @@ public class InterfaceComum extends JPanel {
     protected JButton CriaBotaoPreDefinido(String nomeBotao) {
         JButton novoBotao = new JButton(nomeBotao);
         // Define o tamanho preferido e máximo para o botão
-        Dimension buttonSize = new Dimension(200, 50); // Define a largura e altura específicas
+        Dimension buttonSize = new Dimension(250, 50); // Define a largura e altura específicas
 
         novoBotao.setPreferredSize(buttonSize);
         novoBotao.setMaximumSize(buttonSize); // Garante o tamanho máximo

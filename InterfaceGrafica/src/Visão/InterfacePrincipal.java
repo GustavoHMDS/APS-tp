@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class InterfacePrincipal extends InterfaceComum implements Atualizavel {
-    JButton catalogo, dadosUsuario, sair, login, registrar, novoAnime;
+    JButton catalogo, dadosUsuario, sair, login, registrar, novoAnime, updateAnime;
 
     public InterfacePrincipal(GerenciadorInterfaces gerenciador) {
         super(gerenciador);
@@ -36,6 +36,9 @@ public class InterfacePrincipal extends InterfaceComum implements Atualizavel {
         });
         novoAnime.addActionListener(_ -> {
             gerenciador.trocarParaTela(GerenciadorInterfaces.NOVO_ANIME);
+        });
+        updateAnime.addActionListener(_ -> {
+            gerenciador.trocarParaTela(GerenciadorInterfaces.UPDATE_ANIME);
         });
     }
 
@@ -74,10 +77,12 @@ public class InterfacePrincipal extends InterfaceComum implements Atualizavel {
                 dadosUsuario = CriaBotaoPreDefinido("Meus dados");
                 registrar = CriaBotaoPreDefinido("Registrar novo administrador");
                 novoAnime = CriaBotaoPreDefinido("Adicionar Anime");
+                updateAnime = CriaBotaoPreDefinido("Atualizar Anime");
                 sair = CriaBotaoPreDefinido("Sair");
                 empilhamentoPanel.add(dadosUsuario);
                 empilhamentoPanel.add(registrar);
                 empilhamentoPanel.add(novoAnime);
+                empilhamentoPanel.add(updateAnime);
                 empilhamentoPanel.add(sair);
                 InicializaBotoesAdmin();
                 break;

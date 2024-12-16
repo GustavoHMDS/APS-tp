@@ -52,6 +52,13 @@ public class Catalogo {
         return 1;
     }
 
+    public Anime getAnime(String nome) {
+        for(int i = 0; i < this.animes.size(); i++) {
+            if(animes.get(i).getNome().equals(nome)) return animes.get(i);
+        }
+        return null;
+    }
+
     public int getSize() {
         return this.animes.size();
     }

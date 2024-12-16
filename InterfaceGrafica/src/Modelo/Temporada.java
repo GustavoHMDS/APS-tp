@@ -19,20 +19,17 @@ public class Temporada {
     }
 
     public void adicionarEpisodio(String nome, int codigo, String path) {
-        File arquivo = new File(this.path + path);
-        if(arquivo.exists() && !arquivo.isDirectory()) {
-            this.episodiosQuantidade++;
-            File novoEpisodioDados = new File(path + "episodio" + this.episodiosQuantidade + ".txt");
-            try{
-                novoEpisodioDados.createNewFile();
-                List<String> dados = new ArrayList<>();
-                dados.add("Nome: " + nome);
-                dados.add("Codigo: " + codigo);
-                dados.add("Path: " + this.path + path);
-                Files.write(novoEpisodioDados.toPath(), dados);
-            } catch(Exception e) {
-                System.out.println("Não foi possível guardar as informações do episódio.");
-            }
+        this.episodiosQuantidade++;
+        File novoEpisodioDados = new File(path + "episodio" + this.episodiosQuantidade + ".txt");
+        try{
+            novoEpisodioDados.createNewFile();
+            List<String> dados = new ArrayList<>();
+            dados.add("Nome: " + nome);
+            dados.add("Codigo: " + codigo);
+            dados.add("Path: " + this.path + path);
+            Files.write(novoEpisodioDados.toPath(), dados);
+        } catch(Exception e) {
+            System.out.println("Não foi possível guardar as informações do episódio.");
         }
     }
 

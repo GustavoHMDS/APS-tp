@@ -60,8 +60,8 @@ public class InterfacePrincipal extends InterfaceComum implements Atualizavel {
 
         // Adicione os botões com base no tipo de usuário
         catalogo = CriaBotaoPreDefinido("Ver catálogo");
+        InicializaBotoesGerais();
         empilhamentoPanel.add(catalogo);
-
         switch (tipoUsuario) {
             case "Cliente":
                 dadosUsuario = CriaBotaoPreDefinido("Meus dados");

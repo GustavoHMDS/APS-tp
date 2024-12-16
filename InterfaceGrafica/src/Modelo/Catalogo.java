@@ -3,10 +3,9 @@ package Modelo;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class Catalogo {
-    public List<Anime> animes = new ArrayList<Anime>();
+    public List<Anime> animes = new ArrayList<>();
 
     public int adicionaAnime(String nome, int codigo) {
         File pastaAnimes = new File("animes/");
@@ -37,6 +36,10 @@ public class Catalogo {
             }
         }
         return 1;
+    }
+
+    public int getSize() {
+        return this.animes.size();
     }
 }
 

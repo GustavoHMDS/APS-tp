@@ -13,7 +13,7 @@ public class Main {
         Sistema.usuario = new Convidado();
         Sistema.AdminFailSafe();
         Sistema.screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        Sistema.animes = new Catalogo();
+        Sistema.catalogo = new Catalogo();
         Sistema.preencheCatalogo();
         SwingUtilities.invokeLater(() -> {
             GerenciadorInterfaces gerenciador = new GerenciadorInterfaces();

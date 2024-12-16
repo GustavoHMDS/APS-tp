@@ -5,12 +5,17 @@ import Controle.Sistema;
 import javax.swing.*;
 import java.awt.*;
 
-public class InterfaceLogin extends InterfaceComum {
+public class InterfaceLogin extends InterfaceComum implements Atualizavel {
 
     public InterfaceLogin(GerenciadorInterfaces gerenciador) {
         // Chama o construtor da classe pai (InterfaceComum)
         super(gerenciador);
+        atualizarInterface();
+    }
 
+    @Override
+    public void atualizarInterface() {
+        centerPanel.removeAll();
         // Configurações específicas do painel central para a tela de login
         centerPanel.setLayout(new GridLayout(6, 1, 10, 15)); // Define uma grade para os componentes
 
@@ -51,5 +56,6 @@ public class InterfaceLogin extends InterfaceComum {
                 JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos.", "Erro", JOptionPane.ERROR_MESSAGE);
             }
         });
+
     }
 }

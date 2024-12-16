@@ -69,12 +69,14 @@ public class GerenciadorInterfaces extends JFrame {
         telas.put(NOVO_PAGAMENTO, telaPagamento);
 
         interfacesAtualizaveis = new ArrayList<>();
+        interfacesAtualizaveis.add(login);
         interfacesAtualizaveis.add(principal);
         interfacesAtualizaveis.add(registro);
         interfacesAtualizaveis.add(dadosUsuario);
         interfacesAtualizaveis.add(editorDadosUSuario);
         interfacesAtualizaveis.add(registraCartao);
         interfacesAtualizaveis.add(telaPagamento);
+        interfacesAtualizaveis.add(verCatalogo);
 
         // Adicione os painéis ao CardLayout
         for (String key : telas.keySet()) {

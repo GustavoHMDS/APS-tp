@@ -30,20 +30,17 @@ public class InterfaceNovaTemporada extends InterfaceComum implements Atualizave
             Styles.setLabelStyle(labelAnime);
             animeSelect.setSelectedIndex(0);
 
-            JLabel novaTemporada = new JLabel("Dados nova temporada:");
             JLabel labelNome = new JLabel("Nome: ");
             JTextField campoNome = new JTextField();
             JLabel labelCodigo = new JLabel("Codigo: ");
             JTextField campoCodigo = new JTextField();
 
-            Styles.setLabelStyle(novaTemporada);
             Styles.setLabelStyle(labelNome);
             Styles.setLabelStyle(labelCodigo);
             Styles.setTextFielStyle(campoNome);
             Styles.setTextFielStyle(campoCodigo);
 
             empilhamentoPanel.add(animeSelect);
-            empilhamentoPanel.add(novaTemporada);
             empilhamentoPanel.add(labelNome);
             empilhamentoPanel.add(campoNome);
             empilhamentoPanel.add(labelCodigo);
@@ -54,8 +51,7 @@ public class InterfaceNovaTemporada extends InterfaceComum implements Atualizave
                 String nome = campoNome.getText();
                 int codigo = Integer.parseInt(campoCodigo.getText());
                 Anime animeSelecionado = Sistema.catalogo.getAnime(animeSelect.getSelectedItem().toString());
-                System.out.println(animeSelecionado.adicionarTemporada(nome, codigo));
-                System.out.println(animeSelecionado.getTemporadasQuantidade());
+                animeSelecionado.adicionarTemporada(nome, codigo);
                 gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL);
             });
             empilhamentoPanel.add(adicionarTemporada);

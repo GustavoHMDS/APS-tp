@@ -480,7 +480,7 @@ public class Sistema {
                                 case "Codigo":
                                     codigo = Integer.parseInt(linha[1]);
                                     break;
-                                case "Temporadas":
+                                case "Temporada":
                                     temporadasQtd = Integer.parseInt(linha[1]);
                                     break;
                                 case "Path":

@@ -19,6 +19,9 @@ public class Temporada {
     }
 
     public void adicionarEpisodio(String nome, int codigo, String path) {
+        File arquivoTemporada = new File(this.path);
+        File pastaEpisodios = new File(arquivoTemporada, "episodios/");
+        if(!pastaEpisodios.exists()) pastaEpisodios.mkdir();
         File novoEpisodioDados = new File(this.path + "episodio" + (this.episodiosQuantidade+1) + ".txt");
         try{
             novoEpisodioDados.createNewFile();

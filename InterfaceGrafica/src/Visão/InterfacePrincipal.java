@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class InterfacePrincipal extends InterfaceComum implements Atualizavel {
-    JButton catalogo, dadosUsuario, sair, login, registrar, novoAnime, updateAnime;
+    JButton catalogo, dadosUsuario, sair, login, registrar, novoAnime, novaTemporada, novoEpisodio;
 
     public InterfacePrincipal(GerenciadorInterfaces gerenciador) {
         super(gerenciador);
@@ -37,8 +37,11 @@ public class InterfacePrincipal extends InterfaceComum implements Atualizavel {
         novoAnime.addActionListener(_ -> {
             gerenciador.trocarParaTela(GerenciadorInterfaces.NOVO_ANIME);
         });
-        updateAnime.addActionListener(_ -> {
+        novaTemporada.addActionListener(_ -> {
             gerenciador.trocarParaTela(GerenciadorInterfaces.NOVA_TEMPORADA);
+        });
+        novoEpisodio.addActionListener(_ -> {
+            gerenciador.trocarParaTela(GerenciadorInterfaces.NOVO_EPISODIO);
         });
     }
 
@@ -77,12 +80,16 @@ public class InterfacePrincipal extends InterfaceComum implements Atualizavel {
                 dadosUsuario = CriaBotaoPreDefinido("Meus dados");
                 registrar = CriaBotaoPreDefinido("Registrar novo administrador");
                 novoAnime = CriaBotaoPreDefinido("Adicionar Anime");
-                updateAnime = CriaBotaoPreDefinido("Adicionar Temporada");
+                novaTemporada = CriaBotaoPreDefinido("Adicionar Temporada");
+                novoEpisodio = CriaBotaoPreDefinido("NovoEpisodio");
                 sair = CriaBotaoPreDefinido("Sair");
                 empilhamentoPanel.add(dadosUsuario);
                 empilhamentoPanel.add(registrar);
                 empilhamentoPanel.add(novoAnime);
-                if(!Sistema.catalogo.animes.isEmpty())empilhamentoPanel.add(updateAnime);
+                if(!Sistema.catalogo.animes.isEmpty()){
+                    empilhamentoPanel.add(novaTemporada);
+                    empilhamentoPanel.add(novoEpisodio);
+                }
                 empilhamentoPanel.add(sair);
                 InicializaBotoesAdmin();
                 break;

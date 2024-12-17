@@ -73,8 +73,8 @@ public class Anime {
                         path = linhaDados[1];
                         break;
                 }
-                return new Temporada(nome, codigo, episodios, path);
             }
+            return new Temporada(nome, codigo, episodios, path);
         } catch (Exception e) {
             System.out.println("Não foi possível ler dados da temporada. " + e);
         }

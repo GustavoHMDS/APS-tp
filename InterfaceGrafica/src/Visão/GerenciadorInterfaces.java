@@ -22,6 +22,7 @@ public class GerenciadorInterfaces extends JFrame {
     private JPanel telaAtual;
     private InterfacePagamento telaPagamento;
     private InterfaceNovaTemporada novaTemporada;
+    private InterfaceNovoEpisodio novoEpisodio;
 
     // Mapa para armazenar as telas
     private Map<String, JPanel> telas;
@@ -38,6 +39,7 @@ public class GerenciadorInterfaces extends JFrame {
     static final String NOVO_CARTAO = "registraCartao";
     static final String NOVO_PAGAMENTO = "novoPagamento";
     static final String NOVA_TEMPORADA = "novaTemporada";
+    static final String NOVO_EPISODIO = "novoEpisodio";
 
     public GerenciadorInterfaces() {
         setTitle("PlaceHolder");
@@ -58,6 +60,7 @@ public class GerenciadorInterfaces extends JFrame {
         registraCartao = new InterfaceRegistraCartao(this);
         telaPagamento = new InterfacePagamento(this);
         novaTemporada = new InterfaceNovaTemporada(this);
+        novoEpisodio = new InterfaceNovoEpisodio(this);
 
         // Mapa de telas
         telas = new HashMap<>();
@@ -71,6 +74,7 @@ public class GerenciadorInterfaces extends JFrame {
         telas.put(NOVO_CARTAO, registraCartao);
         telas.put(NOVO_PAGAMENTO, telaPagamento);
         telas.put(NOVA_TEMPORADA, novaTemporada);
+        telas.put(NOVO_EPISODIO, novoEpisodio);
 
         interfacesAtualizaveis = new ArrayList<>();
         interfacesAtualizaveis.add(login);
@@ -82,6 +86,7 @@ public class GerenciadorInterfaces extends JFrame {
         interfacesAtualizaveis.add(telaPagamento);
         interfacesAtualizaveis.add(verCatalogo);
         interfacesAtualizaveis.add(novaTemporada);
+        interfacesAtualizaveis.add(novoEpisodio);
 
         // Adicione os painéis ao CardLayout
         for (String key : telas.keySet()) {

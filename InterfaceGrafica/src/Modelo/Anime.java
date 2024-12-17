@@ -37,7 +37,7 @@ public class Anime {
                     this.temporadasQuantidade++;
                     File dadosAnimeArquivo = new File(arquivo, "dados.txt");
                     List<String> dadosAnime = Files.readAllLines(dadosAnimeArquivo.toPath());
-                    dadosAnime.set(2,"Temporada: " + this.temporadasQuantidade);
+                    dadosAnime.set(2,"Temporadas: " + this.temporadasQuantidade);
                     Files.write(dadosAnimeArquivo.toPath(), dadosAnime);
                     return 1;
                 } catch (Exception e) {

@@ -489,6 +489,7 @@ public class Sistema {
                             }
                         }
                         Sistema.catalogo.animes.add(new Anime(nome, codigo, temporadasQtd, path));
+                        System.out.println(Sistema.catalogo.animes.get(Sistema.catalogo.animes.size() - 1).getTemporadasQuantidade());
                     } catch (Exception e) {
                         System.out.println("Não foi possível recuparar dados do anime. " + e);
                     }

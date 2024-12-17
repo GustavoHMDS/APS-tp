@@ -6,6 +6,7 @@ import Modelo.*;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.nio.file.Files;
 import java.util.List;
 
 public class InterfaceCatalogo extends InterfaceComum implements Atualizavel {
@@ -154,8 +155,14 @@ public class InterfaceCatalogo extends InterfaceComum implements Atualizavel {
                             if (episodioTxt.exists()) {
                                 // Aqui você pode ler o arquivo .txt para obter o caminho do .mp4 correspondente
                                 // Por exemplo, você pode armazenar os dados do episódio no próprio objeto Episodio
-                                String episodioPath = new File(episodiosDir, episodioSelecionado + ".mp4").getAbsolutePath();
-                                Sistema.play(episodioPath);  // Chama o player de vídeo com o caminho do arquivo .mp4
+                                try{
+                                    List<String> episodioLinha = Files.readAllLines(episodioTxt.toPath());
+                                    String[] path =  episodioLinha.get(2).split(": ");
+                                    Sistema.play(path[1]);
+
+                                } catch(Exception ee) {
+                                    System.out.println("Erro na leitura de path");
+                                }
                             }
                         }
                     }

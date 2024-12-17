@@ -11,7 +11,7 @@ public class Temporada {
     private int episodiosQuantidade;
     private String path;
 
-    Temporada(String nome, int codigo, int episodiosQuantidade, String path) {
+    public Temporada(String nome, int codigo, int episodiosQuantidade, String path) {
         this.nome = nome;
         this.codigo = codigo;
         this.episodiosQuantidade = episodiosQuantidade;
@@ -24,6 +24,7 @@ public class Temporada {
         if(!pastaEpisodios.exists()) pastaEpisodios.mkdir();
         File novoEpisodioDados = new File(this.path + "episodio" + (this.episodiosQuantidade+1) + ".txt");
         try{
+
             novoEpisodioDados.createNewFile();
             List<String> dados = new ArrayList<>();
             dados.add("Nome: " + nome);

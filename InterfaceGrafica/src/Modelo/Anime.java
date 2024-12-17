@@ -112,4 +112,5 @@ public class Anime {
     public String getPath() {
         return path;
     }
+
 }

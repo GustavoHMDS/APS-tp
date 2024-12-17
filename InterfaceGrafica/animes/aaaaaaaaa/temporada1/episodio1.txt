@@ -1,0 +1,3 @@
+Nome: 1
+Codigo: 1
+Path: animes/aaaaaaaaa/temporada1/episodios/cavaleiros.mp4

@@ -28,6 +28,7 @@ public class Catalogo {
             Files.write(dadosAnime.toPath(), dados);
 
             this.animes.add(new Anime(nome, codigo, 0,"animes/" + nome.replace(" ", "-") + "/"));
+            System.out.println(this.animes.size());
         } catch (Exception e) {
             System.out.println("Não foi possível salvar dados do anime! " + e);
         }

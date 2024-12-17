@@ -1,0 +1,4 @@
+Nome: aaaaaaaaa
+Codigo: 1
+Temporadas: 1
+Path: animes/aaaaaaaaa/

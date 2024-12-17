@@ -1,13 +1,12 @@
 package Visão;
 import Controle.Sistema;
 import Modelo.Anime;
-import Modelo.Temporada;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class InterfaceUpdateAnime extends InterfaceComum implements Atualizavel{
-    public InterfaceUpdateAnime(GerenciadorInterfaces gerenciador) {
+public class InterfaceNovaTemporada extends InterfaceComum implements Atualizavel{
+    public InterfaceNovaTemporada(GerenciadorInterfaces gerenciador) {
         super(gerenciador);
         atualizarInterface();
     }
@@ -55,6 +54,7 @@ public class InterfaceUpdateAnime extends InterfaceComum implements Atualizavel{
             int codigo = Integer.parseInt(campoCodigo.getText());
             Anime animeSelecionado = Sistema.catalogo.getAnime(animeSelect.getSelectedItem().toString());
             System.out.println(animeSelecionado.adicionarTemporada(nome, codigo));
+            System.out.println(animeSelecionado.getTemporadasQuantidade());
             gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL);
         });
         empilhamentoPanel.add(adicionarTemporada);

@@ -34,6 +34,10 @@ public class Anime {
                     dados.add("Path: " + temporadaPath);
                     Files.write(temporadaDados.toPath(), dados);
                     this.temporadasQuantidade++;
+                    File dadosAnimeArquivo = new File(arquivo, "dados.txt");
+                    List<String> dadosAnime = Files.readAllLines(dadosAnimeArquivo.toPath());
+                    dadosAnime.set(2,"Temporada: " + this.temporadasQuantidade);
+                    Files.write(dadosAnimeArquivo.toPath(), dadosAnime);
                     return 1;
                 } catch (Exception e) {
                     System.out.println("Não foi possivel salvar dados da temporada. " + e);

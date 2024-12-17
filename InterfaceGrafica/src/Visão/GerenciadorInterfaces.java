@@ -21,7 +21,7 @@ public class GerenciadorInterfaces extends JFrame {
     private CardLayout cardLayout;
     private JPanel telaAtual;
     private InterfacePagamento telaPagamento;
-    private InterfaceUpdateAnime updateAnime;
+    private InterfaceNovaTemporada novaTemporada;
 
     // Mapa para armazenar as telas
     private Map<String, JPanel> telas;
@@ -37,7 +37,7 @@ public class GerenciadorInterfaces extends JFrame {
     static final String NOVO_ANIME = "adicionadorAnime";
     static final String NOVO_CARTAO = "registraCartao";
     static final String NOVO_PAGAMENTO = "novoPagamento";
-    static final String UPDATE_ANIME = "updateAnime";
+    static final String NOVA_TEMPORADA = "novaTemporada";
 
     public GerenciadorInterfaces() {
         setTitle("PlaceHolder");
@@ -57,7 +57,7 @@ public class GerenciadorInterfaces extends JFrame {
         adicionadorAnime = new InterfaceAdicaoAnime(this);
         registraCartao = new InterfaceRegistraCartao(this);
         telaPagamento = new InterfacePagamento(this);
-        updateAnime = new InterfaceUpdateAnime(this);
+        novaTemporada = new InterfaceNovaTemporada(this);
 
         // Mapa de telas
         telas = new HashMap<>();
@@ -70,7 +70,7 @@ public class GerenciadorInterfaces extends JFrame {
         telas.put(NOVO_ANIME, adicionadorAnime);
         telas.put(NOVO_CARTAO, registraCartao);
         telas.put(NOVO_PAGAMENTO, telaPagamento);
-        telas.put(UPDATE_ANIME, updateAnime);
+        telas.put(NOVA_TEMPORADA, novaTemporada);
 
         interfacesAtualizaveis = new ArrayList<>();
         interfacesAtualizaveis.add(login);
@@ -81,7 +81,7 @@ public class GerenciadorInterfaces extends JFrame {
         interfacesAtualizaveis.add(registraCartao);
         interfacesAtualizaveis.add(telaPagamento);
         interfacesAtualizaveis.add(verCatalogo);
-        interfacesAtualizaveis.add(updateAnime);
+        interfacesAtualizaveis.add(novaTemporada);
 
         // Adicione os painéis ao CardLayout
         for (String key : telas.keySet()) {

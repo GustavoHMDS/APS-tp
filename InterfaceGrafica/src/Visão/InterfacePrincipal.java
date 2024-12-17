@@ -38,7 +38,7 @@ public class InterfacePrincipal extends InterfaceComum implements Atualizavel {
             gerenciador.trocarParaTela(GerenciadorInterfaces.NOVO_ANIME);
         });
         updateAnime.addActionListener(_ -> {
-            gerenciador.trocarParaTela(GerenciadorInterfaces.UPDATE_ANIME);
+            gerenciador.trocarParaTela(GerenciadorInterfaces.NOVA_TEMPORADA);
         });
     }
 

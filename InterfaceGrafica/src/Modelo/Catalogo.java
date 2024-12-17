@@ -36,20 +36,15 @@ public class Catalogo {
     }
 
     public int removeAnime(String nome) {
+        int i = 0;
         for(Anime anime : animes) {
             if(anime.getNome().equals(nome)) {
-                File pasta = new File("animes/" + anime.getPath());
-                if(pasta.exists() && pasta.isDirectory()) {
-                    pasta.delete();
-                    this.animes.remove(anime);
-                    break;
-                } else {
-                    System.out.println("Diretório não encontrado!");
-                    return 0;
-                }
+                this.animes.remove(i);
+                return 1;
             }
+            i++;
         }
-        return 1;
+        return 0;
     }
 
     public Anime getAnime(String nome) {

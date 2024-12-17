@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class InterfacePrincipal extends InterfaceComum implements Atualizavel {
-    JButton catalogo, dadosUsuario, sair, login, registrar, novoAnime, novaTemporada, novoEpisodio;
+    JButton catalogo, dadosUsuario, sair, login, registrar, novoAnime, novaTemporada, novoEpisodio, apagarConteudo;
 
     public InterfacePrincipal(GerenciadorInterfaces gerenciador) {
         super(gerenciador);
@@ -42,6 +42,9 @@ public class InterfacePrincipal extends InterfaceComum implements Atualizavel {
         });
         novoEpisodio.addActionListener(_ -> {
             gerenciador.trocarParaTela(GerenciadorInterfaces.NOVO_EPISODIO);
+        });
+        apagarConteudo.addActionListener(_ -> {
+            gerenciador.trocarParaTela(GerenciadorInterfaces.APAGA_ANIME);
         });
     }
 
@@ -81,7 +84,8 @@ public class InterfacePrincipal extends InterfaceComum implements Atualizavel {
                 registrar = CriaBotaoPreDefinido("Registrar novo administrador");
                 novoAnime = CriaBotaoPreDefinido("Adicionar Anime");
                 novaTemporada = CriaBotaoPreDefinido("Adicionar Temporada");
-                novoEpisodio = CriaBotaoPreDefinido("NovoEpisodio");
+                novoEpisodio = CriaBotaoPreDefinido("Adicionar Episodio");
+                apagarConteudo = CriaBotaoPreDefinido("Apagar Conteudo");
                 sair = CriaBotaoPreDefinido("Sair");
                 empilhamentoPanel.add(dadosUsuario);
                 empilhamentoPanel.add(registrar);
@@ -89,6 +93,7 @@ public class InterfacePrincipal extends InterfaceComum implements Atualizavel {
                 if(!Sistema.catalogo.animes.isEmpty()){
                     empilhamentoPanel.add(novaTemporada);
                     empilhamentoPanel.add(novoEpisodio);
+                    empilhamentoPanel.add(apagarConteudo);
                 }
                 empilhamentoPanel.add(sair);
                 InicializaBotoesAdmin();

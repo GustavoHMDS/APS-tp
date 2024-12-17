@@ -305,7 +305,7 @@ public class Sistema {
     }
 
     // Método auxiliar para deletar pastas recursivamente
-    private static boolean deletarPastaRecursivamente(File pasta) {
+    public static boolean deletarPastaRecursivamente(File pasta) {
         if (pasta.isDirectory()) {
             // Deleta todos os arquivos e subpastas
             File[] arquivos = pasta.listFiles();

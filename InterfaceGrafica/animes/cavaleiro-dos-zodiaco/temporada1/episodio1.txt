@@ -1,0 +1,3 @@
+Nome: dsadas
+Codigo: 6
+Path: animes/cavaleiro-dos-zodiaco/temporada1/episodios/Teste.mp4

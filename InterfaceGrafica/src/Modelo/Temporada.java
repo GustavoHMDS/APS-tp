@@ -44,7 +44,9 @@ public class Temporada {
 
     public void removerEpisodio(int indice) {
         if(this.episodiosQuantidade < 1) return;
+        System.out.println("entrou");
         File temporadaPasta = new File(this.path);
+        System.out.println(this.path);
         if(temporadaPasta.exists()) {
             File[] arquivos = temporadaPasta.listFiles();
             int episodioIndice = 0;
@@ -61,6 +63,7 @@ public class Temporada {
                     }
                 }
             }
+            System.out.println("apagou");
             this.episodiosQuantidade--;
             try{
                 File temporadaDados = new File(this.path + "dados.txt");
@@ -83,6 +86,10 @@ public class Temporada {
 
     public String getPath() {
         return path;
+    }
+
+    public int getEpisodiosQuantidade() {
+        return episodiosQuantidade;
     }
 
     public void setNome(String nome) {

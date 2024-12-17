@@ -4,6 +4,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import Controle.Sistema;
 
 public class Anime {
     private String nome;
@@ -45,6 +46,39 @@ public class Anime {
             }
         }
         return 0;
+    }
+
+    public void removerTemporada(int indice) {
+        if(this.temporadasQuantidade < 1) return;
+        File animePasta = new File(this.path);
+        if(animePasta.exists()) {
+            File[] arquivos = animePasta.listFiles();
+            int temporadaIndice = 0;
+            System.out.println(arquivos.length);
+            for(File arquivo : arquivos) {
+                if(arquivo.isDirectory() && arquivo.getName().contains("temporada")) {
+                    if(temporadaIndice > 0) {
+                        arquivo.renameTo(new File(this.path + "temporada" + temporadaIndice + "/"));
+                        temporadaIndice++;
+                    }
+
+                    if(arquivo.getName().contains(""+indice)) {
+                        boolean res = Sistema.deletarPastaRecursivamente(arquivo);
+                        System.out.println(res);
+                        temporadaIndice = indice;
+                    }
+                }
+            }
+            this.temporadasQuantidade--;
+            try{
+                File animeDados = new File(this.path + "dados.txt");
+                List<String> dadosAnime = Files.readAllLines(animeDados.toPath());
+                dadosAnime.set(2, "Temporadas: " + this.temporadasQuantidade);
+                Files.write(animeDados.toPath(), dadosAnime);
+            } catch(Exception e) {
+                System.out.println("Não foi possivel salvar mudanças no anime!");
+            }
+        }
     }
 
     public Temporada getTemporada(int indice) {

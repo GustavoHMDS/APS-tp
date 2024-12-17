@@ -422,7 +422,9 @@ public class Sistema {
     }
 
     public static int editarUsuario(String email, String[] dados) {
+        String basePath = "usuarios/";
         File pastaUsuario = new File("usuarios/" + email);
+
         if(!pastaUsuario.exists()) return 0;
         File arquivo = new File(pastaUsuario, "dados.txt");
         for (String dado : dados) System.out.println(dado);

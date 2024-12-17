@@ -1,4 +1,10 @@
 package Visão;
+import Controle.Sistema;
+import Modelo.Anime;
 
-public class InterfaceNovoEpisodio {
+import javax.swing.*;
+import java.awt.*;
+
+public class InterfaceNovoEpisodio{
+
 }

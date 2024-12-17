@@ -19,8 +19,7 @@ public class Temporada {
     }
 
     public void adicionarEpisodio(String nome, int codigo, String path) {
-        this.episodiosQuantidade++;
-        File novoEpisodioDados = new File(path + "episodio" + (this.episodiosQuantidade) + ".txt");
+        File novoEpisodioDados = new File(this.path + "episodio" + (this.episodiosQuantidade+1) + ".txt");
         try{
             novoEpisodioDados.createNewFile();
             List<String> dados = new ArrayList<>();
@@ -28,6 +27,12 @@ public class Temporada {
             dados.add("Codigo: " + codigo);
             dados.add("Path: " + this.path + path);
             Files.write(novoEpisodioDados.toPath(), dados);
+            this.episodiosQuantidade++;
+            File temporadaDados = new File(this.path + "dados.txt");
+            List<String> dadosTemporada = Files.readAllLines(temporadaDados.toPath());
+            dadosTemporada.set(2, "Episodios: " + this.episodiosQuantidade);
+            Files.write(temporadaDados.toPath(), dadosTemporada);
+
         } catch(Exception e) {
             System.out.println("Não foi possível guardar as informações do episódio.");
         }
@@ -53,6 +58,14 @@ public class Temporada {
                 }
             }
             this.episodiosQuantidade--;
+            try{
+                File temporadaDados = new File(this.path + "dados.txt");
+                List<String> dadosTemporada = Files.readAllLines(temporadaDados.toPath());
+                dadosTemporada.set(2, "Episodios: " + this.episodiosQuantidade);
+                Files.write(temporadaDados.toPath(), dadosTemporada);
+            } catch(Exception e) {
+                System.out.println("Não foi possivel salvar mudanças na temporada!");
+            }
         }
     }
 

@@ -22,6 +22,7 @@ public class InterfaceEditorDadosUsuario extends InterfaceComum implements Atual
         empilhamentoPanel.setLayout(new BoxLayout(empilhamentoPanel, BoxLayout.Y_AXIS));
         empilhamentoPanel.setAlignmentX(Component.CENTER_ALIGNMENT); // Centralizar os botões dentro do empilhamentoPanel
         empilhamentoPanel.setBackground(new Color(64, 44, 94));
+        empilhamentoPanel.setAutoscrolls(true);
         if(Sistema.usuario != null) {
             JLabel labelNome = new JLabel("Nome:");
             JTextField campoNome = new JTextField(Sistema.usuario.getNome());

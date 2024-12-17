@@ -1,0 +1,3 @@
+Nome: Teste
+Codigo: 0
+Path: animes/cavaleiros-do-zodiaco/temporada1/Episodios/teste.mp4

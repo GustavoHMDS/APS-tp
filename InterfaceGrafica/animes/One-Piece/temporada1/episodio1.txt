@@ -1,0 +1,3 @@
+Nome: dv
+Codigo: 21
+Path: animes/One-Piece/temporada1/episodios/1

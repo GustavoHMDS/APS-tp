@@ -15,6 +15,7 @@ public class Main {
         Sistema.screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Sistema.catalogo = new Catalogo();
         Sistema.preencheCatalogo();
+        System.out.println(Sistema.catalogo.animes.get(0).getTemporadasQuantidade());
         SwingUtilities.invokeLater(() -> {
             GerenciadorInterfaces gerenciador = new GerenciadorInterfaces();
             gerenciador.setVisible(true);

@@ -1,0 +1,8 @@
+CPF: 1
+Nome: a
+DataNascimento: 11/11/1999
+Email: a
+Senha: a
+Tipo: Cliente
+Assinatura: falso
+Vencimento: 17/12/2024

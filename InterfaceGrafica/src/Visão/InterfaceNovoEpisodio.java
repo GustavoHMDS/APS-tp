@@ -77,6 +77,7 @@ public class InterfaceNovoEpisodio extends InterfaceComum implements Atualizavel
                 int codigo = Integer.parseInt(campoCodigo.getText());
                 String path = campoPath.getText();
                 Temporada temp = animeSelecionado.getTemporada(temporada);
+                //System.out.println(temp.getNome());
                 temp.adicionarEpisodio(nome, codigo, "episodios/" + path);
 
                 gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL);

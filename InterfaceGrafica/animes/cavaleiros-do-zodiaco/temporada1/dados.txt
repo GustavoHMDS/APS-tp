@@ -1,4 +1,4 @@
 Nome: fefefaf
 Codigo: 7
-Episodios: 0
+Episodios: 2
 Path: animes/cavaleiros-do-zodiaco/temporada1/

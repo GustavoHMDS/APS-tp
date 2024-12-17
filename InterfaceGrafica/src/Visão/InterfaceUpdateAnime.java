@@ -25,25 +25,39 @@ public class InterfaceUpdateAnime extends InterfaceComum implements Atualizavel{
         for(int i = 0; i < Sistema.catalogo.animes.size(); i++) {
             animes[i] = Sistema.catalogo.animes.get(i).getNome();
         }
-        Temporada temporada = null;
         JLabel labelAnime = new JLabel("Anime: ");
-        Styles.setLabelStyle(labelAnime);
-
         JComboBox animeSelect = new JComboBox(animes);
-        JLabel labelTemporada = new JLabel("Temporada: ");
-        Styles.setLabelStyle(labelTemporada);
+        Styles.setLabelStyle(labelAnime);
+        animeSelect.setSelectedIndex(0);
+
+        JLabel novaTemporada = new JLabel("Dados nova temporada:");
+        JLabel labelNome = new JLabel("Nome: ");
+        JTextField campoNome = new JTextField();
+        JLabel labelCodigo = new JLabel("Codigo: ");
+        JTextField campoCodigo = new JTextField();
+
+        Styles.setLabelStyle(novaTemporada);
+        Styles.setLabelStyle(labelNome);
+        Styles.setLabelStyle(labelCodigo);
+        Styles.setTextFielStyle(campoNome);
+        Styles.setTextFielStyle(campoCodigo);
 
         empilhamentoPanel.add(animeSelect);
-        animeSelect.setSelectedIndex(0);
-        Anime anime = Sistema.catalogo.animes.get(0);
-        if(anime.getTemporadasQuantidade() > 0) {
-            String[] temporadas = new String[anime.getTemporadasQuantidade()];
-            for(int i = 0; i < anime.getTemporadasQuantidade(); i++) {
-                temporadas[i] = "Temporada " + i;
-            }
-            JComboBox temporadaSelect = new JComboBox(temporadas);
-            empilhamentoPanel.add(temporadaSelect);
-        }
+        empilhamentoPanel.add(novaTemporada);
+        empilhamentoPanel.add(labelNome);
+        empilhamentoPanel.add(campoNome);
+        empilhamentoPanel.add(labelCodigo);
+        empilhamentoPanel.add(campoCodigo);
+
+        JButton adicionarTemporada = CriaBotaoPreDefinido("Adicionar temporada", 250, 30, 16);
+        adicionarTemporada.addActionListener(e -> {
+            String nome = campoNome.getText();
+            int codigo = Integer.parseInt(campoCodigo.getText());
+            Anime animeSelecionado = Sistema.catalogo.getAnime(animeSelect.getSelectedItem().toString());
+            System.out.println(animeSelecionado.adicionarTemporada(nome, codigo));
+            gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL);
+        });
+        empilhamentoPanel.add(adicionarTemporada);
         centerPanel.add(empilhamentoPanel);
     }
 }

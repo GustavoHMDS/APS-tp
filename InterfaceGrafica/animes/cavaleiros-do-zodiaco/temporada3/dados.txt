@@ -1,0 +1,4 @@
+Nome: thethger
+Codigo: 5
+Episodios: 0
+Path: animes/cavaleiros-do-zodiaco/temporada3/

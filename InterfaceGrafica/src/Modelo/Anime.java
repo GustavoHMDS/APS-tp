@@ -18,11 +18,11 @@ public class Anime {
         this.path = path;
     }
 
-    public void adicionarTemporada(String nome, int codigo) {
+    public int adicionarTemporada(String nome, int codigo) {
         File arquivo = new File(this.path);
         if(arquivo.exists() && arquivo.isDirectory()) {
-            String temporadaPath = this.path + "temporada" + this.temporadasQuantidade+1 + "/";
-            File novaTemporada = new File(path);
+            String temporadaPath = this.path + "temporada" + (this.temporadasQuantidade+1) + "/";
+            File novaTemporada = new File(temporadaPath);
             if(novaTemporada.mkdir()) {
                 File temporadaDados = new File(temporadaPath + "dados.txt");
                 try{
@@ -33,11 +33,14 @@ public class Anime {
                     dados.add("Episodios: 0");
                     dados.add("Path: " + temporadaPath);
                     Files.write(temporadaDados.toPath(), dados);
+                    this.temporadasQuantidade++;
+                    return 1;
                 } catch (Exception e) {
                     System.out.println("Não foi possivel salvar dados da temporada. " + e);
                 }
             }
         }
+        return 0;
     }
 
     public Temporada getTemporada(int indice) {
@@ -72,6 +75,18 @@ public class Anime {
             System.out.println("Não foi possível ler dados da temporada. " + e);
         }
         return null;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
+    public void setTemporadasQuantidade(int temporadasQuantidade) {
+        this.temporadasQuantidade = temporadasQuantidade;
     }
 
     public void setPath(String path) {

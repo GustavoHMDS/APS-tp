@@ -20,7 +20,7 @@ public class Temporada {
 
     public void adicionarEpisodio(String nome, int codigo, String path) {
         this.episodiosQuantidade++;
-        File novoEpisodioDados = new File(path + "episodio" + this.episodiosQuantidade + ".txt");
+        File novoEpisodioDados = new File(path + "episodio" + (this.episodiosQuantidade) + ".txt");
         try{
             novoEpisodioDados.createNewFile();
             List<String> dados = new ArrayList<>();

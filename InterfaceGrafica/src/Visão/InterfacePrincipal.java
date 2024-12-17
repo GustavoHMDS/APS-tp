@@ -77,12 +77,12 @@ public class InterfacePrincipal extends InterfaceComum implements Atualizavel {
                 dadosUsuario = CriaBotaoPreDefinido("Meus dados");
                 registrar = CriaBotaoPreDefinido("Registrar novo administrador");
                 novoAnime = CriaBotaoPreDefinido("Adicionar Anime");
-                updateAnime = CriaBotaoPreDefinido("Atualizar Anime");
+                updateAnime = CriaBotaoPreDefinido("Adicionar Temporada");
                 sair = CriaBotaoPreDefinido("Sair");
                 empilhamentoPanel.add(dadosUsuario);
                 empilhamentoPanel.add(registrar);
                 empilhamentoPanel.add(novoAnime);
-                empilhamentoPanel.add(updateAnime);
+                if(!Sistema.catalogo.animes.isEmpty())empilhamentoPanel.add(updateAnime);
                 empilhamentoPanel.add(sair);
                 InicializaBotoesAdmin();
                 break;

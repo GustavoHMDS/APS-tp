@@ -1,0 +1,8 @@
+CPF: 121313
+Nome: qqqq
+DataNascimento: 11/11/3333
+Email: qwqw
+Senha: qwqw
+Tipo: Cliente
+Assinatura: falso
+Vencimento: 12/1/2025

@@ -1,0 +1,4 @@
+Nome: qqqq
+Codigo: 3
+Episodios: 0
+Path: animes/qqqq/temporada2/

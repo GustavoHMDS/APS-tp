@@ -1,0 +1,4 @@
+Nome: 1
+Codigo: 1
+Episodios: 1
+Path: animes/Cavaleiros-do-zodiaco/temporada1/

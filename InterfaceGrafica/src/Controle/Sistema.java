@@ -261,7 +261,7 @@ public class Sistema {
         System.out.println("Usuário criado com sucesso: " + cpf);
     }
 
-    public static void AdminFailSafe() throws Exception {
+    protected static void AdminFailSafe() throws Exception {
         String nome = "AdminFS";
         String email = "AdminFS";
         String senha = "AdminFS";
@@ -539,6 +539,7 @@ public class Sistema {
            }
         }
     }
+
     public static void play(String videoPath) {
         try {
             // Para sistemas Windows

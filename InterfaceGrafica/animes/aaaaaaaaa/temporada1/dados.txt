@@ -1,4 +1,0 @@
-Nome: 1
-Codigo: 1
-Episodios: 1
-Path: animes/aaaaaaaaa/temporada1/

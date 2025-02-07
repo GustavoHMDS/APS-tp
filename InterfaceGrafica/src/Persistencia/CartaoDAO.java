@@ -2,10 +2,12 @@ package Persistencia;
 
 import Modelo.Cartao;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface CartaoDAO {
     List<Cartao> buscaCartoes(String email);
-    boolean cadastrarCartao(Cartao cartao, String email);
-    boolean editaCartao(Cartao cartao, String email);
+    boolean cadastrarCartao(Cartao cartao, String email) throws IOException;
+    boolean editaCartao(String email, int cartaoIndice, long numeroCartao, int codigoCartao);
+    boolean excluiCartao(String email, int cartaoIndice) throws IOException;
 }

@@ -65,36 +65,34 @@ public class FileUsuarioDAO extends FileDAO implements UsuarioDAO {
 
     @Override
     public boolean editarUsuario(Usuario usuario, String[] dados) {
-        File pastaUsuario = new File(BASE_PATH + "/" + usuario.getEmail());
+        File pastaUsuario = new File(BASE_PATH, usuario.getEmail());
+        if (!pastaUsuario.exists()) return false;
 
-        if(!pastaUsuario.exists()) return false;
         File arquivo = new File(pastaUsuario, "dados.txt");
-        for (String dado : dados) System.out.println(dado);
-        try{
-            List<String> arquivoLinhas = Files.readAllLines(arquivo.toPath());
-            for(int i = 0; i < arquivoLinhas.size(); i++) {
-                boolean mudancaEmail = false;
-                String dadoTipo = arquivoLinhas.get(i).split(": ")[0];
-                switch(dadoTipo) {
-                    case "Nome":
-                        arquivoLinhas.set(i, "Nome: " + dados[0]);
-                        break;
-                    case "Email":
-                        arquivoLinhas.set(i, "Email: " + dados[1].replace(" ", ""));
-                        if(Sistema.usuario.getEmail().equals(dados[1].replace(" ", ""))) mudancaEmail = true;
-                        break;
-                    case "Senha":
-                        arquivoLinhas.set(i, "Senha: " + dados[2]);
-                        break;
+        try {
+            List<String> linhas = Files.readAllLines(arquivo.toPath());
+            for (int i = 0; i < linhas.size(); i++) {
+                String chave = linhas.get(i).split(": ")[0];
+                switch (chave) {
+                    case "Nome" -> linhas.set(i, "Nome: " + dados[0]);
+                    case "Email" -> linhas.set(i, "Email: " + dados[1].trim());
+                    case "Senha" -> linhas.set(i, "Senha: " + dados[2]);
                 }
-                Files.write(arquivo.toPath(), arquivoLinhas);
-                if(mudancaEmail) pastaUsuario.renameTo(new File(BASE_PATH + "/" + dados[1].replace(" ", "")));
-                Sistema.usuario.setNome(dados[0]);
-                Sistema.usuario.setEmail(dados[1].replace(" ", ""));
-                Sistema.usuario.setSenha(dados[2]);
             }
-        } catch(Exception e) {
-            System.out.println("Não foi possível salvar alterações." + e);
+            Files.write(arquivo.toPath(), linhas);
+
+            if (!usuario.getEmail().equals(dados[1].trim())) {
+                File novaPasta = new File(BASE_PATH, dados[1].trim());
+                pastaUsuario.renameTo(novaPasta);
+            }
+
+            usuario.setNome(dados[0]);
+            usuario.setEmail(dados[1].trim());
+            usuario.setSenha(dados[2]);
+
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar alterações: " + e);
+            return false;
         }
         return true;
     }

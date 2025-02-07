@@ -3,7 +3,7 @@ package Persistencia;
 import java.io.File;
 import java.io.IOException;
 
-public abstract class FileDAO {
+abstract class FileDAO {
     protected static boolean deletarPastaRecursivamente(File pasta) {
         if (pasta.isDirectory()) {
             // Deleta todos os arquivos e subpastas

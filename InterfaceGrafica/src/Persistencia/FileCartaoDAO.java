@@ -9,9 +9,23 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileCartaoDAO implements CartaoDAO{
+public class FileCartaoDAO extends FileDAO implements CartaoDAO{
     private final String BASE_PATH = "usuarios";
 
+
+    //Singleton
+    private static FileCartaoDAO instance;
+
+    private FileCartaoDAO(){}
+
+    public static FileCartaoDAO getInstance(){
+        if(instance == null){
+            instance = new FileCartaoDAO();
+        }
+        return instance;
+    }
+
+    //Métodos
     @Override
     public List<Cartao> buscaCartoes(String email) {
         File pastaCartoes = new File(BASE_PATH, email + "/cartoes");

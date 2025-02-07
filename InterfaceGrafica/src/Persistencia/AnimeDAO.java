@@ -2,11 +2,11 @@ package Persistencia;
 
 import Modelo.Anime;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface AnimeDAO {
-    Anime buscarAnime(String nome);
     List<Anime> carregarAnimes();
-    boolean adicionarAnime(Anime anime);
-    boolean excluirAnime(Anime anime);
+    boolean adicionarAnime(String nome, int codigo);
+    boolean excluirAnime(Anime anime) throws IOException;
 }

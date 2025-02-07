@@ -14,6 +14,19 @@ import java.util.List;
 public class FileUsuarioDAO extends FileDAO implements UsuarioDAO {
     private static final String BASE_PATH = "usuarios";
 
+    //Singleton
+    private static FileUsuarioDAO instance;
+
+    private FileUsuarioDAO() {}
+
+    public static FileUsuarioDAO getInstance() {
+        if (instance == null) {
+            instance = new FileUsuarioDAO();
+        }
+        return instance;
+    }
+
+    //Métodos
     @Override
     public Usuario logInUsuario(String email, String senha) {
         File pastaUsuario = new File(BASE_PATH, email);

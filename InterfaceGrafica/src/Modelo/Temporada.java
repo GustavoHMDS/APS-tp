@@ -6,13 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Temporada {
+    private Anime anime;
     private String nome;
     private int codigo;
     private int episodiosQuantidade;
     private String path;
 
-    public Temporada(String nome, int codigo, int episodiosQuantidade, String path) {
+    public Temporada(String nome, Anime anime, int codigo, int episodiosQuantidade, String path) {
         this.nome = nome;
+        this.anime = anime;
         this.codigo = codigo;
         this.episodiosQuantidade = episodiosQuantidade;
         this.path = path;
@@ -24,7 +26,6 @@ public class Temporada {
         if(!pastaEpisodios.exists()) pastaEpisodios.mkdir();
         File novoEpisodioDados = new File(this.path + "episodio" + (this.episodiosQuantidade+1) + ".txt");
         try{
-
             novoEpisodioDados.createNewFile();
             List<String> dados = new ArrayList<>();
             dados.add("Nome: " + nome);

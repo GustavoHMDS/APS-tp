@@ -1,4 +1,4 @@
 Nome: cavaleiro dos zodiaco
 Codigo: 5
-Temporadas: 1
+Temporadas: 2
 Path: animes/cavaleiro-dos-zodiaco/

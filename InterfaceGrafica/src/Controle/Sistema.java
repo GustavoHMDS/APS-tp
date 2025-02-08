@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -463,7 +464,6 @@ public class Sistema {
             try{
                 File[] animes = pastaAnimes.listFiles();
                 for(File arquivo : animes) {
-                    System.out.println(arquivo.getName());
                     if(!arquivo.isDirectory()) continue;
                     File arquivoDados = new File(arquivo, "dados.txt");
                     if(!arquivoDados.exists()) continue;

@@ -37,7 +37,7 @@ public class Anime {
                     this.temporadasQuantidade++;
                     File dadosAnimeArquivo = new File(arquivo, "dados.txt");
                     List<String> dadosAnime = Files.readAllLines(dadosAnimeArquivo.toPath());
-                    dadosAnime.set(2,"Temporada: " + this.temporadasQuantidade);
+                    dadosAnime.set(2,"Temporadas: " + this.temporadasQuantidade);
                     Files.write(dadosAnimeArquivo.toPath(), dadosAnime);
                     return 1;
                 } catch (Exception e) {
@@ -108,7 +108,7 @@ public class Anime {
                         break;
                 }
             }
-            return new Temporada(nome, codigo, episodios, path);
+            return new Temporada(nome, this, codigo, episodios, path);
         } catch (Exception e) {
             System.out.println("Não foi possível ler dados da temporada. " + e);
         }

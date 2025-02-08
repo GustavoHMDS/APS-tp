@@ -1,0 +1,4 @@
+Nome: alguma coisa
+Codigo: 8
+Episodios: 0
+Path: animes/cavaleiro-dos-zodiaco/temporada2/

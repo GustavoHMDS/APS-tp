@@ -1,0 +1,3 @@
+Nome: Arqui inimigo
+Codigo: 7
+Path: animes/One-Piece/temporada1/episodios/alguma_coisa.mp4

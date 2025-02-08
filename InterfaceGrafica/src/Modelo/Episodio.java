@@ -4,11 +4,13 @@ import java.io.File;
 
 public class Episodio {
     private String nome;
+    private Temporada temporada;
     private int codigo;
     private String path;
 
-    Episodio(String nome, int codigo, String path) {
+    Episodio(String nome, Temporada temporada, int codigo, String path) {
         this.nome = nome;
+        this.temporada = temporada;
         this.codigo = codigo;
         this.path = path;
     }

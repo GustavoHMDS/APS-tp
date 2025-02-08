@@ -1,4 +1,4 @@
 Nome: sdf
 Codigo: 11
-Episodios: 1
+Episodios: 2
 Path: animes/One-Piece/temporada1/

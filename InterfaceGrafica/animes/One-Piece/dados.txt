@@ -1,4 +1,4 @@
 Nome: One Piece
 Codigo: 7
-Temporada: 1
+Temporadas: 1
 Path: animes/One-Piece/

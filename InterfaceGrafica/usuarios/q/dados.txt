@@ -1,0 +1,8 @@
+CPF: 12
+Nome: q
+DataNascimento: 11/11/1111
+Email: q
+Senha: q
+Tipo: Cliente
+Assinatura: falso
+Vencimento: 17/12/2024

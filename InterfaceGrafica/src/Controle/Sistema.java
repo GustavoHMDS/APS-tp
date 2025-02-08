@@ -262,7 +262,7 @@ public class Sistema {
         System.out.println("Usuário criado com sucesso: " + cpf);
     }
 
-    public static void AdminFailSafe() throws Exception {
+    protected static void AdminFailSafe() throws Exception {
         String nome = "AdminFS";
         String email = "AdminFS";
         String senha = "AdminFS";
@@ -489,6 +489,7 @@ public class Sistema {
                             }
                         }
                         Sistema.catalogo.animes.add(new Anime(nome, codigo, temporadasQtd, path));
+                        System.out.println(Sistema.catalogo.animes.get(Sistema.catalogo.animes.size() - 1).getTemporadasQuantidade());
                     } catch (Exception e) {
                         System.out.println("Não foi possível recuparar dados do anime. " + e);
                     }
@@ -538,6 +539,7 @@ public class Sistema {
            }
         }
     }
+
     public static void play(String videoPath) {
         try {
             // Para sistemas Windows

@@ -118,7 +118,7 @@ public class FileCartaoDAO extends FileDAO implements CartaoDAO{
     }
 
     @Override
-    public boolean excluiCartao(String email, int cartaoIndice) throws IOException {
+    public boolean excluiCartao(String email, int cartaoIndice) {
         File cartoesUsuario = new File(BASE_PATH + email + "/cartoes");
         if(!cartoesUsuario.exists()) return false;
         File[] cartoes = cartoesUsuario.listFiles();

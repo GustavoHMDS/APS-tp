@@ -8,32 +8,8 @@ import java.util.List;
 public class Catalogo {
     public List<Anime> animes = new ArrayList<>();
 
-    public int adicionaAnime(String nome, int codigo) {
-        File pastaAnimes = new File("animes/");
-        if(!pastaAnimes.exists()) {
-            if(!pastaAnimes.mkdir()) return 0;
-        }
-        File anime = new File(pastaAnimes, nome.replace(" ", "-") + "/");
-        if(!anime.mkdir()) {
-            return 0;
-        }
-        File dadosAnime = new File(anime, "dados.txt");
-        try{
-            dadosAnime.createNewFile();
-            List<String> dados = new ArrayList<>();
-            dados.add("Nome: " + nome);
-            dados.add("Codigo: " + codigo);
-            dados.add("Temporadas: " + 0);
-            dados.add("Path: animes/" + nome.replace(" ", "-") + "/");
-            Files.write(dadosAnime.toPath(), dados);
-
-            this.animes.add(new Anime(nome, codigo, 0,"animes/" + nome.replace(" ", "-") + "/"));
-            System.out.println(this.animes.size());
-        } catch (Exception e) {
-            System.out.println("Não foi possível salvar dados do anime! " + e);
-        }
-
-        return 1;
+    public void adicionaAnime(Anime anime) {
+        animes.add(anime);
     }
 
     public int removeAnime(String nome) {

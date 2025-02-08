@@ -7,6 +7,7 @@ import Modelo.Cliente;
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
 import java.awt.*;
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel{
@@ -97,7 +98,7 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
                             int cartao = Integer.parseInt(cartaoSelect.getSelectedItem().toString());
                             cartaoSelect.removeItemAt(cartaoSelect.getItemCount() - 1);
                             cliente.removerCartao(cartao-1);
-                            if(Sistema.removerCartao(cliente.getEmail(), cartao) == 1) {
+                            if(Sistema.removerCartao(cliente.getEmail(), cartao)) {
                                 labelNumCartoes.setText("Quantidade de cartões: " + cliente.getCartoesQuantidade());
                             }
                             if(cartaoSelect.getItemCount() > 0) {
@@ -159,7 +160,7 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
-            Sistema.LogOffUsuario();
+            Sistema.logOffUsuario();
             gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL);
         });
         empilhamentoPanel.add(excluirConta);

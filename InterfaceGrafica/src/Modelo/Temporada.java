@@ -93,6 +93,10 @@ public class Temporada {
         return episodiosQuantidade;
     }
 
+    public void setEpisodiosQuantidade(int episodiosQuantidade) {
+        this.episodiosQuantidade = episodiosQuantidade;
+    }
+
     public void setNome(String nome) {
         this.nome = nome;
     }

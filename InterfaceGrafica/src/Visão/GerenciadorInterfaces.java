@@ -43,27 +43,27 @@ public class GerenciadorInterfaces extends JFrame {
     static final String NOVO_EPISODIO = "novoEpisodio";
     static final String APAGA_ANIME = "apagaAnime";
 
-    public GerenciadorInterfaces() {
+    public GerenciadorInterfaces(Sistema sistema) {
         setTitle("PlaceHolder");
-        setSize(Sistema.screenSize.width, Sistema.screenSize.height);
+        setSize(Sistema.getScreenSize().width, Sistema.getScreenSize().height);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         cardLayout = new CardLayout();
         telaAtual = new JPanel(cardLayout);
 
         // Inicialize as telas de login e interfaces de usuário
-        login = new InterfaceLogin(this);
-        verCatalogo = new InterfaceCatalogo(this);
-        principal = new InterfacePrincipal(this);
-        registro = new InterfaceRegistro(this);
-        dadosUsuario = new InterfaceDadosUsuario(this);
-        editorDadosUSuario = new InterfaceEditorDadosUsuario(this);
-        adicionadorAnime = new InterfaceAdicaoAnime(this);
-        registraCartao = new InterfaceRegistraCartao(this);
-        telaPagamento = new InterfacePagamento(this);
-        novaTemporada = new InterfaceNovaTemporada(this);
-        novoEpisodio = new InterfaceNovoEpisodio(this);
-        apagaAnime = new InterfaceApagaAnime(this);
+        login = new InterfaceLogin(this, sistema);
+        verCatalogo = new InterfaceCatalogo(this, sistema);
+        principal = new InterfacePrincipal(this, sistema);
+        registro = new InterfaceRegistro(this, sistema);
+        dadosUsuario = new InterfaceDadosUsuario(this, sistema);
+        editorDadosUSuario = new InterfaceEditorDadosUsuario(this, sistema);
+        adicionadorAnime = new InterfaceAdicaoAnime(this, sistema);
+        registraCartao = new InterfaceRegistraCartao(this, sistema);
+        telaPagamento = new InterfacePagamento(this, sistema);
+        novaTemporada = new InterfaceNovaTemporada(this, sistema);
+        novoEpisodio = new InterfaceNovoEpisodio(this, sistema);
+        apagaAnime = new InterfaceApagaAnime(this, sistema);
 
         // Mapa de telas
         telas = new HashMap<>();

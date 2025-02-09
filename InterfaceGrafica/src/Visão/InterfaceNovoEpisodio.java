@@ -1,14 +1,15 @@
 package Visão;
 import Controle.Sistema;
 import Modelo.Anime;
+import Modelo.Episodio;
 import Modelo.Temporada;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class InterfaceNovoEpisodio extends InterfaceComum implements Atualizavel{
-    InterfaceNovoEpisodio(GerenciadorInterfaces gerenciadorInterfaces) {
-        super(gerenciadorInterfaces);
+    InterfaceNovoEpisodio(GerenciadorInterfaces gerenciadorInterfaces, Sistema sistema) {
+        super(gerenciadorInterfaces, sistema);
 
         atualizarInterface();
     }
@@ -16,16 +17,12 @@ public class InterfaceNovoEpisodio extends InterfaceComum implements Atualizavel
     public void atualizarInterface() {
         super.centerPanel.removeAll();
 
-        JPanel empilhamentoPanel = new JPanel();
-        empilhamentoPanel.setLayout(new BoxLayout(empilhamentoPanel, BoxLayout.Y_AXIS));
-        empilhamentoPanel.setAlignmentX(Component.CENTER_ALIGNMENT); // Centralizar os botões dentro do empilhamentoPanel
-        empilhamentoPanel.setBackground(new Color(64, 44, 94));
-        empilhamentoPanel.setAutoscrolls(true);
+        JPanel empilhamentoPanel = preparaPainel();
 
-        if(Sistema.catalogo.animes.size() > 1) {
-            String[] animes = new String[Sistema.catalogo.animes.size()];
-            for(int i = 0; i < Sistema.catalogo.animes.size(); i++) {
-                    animes[i] = Sistema.catalogo.animes.get(i).getNome();
+        if(sistema.getCatalogo().animes.size() > 1) {
+            String[] animes = new String[sistema.getCatalogo().animes.size()];
+            for(int i = 0; i < sistema.getCatalogo().animes.size(); i++) {
+                    animes[i] = sistema.getCatalogo().animes.get(i).getNome();
             }
             JLabel labelAnime = new JLabel("Anime: ");
             JComboBox animeSelect = new JComboBox(animes);
@@ -67,7 +64,7 @@ public class InterfaceNovoEpisodio extends InterfaceComum implements Atualizavel
                     return;
                 }
                 int temporada = Integer.parseInt(campoTemporada.getText());
-                Anime animeSelecionado = Sistema.catalogo.getAnime(animeSelect.getSelectedItem().toString());
+                Anime animeSelecionado = sistema.getCatalogo().getAnime(animeSelect.getSelectedItem().toString());
                 System.out.println(animeSelecionado.getNome() + " " + animeSelecionado.getTemporadasQuantidade());
                 if(temporada > animeSelecionado.getTemporadasQuantidade() || temporada <= 0) {
                     JOptionPane.showMessageDialog(null, "Temporada iválida para o anime " + animeSelecionado.getNome());
@@ -78,7 +75,8 @@ public class InterfaceNovoEpisodio extends InterfaceComum implements Atualizavel
                 String path = campoPath.getText();
                 Temporada temp = animeSelecionado.getTemporada(temporada);
                 //System.out.println(temp.getNome());
-                temp.adicionarEpisodio(nome, codigo, "episodios/" + path);
+                Episodio novoEpisodio = new Episodio(nome, temp, codigo, "episodios/" + path);
+                temp.adicionarEpisodio(novoEpisodio);
 
                 gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL);
             });

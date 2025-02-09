@@ -2,21 +2,17 @@ package Visão;
 
 import Controle.Sistema;
 import Modelo.Anime;
-import Modelo.Cliente;
 import Modelo.Temporada;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.nio.file.Files;
-import java.util.List;
 
 public class InterfaceApagaAnime extends InterfaceComum implements Atualizavel{
     Anime anime;
     Temporada temporada;
     int episodioIndex, temporadaIndex;
-    InterfaceApagaAnime(GerenciadorInterfaces gerenciadorInterfaces){
-        super(gerenciadorInterfaces);
+    InterfaceApagaAnime(GerenciadorInterfaces gerenciadorInterfaces, Sistema sistema){
+        super(gerenciadorInterfaces, sistema);
         atualizarInterface();
     }
 
@@ -29,7 +25,7 @@ public class InterfaceApagaAnime extends InterfaceComum implements Atualizavel{
         empilhamentoPanel.setAlignmentX(Component.CENTER_ALIGNMENT); // Centralizar os botões dentro do empilhamentoPanel
         empilhamentoPanel.setBackground(new Color(64, 44, 94));
         empilhamentoPanel.setAutoscrolls(true);
-        if(Sistema.catalogo.animes.size() > 1) {
+        if(sistema.getCatalogo().animes.size() > 1) {
 
             // Texto acima da JComboBox de animes
             JLabel animeComboBoxLabel = new JLabel("Selecione um anime:");
@@ -63,11 +59,11 @@ public class InterfaceApagaAnime extends InterfaceComum implements Atualizavel{
             Styles.setLabelStyle(episodioInfoLabel);
             episodioInfoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-            for(int i = 0; i < Sistema.catalogo.animes.size(); i++) {
-                animeComboBox.addItem(Sistema.catalogo.animes.get(i).getNome());
+            for(int i = 0; i < sistema.getCatalogo().animes.size(); i++) {
+                animeComboBox.addItem(sistema.getCatalogo().animes.get(i).getNome());
             }
             animeComboBox.setSelectedIndex(0);
-            anime = Sistema.catalogo.animes.get(0);
+            anime = sistema.getCatalogo().animes.get(0);
             temporadaComboBox.addItem("Todas as temporadas");
             for(int i = 0; i < anime.getTemporadasQuantidade(); i++) {
                 temporadaComboBox.addItem("Temporada " + (i+1));
@@ -76,7 +72,7 @@ public class InterfaceApagaAnime extends InterfaceComum implements Atualizavel{
             temporadaIndex = episodioIndex = -1;
 
             animeComboBox.addActionListener(e -> {
-                anime = Sistema.catalogo.getAnime(animeComboBox.getSelectedItem().toString());
+                anime = sistema.getCatalogo().getAnime(animeComboBox.getSelectedItem().toString());
                 resetTemporadaComboBox(temporadaComboBox);
                 resetEpisodioComboBox(episodioComboBox);
             });
@@ -115,7 +111,7 @@ public class InterfaceApagaAnime extends InterfaceComum implements Atualizavel{
             excluirButton.addActionListener(e -> {
                 if(anime == null) return;
                 if(temporadaIndex == -1) {
-                    Sistema.catalogo.removeAnime(anime.getNome());
+                    sistema.getCatalogo().removeAnime(anime.getNome());
                 } else if(episodioIndex == -1) {
                     anime.removerTemporada(temporadaIndex);
                 } else {

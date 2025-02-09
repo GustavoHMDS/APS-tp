@@ -1,6 +1,7 @@
-package Persistencia;
+package Persistencia.FileDAOs;
 
 import Modelo.Cartao;
+import Persistencia.DAOs.CartaoDAO;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -9,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileCartaoDAO extends FileDAO implements CartaoDAO{
+public class FileCartaoDAO extends FileDAO implements CartaoDAO {
     private final String BASE_PATH = "usuarios";
 
 

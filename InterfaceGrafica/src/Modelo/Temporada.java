@@ -10,6 +10,7 @@ public class Temporada {
     private String nome;
     private int codigo;
     private int episodiosQuantidade;
+    private List<Episodio> episodios;
     private String path;
 
     public Temporada(String nome, Anime anime, int codigo, int episodiosQuantidade, String path) {
@@ -17,64 +18,28 @@ public class Temporada {
         this.anime = anime;
         this.codigo = codigo;
         this.episodiosQuantidade = episodiosQuantidade;
+        this.episodios = new ArrayList<>();
         this.path = path;
     }
 
-    public void adicionarEpisodio(String nome, int codigo, String path) {
-        File arquivoTemporada = new File(this.path);
-        File pastaEpisodios = new File(arquivoTemporada, "episodios/");
-        if(!pastaEpisodios.exists()) pastaEpisodios.mkdir();
-        File novoEpisodioDados = new File(this.path + "episodio" + (this.episodiosQuantidade+1) + ".txt");
-        try{
-            novoEpisodioDados.createNewFile();
-            List<String> dados = new ArrayList<>();
-            dados.add("Nome: " + nome);
-            dados.add("Codigo: " + codigo);
-            dados.add("Path: " + this.path + path);
-            Files.write(novoEpisodioDados.toPath(), dados);
-            this.episodiosQuantidade++;
-            File temporadaDados = new File(this.path + "dados.txt");
-            List<String> dadosTemporada = Files.readAllLines(temporadaDados.toPath());
-            dadosTemporada.set(2, "Episodios: " + this.episodiosQuantidade);
-            Files.write(temporadaDados.toPath(), dadosTemporada);
-
-        } catch(Exception e) {
-            System.out.println("Não foi possível guardar as informações do episódio.");
-        }
+    public void adicionarEpisodio(Episodio episodio) {
+        this.episodios.add(episodio);
+        episodiosQuantidade++;
     }
 
-    public void removerEpisodio(int indice) {
-        if(this.episodiosQuantidade < 1) return;
-        System.out.println("entrou");
-        File temporadaPasta = new File(this.path);
-        System.out.println(this.path);
-        if(temporadaPasta.exists()) {
-            File[] arquivos = temporadaPasta.listFiles();
-            int episodioIndice = 0;
-            for(File arquivo : arquivos) {
-                if(arquivo.isDirectory() == false && arquivo.getName().contains("episodio")) {
-                    if(episodioIndice > 0) {
-                        arquivo.renameTo(new File(this.path + "episodio" + episodioIndice + ".txt"));
-                        episodioIndice++;
-                    }
+    public void setEpisodios(List<Episodio> episodios) {
+        this.episodios = episodios;
+    }
 
-                    if(arquivo.getName().contains(""+indice)) {
-                        arquivo.delete();
-                        episodioIndice = indice;
-                    }
-                }
-            }
-            System.out.println("apagou");
-            this.episodiosQuantidade--;
-            try{
-                File temporadaDados = new File(this.path + "dados.txt");
-                List<String> dadosTemporada = Files.readAllLines(temporadaDados.toPath());
-                dadosTemporada.set(2, "Episodios: " + this.episodiosQuantidade);
-                Files.write(temporadaDados.toPath(), dadosTemporada);
-            } catch(Exception e) {
-                System.out.println("Não foi possivel salvar mudanças na temporada!");
+    public boolean removerEpisodio(int indice) {
+        for(Episodio episodio : episodios) {
+            if(episodio.getCodigo() == indice) {
+                episodios.remove(episodio);
+                episodiosQuantidade--;
+                return true;
             }
         }
+        return false;
     }
 
     public String getNome() {

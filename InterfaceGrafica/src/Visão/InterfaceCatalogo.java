@@ -14,8 +14,8 @@ public class InterfaceCatalogo extends InterfaceComum implements Atualizavel {
     String pathTemp;
     String pathEp;
 
-    public InterfaceCatalogo(GerenciadorInterfaces gerenciador) {
-        super(gerenciador);
+    public InterfaceCatalogo(GerenciadorInterfaces gerenciador, Sistema sistema) {
+        super(gerenciador, sistema);
         atualizarInterface();
     }
 
@@ -64,17 +64,17 @@ public class InterfaceCatalogo extends InterfaceComum implements Atualizavel {
         Styles.setLabelStyle(episodioInfoLabel);
         episodioInfoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        if (!Sistema.catalogo.animes.isEmpty()) {
+        if (!sistema.getCatalogo().animes.isEmpty()) {
             // Preenche a ComboBox de animes
-            for (int i = 0; i < Sistema.catalogo.animes.size(); i++) {
-                animeComboBox.addItem(Sistema.catalogo.animes.get(i).getNome());
+            for (int i = 0; i < sistema.getCatalogo().animes.size(); i++) {
+                animeComboBox.addItem(sistema.getCatalogo().animes.get(i).getNome());
             }
 
             // Listener para atualizar informações do anime e temporadas
             animeComboBox.addActionListener(e -> {
                 String nomeSelecionado = (String) animeComboBox.getSelectedItem();
                 if (nomeSelecionado != null) {
-                    Anime anime = Sistema.catalogo.getAnime(nomeSelecionado);
+                    Anime anime = sistema.getCatalogo().getAnime(nomeSelecionado);
                     if (anime != null) {
                         animeInfoLabel.setText(
                                 "<html><b>Nome:</b> " + anime.getNome() +
@@ -115,7 +115,7 @@ public class InterfaceCatalogo extends InterfaceComum implements Atualizavel {
             temporadaComboBox.addActionListener(e -> {
                 String temporadaSelecionada = (String) temporadaComboBox.getSelectedItem();
                 if (temporadaSelecionada != null) {
-                    Anime anime = Sistema.catalogo.getAnime((String) animeComboBox.getSelectedItem());
+                    Anime anime = sistema.getCatalogo().getAnime((String) animeComboBox.getSelectedItem());
                     if (anime != null) {
                         File temporadaDir = new File(anime.getPath(), temporadaSelecionada);
                         File episodiosDir = new File(temporadaDir, "Episodios");
@@ -142,10 +142,10 @@ public class InterfaceCatalogo extends InterfaceComum implements Atualizavel {
 
             // Listener para assistir o episódio
             assistirButton.addActionListener(e -> {
-                if(!Sistema.getTipoUsuario().equals("Guest") || Sistema.usuario instanceof Cliente cliente && cliente.isPremium()){
+                if(!sistema.getTipoUsuario().equals("Guest") || sistema.getUsuario() instanceof Cliente cliente && cliente.isPremium()){
                     String episodioSelecionado = (String) episodioComboBox.getSelectedItem();
                     if (episodioSelecionado != null) {
-                        Anime anime = Sistema.catalogo.getAnime((String) animeComboBox.getSelectedItem());
+                        Anime anime = sistema.getCatalogo().getAnime((String) animeComboBox.getSelectedItem());
                         String temporadaSelecionada = (String) temporadaComboBox.getSelectedItem();
                         if (anime != null) {
                             File temporadaDir = new File(anime.getPath(), temporadaSelecionada);
@@ -158,7 +158,7 @@ public class InterfaceCatalogo extends InterfaceComum implements Atualizavel {
                                 try{
                                     List<String> episodioLinha = Files.readAllLines(episodioTxt.toPath());
                                     String[] path =  episodioLinha.get(2).split(": ");
-                                    Sistema.play(path[1]);
+                                    sistema.play(path[1]);
 
                                 } catch(Exception ee) {
                                     System.out.println("Erro na leitura de path");
@@ -205,8 +205,8 @@ public class InterfaceCatalogo extends InterfaceComum implements Atualizavel {
         empilhamentoPanel.add(assistirButton);
 
         // Configuração dos tamanhos
-        centerPanel.setSize(new Dimension(Sistema.screenSize.width, Sistema.screenSize.height - 120));
-        empilhamentoPanel.setSize(new Dimension(Sistema.screenSize.width, Sistema.screenSize.height - 120));
+        centerPanel.setSize(new Dimension(Sistema.getScreenSize().width, Sistema.getScreenSize().height - 120));
+        empilhamentoPanel.setSize(new Dimension(Sistema.getScreenSize().width, Sistema.getScreenSize().height - 120));
 
         // Adiciona o painel principal
         centerPanel.add(empilhamentoPanel);

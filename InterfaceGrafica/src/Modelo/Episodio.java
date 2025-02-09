@@ -8,7 +8,7 @@ public class Episodio {
     private int codigo;
     private String path;
 
-    Episodio(String nome, Temporada temporada, int codigo, String path) {
+    public Episodio(String nome, Temporada temporada, int codigo, String path) {
         this.nome = nome;
         this.temporada = temporada;
         this.codigo = codigo;

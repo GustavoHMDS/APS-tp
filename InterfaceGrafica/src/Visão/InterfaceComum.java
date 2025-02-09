@@ -1,8 +1,6 @@
 package Visão;
 
 import Controle.Sistema;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
@@ -14,10 +12,11 @@ public class InterfaceComum extends JPanel {
     protected JTextField campoMes;
     protected JTextField campoAno;
     protected JPanel centerPanel;
+    protected Sistema sistema;
 
-
-    public InterfaceComum(GerenciadorInterfaces gerenciador) {
+    public InterfaceComum(GerenciadorInterfaces gerenciador, Sistema sistema) {
         this.gerenciador = gerenciador;
+        this.sistema = sistema;
         setSize(1300, 800);
         setLayout(new BorderLayout());
         setBackground(Styles.background); // Cor de fundo da InterfaceComum
@@ -27,7 +26,7 @@ public class InterfaceComum extends JPanel {
         JPanel topPanel = new JPanel(new BorderLayout());
         topPanel.setOpaque(false); // Tornar transparente para herdar a cor do pai
 
-        home = CriaBotaoPreDefinido(Sistema.nomeApp);
+        home = CriaBotaoPreDefinido(sistema.nomeApp);
         ImageIcon logo = new ImageIcon("./src/Imagens/anitoons-logo.png");
         home.setIcon(logo);
         if (home.getIcon() != null) {
@@ -121,5 +120,13 @@ public class InterfaceComum extends JPanel {
         painelData.add(campoAno);
 
         return painelData;
+    }
+    protected JPanel preparaPainel() {
+        JPanel empilhamentoPanel = new JPanel();
+        empilhamentoPanel.setLayout(new BoxLayout(empilhamentoPanel, BoxLayout.Y_AXIS));
+        empilhamentoPanel.setAlignmentX(Component.CENTER_ALIGNMENT); // Centralizar os botões dentro do empilhamentoPanel
+        empilhamentoPanel.setBackground(new Color(64, 44, 94));
+        empilhamentoPanel.setAutoscrolls(true);
+        return empilhamentoPanel;
     }
 }

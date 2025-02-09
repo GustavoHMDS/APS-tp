@@ -1,22 +1,21 @@
 package Visão;
 
 import Controle.Sistema;
-import Modelo.Admin;
 import Modelo.Convidado;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class InterfaceRegistro extends InterfaceComum implements Atualizavel {
-    public InterfaceRegistro(GerenciadorInterfaces gerenciador) {
-        super(gerenciador);
+    public InterfaceRegistro(GerenciadorInterfaces gerenciador, Sistema sistema) {
+        super(gerenciador, sistema);
         atualizarInterface();
     }
 
     @Override
     public void atualizarInterface() {
         String tipoUsuario;
-        if(Sistema.getTipoUsuario().equals("Guest")) tipoUsuario = "Cliente";
+        if(sistema.getTipoUsuario().equals("Guest")) tipoUsuario = "Cliente";
         else tipoUsuario = "Admin";
         super.centerPanel.removeAll();
 
@@ -68,11 +67,11 @@ public class InterfaceRegistro extends InterfaceComum implements Atualizavel {
             String senha = campoSenha.getText();
             String dataNascimento = campoDia.getText() + "/" + campoMes.getText() + "/" + campoAno.getText();
             try {
-                Sistema.criarUsuario(cpf, nome, dataNascimento, email, senha, tipoUsuario);
+                sistema.criarUsuario(cpf, nome, dataNascimento, email, senha, tipoUsuario);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Erro criando a conta", "Erro", JOptionPane.ERROR_MESSAGE);
             }
-            if(Sistema.usuario instanceof Convidado) Sistema.login(email, senha);
+            if(sistema.getUsuario() instanceof Convidado) sistema.login(email, senha);
             gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL);
         });
         centerPanel.add(empilhamentoPanel);

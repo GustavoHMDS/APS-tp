@@ -1,8 +1,8 @@
-package Persistencia;
+package Persistencia.FileDAOs;
 
-import Controle.Sistema;
 import Modelo.Anime;
 import Modelo.Temporada;
+import Persistencia.DAOs.TemporadaDAO;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -10,6 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileTemporadaDAO extends FileDAO implements TemporadaDAO {
+    private static FileTemporadaDAO instance;
+
+    private FileTemporadaDAO() {}
+
+    public static FileTemporadaDAO getInstance() {
+        if(instance == null) instance = new FileTemporadaDAO();
+        return instance;
+    }
+
     @Override
     public Temporada buscaTemporada(Anime anime, int id) {
         if(id > anime.getTemporadasQuantidade()) return null;

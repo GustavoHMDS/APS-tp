@@ -1,4 +1,4 @@
-package Persistencia;
+package Persistencia.DAOs;
 
 import Modelo.Anime;
 

@@ -36,6 +36,6 @@ public class Styles {
         button.setForeground(new Color(64, 44, 94)); // Define a cor do texto
         button.setContentAreaFilled(true); // Preencher o conteúdo com a cor de fundo
         button.setBorderPainted(false); // Remove a borda
-        button.setMaximumSize(new Dimension((Sistema.screenSize.width * 6)/10, 50));
+        button.setMaximumSize(new Dimension((Sistema.getScreenSize().width * 6)/10, 50));
     }
 }

@@ -1,8 +1,6 @@
-package Persistencia;
+package Persistencia.DAOs;
 
 import Modelo.Usuario;
-
-import java.io.IOException;
 
 public interface UsuarioDAO {
     Usuario logInUsuario(String email, String password);

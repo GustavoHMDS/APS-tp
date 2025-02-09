@@ -8,8 +8,8 @@ import java.awt.*;
 public class InterfacePrincipal extends InterfaceComum implements Atualizavel {
     JButton catalogo, dadosUsuario, sair, login, registrar, novoAnime, novaTemporada, novoEpisodio, apagarConteudo;
 
-    public InterfacePrincipal(GerenciadorInterfaces gerenciador) {
-        super(gerenciador);
+    public InterfacePrincipal(GerenciadorInterfaces gerenciador, Sistema sistema) {
+        super(gerenciador, sistema);
         atualizarInterface();
     }
 
@@ -24,7 +24,7 @@ public class InterfacePrincipal extends InterfaceComum implements Atualizavel {
             gerenciador.trocarParaTela(GerenciadorInterfaces.DADOS_USUARIO);
         });
         sair.addActionListener(_ -> {
-            Sistema.LogOffUsuario();
+            sistema.logOffUsuario();
             gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL);
         });
     }
@@ -59,7 +59,7 @@ public class InterfacePrincipal extends InterfaceComum implements Atualizavel {
 
     @Override
     public void atualizarInterface() {
-        String tipoUsuario = Sistema.getTipoUsuario();
+        String tipoUsuario = sistema.getTipoUsuario();
         super.centerPanel.removeAll();
 
         // Criar um painel para empilhar os botões, usando BoxLayout vertical
@@ -90,7 +90,7 @@ public class InterfacePrincipal extends InterfaceComum implements Atualizavel {
                 empilhamentoPanel.add(dadosUsuario);
                 empilhamentoPanel.add(registrar);
                 empilhamentoPanel.add(novoAnime);
-                if(!Sistema.catalogo.animes.isEmpty()){
+                if(!sistema.getCatalogo().animes.isEmpty()){
                     empilhamentoPanel.add(novaTemporada);
                     empilhamentoPanel.add(novoEpisodio);
                     empilhamentoPanel.add(apagarConteudo);

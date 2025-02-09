@@ -10,16 +10,16 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class InterfaceRegistraCartao extends InterfaceComum implements Atualizavel {
-    public InterfaceRegistraCartao(GerenciadorInterfaces gerenciador) {
-        super(gerenciador);
+    public InterfaceRegistraCartao(GerenciadorInterfaces gerenciador, Sistema sistema) {
+        super(gerenciador, sistema);
         atualizarInterface();
     }
 
     @Override
     public void atualizarInterface() {
-        String tipoUsuario = Sistema.getTipoUsuario();
+        String tipoUsuario = sistema.getTipoUsuario();
         super.centerPanel.removeAll();
-        Cliente cliente = Sistema.getCliente();
+        Cliente cliente = sistema.getCliente();
 
         // Criar um painel para empilhar os botões, usando BoxLayout vertical
         JPanel empilhamentoPanel = new JPanel();
@@ -61,8 +61,8 @@ public class InterfaceRegistraCartao extends InterfaceComum implements Atualizav
             LocalDate data = LocalDate.of(ano, mes, dia);
             Cartao cartao = new Cartao(Integer.parseInt(campoNumeroCartao.getText()), Integer.parseInt(campoCodigoCartao.getText()), data);
             try {
-                Sistema.adicionarCartao(Sistema.usuario.getEmail(), cartao);
-                Sistema.getCliente().adicionarCartao(cartao);
+                sistema.adicionarCartao(sistema.getUsuario().getEmail(), cartao);
+                sistema.getCliente().adicionarCartao(cartao);
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }

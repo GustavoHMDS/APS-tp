@@ -1,20 +1,21 @@
 package Visão;
 
 import Controle.Sistema;
+import Modelo.Anime;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class InterfaceAdicaoAnime extends InterfaceComum implements Atualizavel{
-    public InterfaceAdicaoAnime(GerenciadorInterfaces gerenciador) {
-        super(gerenciador);
+    public InterfaceAdicaoAnime(GerenciadorInterfaces gerenciador, Sistema sistema) {
+        super(gerenciador, sistema);
         atualizarInterface();
     }
 
     @Override
     public void atualizarInterface() {
         super.centerPanel.removeAll();
-        centerPanel.setSize(new Dimension(Sistema.screenSize.width, Sistema.screenSize.height - 120));
+        centerPanel.setSize(new Dimension(Sistema.getScreenSize().width, Sistema.getScreenSize().height - 120));
         centerPanel.setLayout(new GridLayout(6, 1, 10, 15));
 
         JPanel empilhamentoPanel = new JPanel();
@@ -35,8 +36,10 @@ public class InterfaceAdicaoAnime extends InterfaceComum implements Atualizavel{
         salvar.addActionListener(e -> {
             String nome = campoAnimeNome.getText();
             int id = Integer.parseInt(campoAnimeID.getText());
-            if(nome != "") {
-                Sistema.catalogo.adicionaAnime(nome, id);
+            if(!nome.isEmpty()) {
+                String path = "animes/" + nome.trim().replace("\\s+", "-") + "/";
+                Anime novoAnime = new Anime(nome, id, 0, path);
+                sistema.getCatalogo().adicionaAnime(novoAnime);
                 gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL);
             }
         });

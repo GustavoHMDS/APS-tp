@@ -5,14 +5,12 @@ import Modelo.Admin;
 import Modelo.Cliente;
 
 import javax.swing.*;
-import javax.swing.text.JTextComponent;
 import java.awt.*;
-import java.io.IOException;
 import java.time.LocalDate;
 
 public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel{
-    public InterfaceDadosUsuario(GerenciadorInterfaces gerenciador) {
-        super(gerenciador);
+    public InterfaceDadosUsuario(GerenciadorInterfaces gerenciador, Sistema sistema) {
+        super(gerenciador, sistema);
         atualizarInterface();
     }
 
@@ -25,14 +23,14 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
         empilhamentoPanel.setLayout(new BoxLayout(empilhamentoPanel, BoxLayout.Y_AXIS));
         empilhamentoPanel.setAlignmentX(Component.CENTER_ALIGNMENT); // Centralizar os botões dentro do empilhamentoPanel
         empilhamentoPanel.setBackground(new Color(64, 44, 94));
-        if(Sistema.usuario != null) {
-            JLabel labelNome = new JLabel("Nome: " + Sistema.usuario.getNome());
-            JLabel labelCPF = new JLabel("CPF: " + Sistema.usuario.getCPF());
-            JLabel labelEmail = new JLabel("Email: " + Sistema.usuario.getEmail());
+        if(sistema.getUsuario() != null) {
+            JLabel labelNome = new JLabel("Nome: " + sistema.getUsuario().getNome());
+            JLabel labelCPF = new JLabel("CPF: " + sistema.getUsuario().getCPF());
+            JLabel labelEmail = new JLabel("Email: " + sistema.getUsuario().getEmail());
             String senha = "";
-            for(int i = 0; i < Sistema.usuario.getSenha().length(); i++) senha += '*';
+            for(int i = 0; i < sistema.getUsuario().getSenha().length(); i++) senha += '*';
             JLabel labelSenha = new JLabel("Senha: " + senha);
-            LocalDate data = Sistema.usuario.getDataNascimento();
+            LocalDate data = sistema.getUsuario().getDataNascimento();
             JLabel labelDataNascimento = new JLabel("Data Nascimento: " + data.getDayOfMonth() + "/" + data.getMonthValue() + "/" + data.getYear());
 
             Styles.setLabelStyle(labelNome);
@@ -41,9 +39,9 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
             Styles.setLabelStyle(labelSenha);
             Styles.setLabelStyle(labelDataNascimento);
 
-            //salvarNome.addActionListener(e -> Sistema.editarUsuario(Sistema.usuario.getCPF(), "Nome", campoNome.getText()));
-            //salvarEmail.addActionListener(e -> Sistema.editarUsuario(Sistema.usuario.getCPF(), "Email", campoEmail.getText()));
-            //salvarSenha.addActionListener(e -> Sistema.editarUsuario(Sistema.usuario.getCPF(), "Senha", campoSenha.getText()));
+            //salvarNome.addActionListener(e -> sistema.editarUsuario(sistema.getUsuario().getCPF(), "Nome", campoNome.getText()));
+            //salvarEmail.addActionListener(e -> sistema.editarUsuario(sistema.getUsuario().getCPF(), "Email", campoEmail.getText()));
+            //salvarSenha.addActionListener(e -> sistema.editarUsuario(sistema.getUsuario().getCPF(), "Senha", campoSenha.getText()));
 
             empilhamentoPanel.add(labelNome);
             empilhamentoPanel.add(labelCPF);
@@ -51,7 +49,7 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
             empilhamentoPanel.add(labelSenha);
             empilhamentoPanel.add(labelDataNascimento);
 
-            if(Sistema.usuario instanceof Cliente cliente) {
+            if(sistema.getUsuario() instanceof Cliente cliente) {
                 String assinatura = (cliente.isPremium()) ? "Premium" : "Free";
                 JLabel labelAssinatura = new JLabel("Assinatura: " + assinatura);
                 JLabel labelNumCartoes = new JLabel("Quantidade de cartões: " + cliente.getCartoesQuantidade());
@@ -98,7 +96,7 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
                             int cartao = Integer.parseInt(cartaoSelect.getSelectedItem().toString());
                             cartaoSelect.removeItemAt(cartaoSelect.getItemCount() - 1);
                             cliente.removerCartao(cartao-1);
-                            if(Sistema.removerCartao(cliente.getEmail(), cartao)) {
+                            if(sistema.removerCartao(cliente.getEmail(), cartao)) {
                                 labelNumCartoes.setText("Quantidade de cartões: " + cliente.getCartoesQuantidade());
                             }
                             if(cartaoSelect.getItemCount() > 0) {
@@ -139,7 +137,7 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
                     editarDados.addActionListener((e -> gerenciador.trocarParaTela(GerenciadorInterfaces.EDITOR_DADOS_USUARIO)));
                     empilhamentoPanel.add(cadastrarCartao);
                     empilhamentoPanel.add(Box.createVerticalStrut(10));
-                    if(Sistema.getCliente().getCartoes().length > 0){
+                    if(sistema.getCliente().getCartoes().length > 0){
                         empilhamentoPanel.add(realizarPagamento);
                         empilhamentoPanel.add(Box.createVerticalStrut(10));
                     }
@@ -147,7 +145,7 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
                     empilhamentoPanel.add(Box.createVerticalStrut(10));
                 }
             }
-            else if(Sistema.usuario instanceof Admin admin) {
+            else if(sistema.getUsuario() instanceof Admin admin) {
                 JLabel labelID = new JLabel("Quantidade de cartões: " + admin.getId());
                 Styles.setLabelStyle(labelID);
                 empilhamentoPanel.add(labelID);
@@ -156,11 +154,11 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
         JButton excluirConta = CriaBotaoPreDefinido("Excluir conta", 200, 30, 16);
         excluirConta.addActionListener(e -> {
             try {
-                Sistema.deletarUsuario(Sistema.usuario.getEmail());
+                sistema.deletarUsuario(sistema.getUsuario().getEmail());
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
-            Sistema.logOffUsuario();
+            sistema.logOffUsuario();
             gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL);
         });
         empilhamentoPanel.add(excluirConta);
@@ -173,9 +171,9 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
         empilhamentoPanel.add(voltar);
 
         centerPanel.add(empilhamentoPanel);
-        empilhamentoPanel.setSize(new Dimension(800, Sistema.screenSize.height - 120));
+        empilhamentoPanel.setSize(new Dimension(800, Sistema.getScreenSize().height - 120));
         //empilhamentoPanel.setPreferredSize(new Dimension(350, 600));
         centerPanel.setPreferredSize(new Dimension(600, 600));
-        centerPanel.setMaximumSize(new Dimension(800, Sistema.screenSize.height - 120));
+        centerPanel.setMaximumSize(new Dimension(800, Sistema.getScreenSize().height - 120));
     }
 }

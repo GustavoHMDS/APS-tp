@@ -1,7 +1,8 @@
-package Persistencia;
+package Persistencia.FileDAOs;
 
 import Modelo.Episodio;
 import Modelo.Temporada;
+import Persistencia.DAOs.EpisodioDAO;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -9,13 +10,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileEpisodioDAO implements EpisodioDAO {
+    private static FileEpisodioDAO instance;
+
+    private FileEpisodioDAO() {}
+
+    public static FileEpisodioDAO getInstance() {
+        if(instance == null) instance = new FileEpisodioDAO();
+        return instance;
+    }
+
     @Override
     public Episodio buscaEpisodio(int id) {
         return null;
     }
 
     @Override
-    public Episodio carregaEpisodios(String nombre) {
+    public Episodio carregaEpisodios(String nome) {
         return null;
     }
 

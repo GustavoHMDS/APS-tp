@@ -1,29 +1,26 @@
 package Visão;
 import Controle.Sistema;
 import Modelo.Anime;
+import Modelo.Temporada;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class InterfaceNovaTemporada extends InterfaceComum implements Atualizavel{
-    public InterfaceNovaTemporada(GerenciadorInterfaces gerenciador) {
-        super(gerenciador);
+    public InterfaceNovaTemporada(GerenciadorInterfaces gerenciador, Sistema sistema) {
+        super(gerenciador, sistema);
         atualizarInterface();
     }
 
     public void atualizarInterface() {
         super.centerPanel.removeAll();
 
-        JPanel empilhamentoPanel = new JPanel();
-        empilhamentoPanel.setLayout(new BoxLayout(empilhamentoPanel, BoxLayout.Y_AXIS));
-        empilhamentoPanel.setAlignmentX(Component.CENTER_ALIGNMENT); // Centralizar os botões dentro do empilhamentoPanel
-        empilhamentoPanel.setBackground(new Color(64, 44, 94));
-        empilhamentoPanel.setAutoscrolls(true);
+        JPanel empilhamentoPanel = preparaPainel();
 
-        if(Sistema.catalogo.animes.size() > 1) {
-            String[] animes = new String[Sistema.catalogo.animes.size()];
-            for(int i = 0; i < Sistema.catalogo.animes.size(); i++) {
-                animes[i] = Sistema.catalogo.animes.get(i).getNome();
+        if(sistema.getCatalogo().animes.size() > 1) {
+            String[] animes = new String[sistema.getCatalogo().animes.size()];
+            for(int i = 0; i < sistema.getCatalogo().animes.size(); i++) {
+                animes[i] = sistema.getCatalogo().animes.get(i).getNome();
             }
             JLabel labelAnime = new JLabel("Anime: ");
             JComboBox animeSelect = new JComboBox(animes);
@@ -50,8 +47,10 @@ public class InterfaceNovaTemporada extends InterfaceComum implements Atualizave
             adicionarTemporada.addActionListener(e -> {
                 String nome = campoNome.getText();
                 int codigo = Integer.parseInt(campoCodigo.getText());
-                Anime animeSelecionado = Sistema.catalogo.getAnime(animeSelect.getSelectedItem().toString());
-                animeSelecionado.adicionarTemporada(nome, codigo);
+                Anime animeSelecionado = sistema.getCatalogo().getAnime(animeSelect.getSelectedItem().toString());
+                String path = animeSelecionado.getPath() + "temporada" + codigo + "/";
+                Temporada novaTemporada = new Temporada(nome, animeSelecionado, codigo, 0, path);
+                animeSelecionado.adicionarTemporada(novaTemporada);
                 gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL);
             });
             empilhamentoPanel.add(adicionarTemporada);

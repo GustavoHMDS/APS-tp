@@ -7,9 +7,9 @@ import java.awt.*;
 
 public class InterfaceLogin extends InterfaceComum implements Atualizavel {
 
-    public InterfaceLogin(GerenciadorInterfaces gerenciador) {
+    public InterfaceLogin(GerenciadorInterfaces gerenciador, Sistema sistema) {
         // Chama o construtor da classe pai (InterfaceComum)
-        super(gerenciador);
+        super(gerenciador, sistema);
         atualizarInterface();
     }
 
@@ -50,7 +50,7 @@ public class InterfaceLogin extends InterfaceComum implements Atualizavel {
             String senha = new String(campoSenha.getPassword());
 
             // Verifica as credenciais
-            if (Sistema.login(usuario, senha)) {
+            if (sistema.login(usuario, senha)) {
                 gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL);
             } else {
                 JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos.", "Erro", JOptionPane.ERROR_MESSAGE);

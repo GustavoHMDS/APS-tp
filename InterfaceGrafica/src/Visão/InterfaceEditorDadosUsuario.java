@@ -1,15 +1,14 @@
 package Visão;
 
 import Controle.Sistema;
-
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
 import Modelo.Cliente;
 
 public class InterfaceEditorDadosUsuario extends InterfaceComum implements Atualizavel {
-    public InterfaceEditorDadosUsuario(GerenciadorInterfaces gerenciador) {
-        super(gerenciador);
+    public InterfaceEditorDadosUsuario(GerenciadorInterfaces gerenciador, Sistema sistema) {
+        super(gerenciador, sistema);
         atualizarInterface();
     }
 
@@ -18,18 +17,14 @@ public class InterfaceEditorDadosUsuario extends InterfaceComum implements Atual
         super.centerPanel.removeAll();
 
         // Criar um painel para empilhar os botões, usando BoxLayout vertical
-        JPanel empilhamentoPanel = new JPanel();
-        empilhamentoPanel.setLayout(new BoxLayout(empilhamentoPanel, BoxLayout.Y_AXIS));
-        empilhamentoPanel.setAlignmentX(Component.CENTER_ALIGNMENT); // Centralizar os botões dentro do empilhamentoPanel
-        empilhamentoPanel.setBackground(new Color(64, 44, 94));
-        empilhamentoPanel.setAutoscrolls(true);
-        if(Sistema.usuario != null) {
+        JPanel empilhamentoPanel = preparaPainel();
+        if(sistema.getUsuario() != null) {
             JLabel labelNome = new JLabel("Nome:");
-            JTextField campoNome = new JTextField(Sistema.usuario.getNome());
+            JTextField campoNome = new JTextField(sistema.getUsuario().getNome());
             JLabel labelEmail = new JLabel("Email:");
-            JTextField campoEmail = new JTextField(Sistema.usuario.getEmail());
+            JTextField campoEmail = new JTextField(sistema.getUsuario().getEmail());
             JLabel labelSenha = new JLabel("Senha:");
-            JTextField campoSenha = new JTextField(Sistema.usuario.getSenha());
+            JTextField campoSenha = new JTextField(sistema.getUsuario().getSenha());
             JComboBox cartaoSelect;
 
             Styles.setLabelStyle(labelNome);
@@ -49,7 +44,7 @@ public class InterfaceEditorDadosUsuario extends InterfaceComum implements Atual
             JButton salvar = CriaBotaoPreDefinido("Salvar", 200, 25, 16);
             salvar.addActionListener(e -> {
                 String[] dados = {campoNome.getText(), campoEmail.getText(),campoSenha.getText()};
-                Sistema.editarUsuario(Sistema.usuario.getEmail(),dados);
+                sistema.editarUsuario(sistema.getUsuario().getEmail(),dados);
                 gerenciador.trocarParaTela(gerenciador.DADOS_USUARIO);
             });
 
@@ -58,7 +53,7 @@ public class InterfaceEditorDadosUsuario extends InterfaceComum implements Atual
                 gerenciador.trocarParaTela((gerenciador.DADOS_USUARIO));
             });
 
-            if(Sistema.usuario instanceof Cliente cliente) {
+            if(sistema.getUsuario() instanceof Cliente cliente) {
                 if(cliente.getCartoesQuantidade() > 0) {
                     String[] str = new String[cliente.getCartoesQuantidade()];
                     for(int i = 0; i < cliente.getCartoesQuantidade(); i++) {
@@ -98,7 +93,7 @@ public class InterfaceEditorDadosUsuario extends InterfaceComum implements Atual
                         int cartao = Integer.parseInt((cartaoSelect.getSelectedItem().toString()));
                         cliente.getCartoes()[cartao - 1].setNumeroCartao(Integer.parseInt(campoNumeroCartao.getText()));
                         cliente.getCartoes()[cartao - 1].setCodigoCartao(Integer.parseInt(campoCodigoCartao.getText()));
-                        Sistema.editarCartao(cliente.getEmail(), cartao,Integer.parseInt(campoNumeroCartao.getText()), Integer.parseInt(campoCodigoCartao.getText()));
+                        sistema.editarCartao(cliente.getEmail(), cartao,Integer.parseInt(campoNumeroCartao.getText()), Integer.parseInt(campoCodigoCartao.getText()));
                     });
                 }
             }
@@ -107,9 +102,9 @@ public class InterfaceEditorDadosUsuario extends InterfaceComum implements Atual
             empilhamentoPanel.add(cancelar);
         }
         centerPanel.add(empilhamentoPanel);
-        empilhamentoPanel.setSize(new Dimension(600, Sistema.screenSize.height - 120));
+        empilhamentoPanel.setSize(new Dimension(600, Sistema.getScreenSize().height - 120));
         //empilhamentoPanel.setPreferredSize(new Dimension(350, 400));
         centerPanel.setPreferredSize(new Dimension(600, 500));
-        centerPanel.setMaximumSize(new Dimension(800, Sistema.screenSize.height - 120));
+        centerPanel.setMaximumSize(new Dimension(800, Sistema.getScreenSize().height - 120));
     }
 }

@@ -5,10 +5,6 @@ import Modelo.Cliente;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class InterfacePagamento extends InterfaceComum implements Atualizavel {
     JLabel labelDescricao;
@@ -21,8 +17,8 @@ public class InterfacePagamento extends InterfaceComum implements Atualizavel {
     JButton cancelar;
     double preco = 15;
     int cartaoSelecionado = 11;
-    public InterfacePagamento(GerenciadorInterfaces gerenciador) {
-        super(gerenciador);
+    public InterfacePagamento(GerenciadorInterfaces gerenciador, Sistema sistema) {
+        super(gerenciador, sistema);
         //formatador
         gbc = new GridBagConstraints();
         gbc.gridx = 0; // Coluna 0
@@ -39,11 +35,11 @@ public class InterfacePagamento extends InterfaceComum implements Atualizavel {
     }
     @Override
     public void atualizarInterface() {
-        if(Sistema.usuario instanceof Cliente) {
+        if(sistema.getUsuario() instanceof Cliente) {
             //informações
             labelDescricao = new JLabel("Faça uma assinatura para ter acesso completo!");
             labelPreco = new JLabel("Preço: " + preco);
-            labelDuracao = new JLabel("Duracao: " + ((Cliente) Sistema.usuario).getVencimento());
+            labelDuracao = new JLabel("Duracao: " + ((Cliente) sistema.getUsuario()).getVencimento());
             labelCartao = new JLabel("Cartão: ");
 
 
@@ -89,8 +85,8 @@ public class InterfacePagamento extends InterfaceComum implements Atualizavel {
                 cartaoSelecionado = 11; // "Escolhe Cartão" selecionado
             } else {
                 int cartaoNum = Integer.parseInt(selecionado.split(" ")[1]) - 1;
-                // Verifique se o Sistema.usuario é do tipo Cliente e se o número do cartão é válido
-                if (Sistema.usuario instanceof Cliente cliente && cartaoNum < cliente.getCartoesQuantidade()) {
+                // Verifique se o sistema.getUsuario() é do tipo Cliente e se o número do cartão é válido
+                if (sistema.getUsuario() instanceof Cliente cliente && cartaoNum < cliente.getCartoesQuantidade()) {
                     cartaoSelecionado = cartaoNum;
                     labelCartao.setText("Cartão: " + cliente.getCartoes()[cartaoNum].getNumeroCartao());
                 } else {
@@ -113,7 +109,7 @@ public class InterfacePagamento extends InterfaceComum implements Atualizavel {
         Styles.setButtonStyle(confirmar);
         Styles.setButtonStyle(cancelar);
         confirmar.addActionListener(e-> {
-            if(Sistema.fazPagamento(cartaoSelecionado)){
+            if(sistema.fazPagamento(cartaoSelecionado)){
                 JOptionPane.showMessageDialog(null, "Pagamento Realizado com sucesso", "Pagamento aprovado", JOptionPane.INFORMATION_MESSAGE);
             }
             else JOptionPane.showMessageDialog(null, "O pagamento não foi aprovado, confira a validade do cartão", "Pagamento recusado", JOptionPane.ERROR_MESSAGE);

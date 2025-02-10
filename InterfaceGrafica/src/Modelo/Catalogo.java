@@ -16,9 +16,6 @@ public class Catalogo {
         int i = 0;
         for(Anime anime : animes) {
             if(anime.getNome().equals(nome)) {
-                for(int j = anime.getTemporadasQuantidade(); j > 0; j--) {
-                    anime.removerTemporada(j);
-                }
                 File animePasta = new File(anime.getPath());
                 File[] arquivos = animePasta.listFiles();
                 for(File arquivo : arquivos) {

@@ -12,7 +12,6 @@ import java.util.List;
 public class InterfaceCatalogo extends InterfaceComum implements Atualizavel {
     String pathAnime;
     String pathTemp;
-    String pathEp;
 
     public InterfaceCatalogo(GerenciadorInterfaces gerenciador, SistemaGeral sistema) {
         super(gerenciador, sistema);

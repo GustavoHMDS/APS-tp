@@ -37,9 +37,7 @@ public class InterfaceAdicaoAnime extends InterfaceComum implements Atualizavel{
             String nome = campoAnimeNome.getText();
             int id = Integer.parseInt(campoAnimeID.getText());
             if(!nome.isEmpty()) {
-                String path = "animes/" + nome.trim().replace("\\s+", "-") + "/";
-                Anime novoAnime = new Anime(nome, id, 0, path);
-                sistema.getCatalogo().adicionaAnime(novoAnime);
+                sistema.cadastrarAnime(nome, id);
                 gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL);
             }
         });

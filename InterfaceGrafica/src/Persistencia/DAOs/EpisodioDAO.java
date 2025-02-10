@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface EpisodioDAO {
     List<Episodio> carregaEpisodios(Temporada temporada);
-    Episodio buscaEpisodio(int id);
+    public Episodio buscaEpisodio(Temporada temporada, int id);
     boolean adicionaEpisodio(Temporada temporada, Episodio episodio);
     boolean removeEpisodio(Temporada temporada, int id);
 }

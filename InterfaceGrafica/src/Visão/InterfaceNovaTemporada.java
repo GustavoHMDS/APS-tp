@@ -49,7 +49,7 @@ public class InterfaceNovaTemporada extends InterfaceComum implements Atualizave
                 Anime animeSelecionado = sistema.getCatalogo().getAnime(animeSelect.getSelectedItem().toString());
                 String path = animeSelecionado.getPath() + "temporada" + codigo + "/";
                 Temporada novaTemporada = new Temporada(nome, animeSelecionado, codigo, 0, path);
-                animeSelecionado.adicionarTemporada(novaTemporada);
+                sistema.cadastrarTemporada(animeSelecionado, novaTemporada);
                 gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL);
             });
             empilhamentoPanel.add(adicionarTemporada);

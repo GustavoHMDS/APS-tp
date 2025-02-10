@@ -1,5 +1,8 @@
 package Controle;
 
+import Modelo.Anime;
+import Modelo.Episodio;
+import Modelo.Temporada;
 import Persistencia.DAOs.AnimeDAO;
 import Persistencia.DAOs.EpisodioDAO;
 import Persistencia.DAOs.TemporadaDAO;
@@ -29,6 +32,70 @@ public class FileAnimes implements SistemaAnimes{
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean removerAnime(Anime anime) {
+        try {
+            if (animeDAO.excluirAnime(anime)) {
+                sistema.getCatalogo().removeAnime(anime.getNome());
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            System.out.println("Erro ao excluir anime: " + e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean adicionarTemporada(Anime anime, Temporada temporada) {
+        try {
+            return (temporadaDAO.adicionarTemporada(anime, temporada));
+        } catch (Exception e) {
+            System.out.println("Erro ao adicionar temporada: " + e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean removerTemporada(Anime anime, int id) {
+        try {
+            return  (temporadaDAO.removerTemporada(anime, id));
+        } catch (Exception e) {
+            System.out.println("Erro ao excluir temporada: " + e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean adicionarEpisodio(Temporada temporada, Episodio episodio) {
+        try {
+            return  (episodioDAO.adicionaEpisodio(temporada, episodio));
+        } catch (Exception e) {
+            System.out.println("Erro ao adicionar episodio: " + e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean removerEpisodio(Temporada temporada, int id) {
+        try {
+            return  (episodioDAO.removeEpisodio(temporada, id));
+        } catch (Exception e) {
+            System.out.println("Erro ao adicionar episodio: " + e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public Temporada buscarTemporada(Anime anime, int id) {
+        return temporadaDAO.buscaTemporada(anime, id);
+    }
+
+    @Override
+    public Episodio buscarEpisodio(Temporada temporada, int id) {
+        return episodioDAO.buscaEpisodio(temporada, id);
     }
 
     @Override

@@ -76,65 +76,50 @@ public class FileEpisodioDAO implements EpisodioDAO {
     }
 
     @Override
-    public Episodio buscaEpisodio(int id) {
-        File animesDir = new File("animes");
-        if (!animesDir.exists() || !animesDir.isDirectory()) {
+    public Episodio buscaEpisodio(Temporada temporada, int id) {
+        if (temporada == null || temporada.getPath() == null || temporada.getPath().isEmpty()) {
             return null;
         }
 
-        File[] pastasAnime = animesDir.listFiles(File::isDirectory);
-        if (pastasAnime == null) {
+        File episodiosDir = new File(temporada.getPath(), "episodios");
+        if (!episodiosDir.exists() || !episodiosDir.isDirectory()) {
             return null;
         }
 
-        for (File pastaAnime : pastasAnime) {
-            File[] pastasTemporada = pastaAnime.listFiles(File::isDirectory);
-            if (pastasTemporada == null) {
-                continue;
-            }
+        File[] arquivos = episodiosDir.listFiles((dir, name) -> name.endsWith(".txt"));
+        if (arquivos == null) {
+            return null;
+        }
 
-            for (File pastaTemporada : pastasTemporada) {
-                File episodiosDir = new File(pastaTemporada, "episodios");
-                if (!episodiosDir.exists() || !episodiosDir.isDirectory()) {
-                    continue;
-                }
+        for (File arquivo : arquivos) {
+            try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
+                String nome = "";
+                int codigo = -1;
+                String path = "";
 
-                File[] arquivos = episodiosDir.listFiles((dir, name) -> name.endsWith(".txt"));
-                if (arquivos == null) {
-                    continue;
-                }
-
-                for (File arquivo : arquivos) {
-                    try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
-                        String nome = "";
-                        int codigo = -1;
-                        String path = "";
-
-                        String linha;
-                        while ((linha = br.readLine()) != null) {
-                            String[] partes = linha.split(": ", 2);
-                            if (partes.length == 2) {
-                                switch (partes[0]) {
-                                    case "Nome":
-                                        nome = partes[1];
-                                        break;
-                                    case "Codigo":
-                                        codigo = Integer.parseInt(partes[1]);
-                                        break;
-                                    case "Path":
-                                        path = partes[1];
-                                        break;
-                                }
-                            }
+                String linha;
+                while ((linha = br.readLine()) != null) {
+                    String[] partes = linha.split(": ", 2);
+                    if (partes.length == 2) {
+                        switch (partes[0]) {
+                            case "Nome":
+                                nome = partes[1];
+                                break;
+                            case "Codigo":
+                                codigo = Integer.parseInt(partes[1]);
+                                break;
+                            case "Path":
+                                path = partes[1];
+                                break;
                         }
-
-                        if (codigo == id) {
-                            return new Episodio(nome, null, codigo, path);
-                        }
-                    } catch (IOException | NumberFormatException e) {
-                        e.printStackTrace();
                     }
                 }
+
+                if (codigo == id) {
+                    return new Episodio(nome, temporada, codigo, path);
+                }
+            } catch (IOException | NumberFormatException e) {
+                e.printStackTrace();
             }
         }
         return null;

@@ -10,7 +10,6 @@ public class Temporada {
     private String nome;
     private int codigo;
     private int episodiosQuantidade;
-    private List<Episodio> episodios;
     private String path;
 
     public Temporada(String nome, Anime anime, int codigo, int episodiosQuantidade, String path) {
@@ -18,28 +17,7 @@ public class Temporada {
         this.anime = anime;
         this.codigo = codigo;
         this.episodiosQuantidade = episodiosQuantidade;
-        this.episodios = new ArrayList<>();
         this.path = path;
-    }
-
-    public void adicionarEpisodio(Episodio episodio) {
-        this.episodios.add(episodio);
-        episodiosQuantidade++;
-    }
-
-    public void setEpisodios(List<Episodio> episodios) {
-        this.episodios = episodios;
-    }
-
-    public boolean removerEpisodio(int indice) {
-        for(Episodio episodio : episodios) {
-            if(episodio.getCodigo() == indice) {
-                episodios.remove(episodio);
-                episodiosQuantidade--;
-                return true;
-            }
-        }
-        return false;
     }
 
     public String getNome() {

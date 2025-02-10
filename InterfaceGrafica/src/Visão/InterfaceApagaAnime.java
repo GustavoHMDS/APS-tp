@@ -25,8 +25,7 @@ public class InterfaceApagaAnime extends InterfaceComum implements Atualizavel{
         empilhamentoPanel.setAlignmentX(Component.CENTER_ALIGNMENT); // Centralizar os botões dentro do empilhamentoPanel
         empilhamentoPanel.setBackground(new Color(64, 44, 94));
         empilhamentoPanel.setAutoscrolls(true);
-        if(sistema.getCatalogo().animes.size() > 1) {
-
+        if(sistema.getCatalogo().getSize() > 1) {
             // Texto acima da JComboBox de animes
             JLabel animeComboBoxLabel = new JLabel("Selecione um anime:");
             Styles.setLabelStyle(animeComboBoxLabel);
@@ -86,7 +85,7 @@ public class InterfaceApagaAnime extends InterfaceComum implements Atualizavel{
                     resetEpisodioComboBox(episodioComboBox);
                 } else {
                     int indice = Integer.parseInt(temporadaSelecionada.split(" ")[1]);
-                    temporada = anime.getTemporada(indice);
+                    temporada = sistema.buscarTemporada(anime, indice);
                     temporadaIndex = indice;
                     episodioComboBox.removeAllItems();
                     episodioComboBox.addItem("Todos os episodios");
@@ -111,11 +110,11 @@ public class InterfaceApagaAnime extends InterfaceComum implements Atualizavel{
             excluirButton.addActionListener(e -> {
                 if(anime == null) return;
                 if(temporadaIndex == -1) {
-                    sistema.getCatalogo().removeAnime(anime.getNome());
+                    sistema.removerAnime(anime);
                 } else if(episodioIndex == -1) {
-                    anime.removerTemporada(temporadaIndex);
+                    sistema.removerTemporada(anime, temporadaIndex);
                 } else {
-                    temporada.removerEpisodio(episodioIndex);
+                    sistema.removerEpisodio(temporada, episodioIndex);
                 }
                 gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL);
             });

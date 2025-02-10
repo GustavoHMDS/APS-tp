@@ -78,6 +78,34 @@ public class SistemaGeral {
         return sistemaAnimes.cadastrarAnime(nome, id);
     }
 
+    public boolean removerAnime(Anime anime) {
+        return sistemaAnimes.removerAnime(anime);
+    }
+
+    public boolean cadastrarTemporada(Anime anime, Temporada temporada) {
+        return sistemaAnimes.adicionarTemporada(anime, temporada);
+    }
+
+    public boolean removerTemporada(Anime anime, int id) {
+        return sistemaAnimes.removerTemporada(anime, id);
+    }
+
+    public Temporada buscarTemporada(Anime anime, int id) {
+        return sistemaAnimes.buscarTemporada(anime, id);
+    }
+
+    public boolean cadastrarEpisodio(Temporada temporada, Episodio episodio) {
+        return sistemaAnimes.adicionarEpisodio(temporada, episodio);
+    }
+
+    public boolean removerEpisodio(Temporada temporada, int id) {
+        return sistemaAnimes.removerEpisodio(temporada, id);
+    }
+
+    public Episodio buscarEpisodio(Temporada temporada, int id) {
+        return sistemaAnimes.buscarEpisodio(temporada, id);
+    }
+
     public void preencheCatalogo() {
         sistemaAnimes.preencheCatalogo();
     }
@@ -85,6 +113,8 @@ public class SistemaGeral {
     public void play(String videoPath) {
         sistemaAnimes.play(videoPath);
     }
+
+    //sistema
 
     public static void defineDataAtual(){
         dataAtual = LocalDate.now();

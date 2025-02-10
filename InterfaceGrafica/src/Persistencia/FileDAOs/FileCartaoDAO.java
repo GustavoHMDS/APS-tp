@@ -28,13 +28,11 @@ public class FileCartaoDAO extends FileDAO implements CartaoDAO {
 
     //Métodos
     @Override
-    public List<Cartao> buscaCartoes(String email) {
+    public List<Cartao> buscaCartoes(String email) throws IOException {
         File pastaCartoes = new File(BASE_PATH, email + "/cartoes");
         List<Cartao> cartoes = new ArrayList<>();
 
-        if (!pastaCartoes.exists() || !pastaCartoes.isDirectory()) {
-            return null;
-        }
+        verificarOuCriarPasta(pastaCartoes, "não conseguiu encontrar a pasta de cartoões");
 
         File[] arquivosCartoes = pastaCartoes.listFiles((_, name) -> name.startsWith("cartao_") && name.endsWith(".txt"));
         if (arquivosCartoes == null) return null;

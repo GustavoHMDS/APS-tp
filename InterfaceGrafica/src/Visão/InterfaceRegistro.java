@@ -1,13 +1,13 @@
 package Visão;
 
-import Controle.Sistema;
+import Controle.SistemaGeral;
 import Modelo.Convidado;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class InterfaceRegistro extends InterfaceComum implements Atualizavel {
-    public InterfaceRegistro(GerenciadorInterfaces gerenciador, Sistema sistema) {
+    public InterfaceRegistro(GerenciadorInterfaces gerenciador, SistemaGeral sistema) {
         super(gerenciador, sistema);
         atualizarInterface();
     }

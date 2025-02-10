@@ -1,13 +1,13 @@
 package Visão;
 
-import Controle.Sistema;
+import Controle.SistemaGeral;
 import Modelo.Anime;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class InterfaceAdicaoAnime extends InterfaceComum implements Atualizavel{
-    public InterfaceAdicaoAnime(GerenciadorInterfaces gerenciador, Sistema sistema) {
+    public InterfaceAdicaoAnime(GerenciadorInterfaces gerenciador, SistemaGeral sistema) {
         super(gerenciador, sistema);
         atualizarInterface();
     }
@@ -15,7 +15,7 @@ public class InterfaceAdicaoAnime extends InterfaceComum implements Atualizavel{
     @Override
     public void atualizarInterface() {
         super.centerPanel.removeAll();
-        centerPanel.setSize(new Dimension(Sistema.getScreenSize().width, Sistema.getScreenSize().height - 120));
+        centerPanel.setSize(new Dimension(SistemaGeral.getScreenSize().width, SistemaGeral.getScreenSize().height - 120));
         centerPanel.setLayout(new GridLayout(6, 1, 10, 15));
 
         JPanel empilhamentoPanel = new JPanel();

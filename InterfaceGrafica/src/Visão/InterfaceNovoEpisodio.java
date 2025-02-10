@@ -1,14 +1,13 @@
 package Visão;
-import Controle.Sistema;
+import Controle.SistemaGeral;
 import Modelo.Anime;
 import Modelo.Episodio;
 import Modelo.Temporada;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class InterfaceNovoEpisodio extends InterfaceComum implements Atualizavel{
-    InterfaceNovoEpisodio(GerenciadorInterfaces gerenciadorInterfaces, Sistema sistema) {
+    InterfaceNovoEpisodio(GerenciadorInterfaces gerenciadorInterfaces, SistemaGeral sistema) {
         super(gerenciadorInterfaces, sistema);
 
         atualizarInterface();

@@ -1,13 +1,14 @@
 package Visão;
 
-import Controle.Sistema;
+import Controle.SistemaGeral;
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
+
 import Modelo.Cliente;
 
 public class InterfaceEditorDadosUsuario extends InterfaceComum implements Atualizavel {
-    public InterfaceEditorDadosUsuario(GerenciadorInterfaces gerenciador, Sistema sistema) {
+    public InterfaceEditorDadosUsuario(GerenciadorInterfaces gerenciador, SistemaGeral sistema) {
         super(gerenciador, sistema);
         atualizarInterface();
     }
@@ -102,9 +103,9 @@ public class InterfaceEditorDadosUsuario extends InterfaceComum implements Atual
             empilhamentoPanel.add(cancelar);
         }
         centerPanel.add(empilhamentoPanel);
-        empilhamentoPanel.setSize(new Dimension(600, Sistema.getScreenSize().height - 120));
+        empilhamentoPanel.setSize(new Dimension(600, SistemaGeral.getScreenSize().height - 120));
         //empilhamentoPanel.setPreferredSize(new Dimension(350, 400));
         centerPanel.setPreferredSize(new Dimension(600, 500));
-        centerPanel.setMaximumSize(new Dimension(800, Sistema.getScreenSize().height - 120));
+        centerPanel.setMaximumSize(new Dimension(800, SistemaGeral.getScreenSize().height - 120));
     }
 }

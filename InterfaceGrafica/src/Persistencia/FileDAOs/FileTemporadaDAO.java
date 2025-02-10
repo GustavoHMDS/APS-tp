@@ -4,7 +4,10 @@ import Modelo.Anime;
 import Modelo.Temporada;
 import Persistencia.DAOs.TemporadaDAO;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,10 +58,57 @@ public class FileTemporadaDAO extends FileDAO implements TemporadaDAO {
     }
 
     @Override
-    public List<Temporada> carregaTemporadas() {
-        return List.of();
-    }
+    public List<Temporada> carregaTemporadas(Anime anime) throws IOException {
+        List<Temporada> temporadas = new ArrayList<>();
+        File animePath = new File(anime.getPath());
 
+        verificarOuCriarPasta(animePath, "Não encontrou a pasta do anime " + anime.getNome());
+
+        File[] arquivos = animePath.listFiles(File::isDirectory);
+        if (arquivos == null) {
+            return temporadas;
+        }
+
+        for (File temporadaDir : arquivos) {
+            File dadosTemporada = new File(temporadaDir, "dados.txt");
+            if (dadosTemporada.exists()) {
+                try (BufferedReader br = new BufferedReader(new FileReader(dadosTemporada))) {
+                    String nome = "";
+                    int codigo = -1;
+                    int episodiosQuantidade = 0;
+                    String path = temporadaDir.getPath() + File.separator;
+
+                    String linha;
+                    while ((linha = br.readLine()) != null) {
+                        String[] partes = linha.split(": ", 2);
+                        if (partes.length == 2) {
+                            switch (partes[0]) {
+                                case "Nome":
+                                    nome = partes[1];
+                                    break;
+                                case "Codigo":
+                                    codigo = Integer.parseInt(partes[1]);
+                                    break;
+                                case "Episodios":
+                                    episodiosQuantidade = Integer.parseInt(partes[1]);
+                                    break;
+                                case "Path":
+                                    path = partes[1];
+                                    break;
+                            }
+                        }
+                    }
+
+                    if (!nome.isEmpty() && codigo != -1) {
+                        temporadas.add(new Temporada(nome, anime, codigo, episodiosQuantidade, path));
+                    }
+                } catch (IOException | NumberFormatException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return temporadas;
+    }
     @Override
     public boolean adicionarTemporada(Anime anime,Temporada temporada) {
         File arquivo = new File(anime.getPath());

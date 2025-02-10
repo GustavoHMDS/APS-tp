@@ -1,13 +1,13 @@
 package Visão;
 
-import Controle.Sistema;
+import Controle.SistemaGeral;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class InterfaceLogin extends InterfaceComum implements Atualizavel {
 
-    public InterfaceLogin(GerenciadorInterfaces gerenciador, Sistema sistema) {
+    public InterfaceLogin(GerenciadorInterfaces gerenciador, SistemaGeral sistema) {
         // Chama o construtor da classe pai (InterfaceComum)
         super(gerenciador, sistema);
         atualizarInterface();
@@ -33,7 +33,7 @@ public class InterfaceLogin extends InterfaceComum implements Atualizavel {
         JButton botaoEntrar = CriaBotaoPreDefinido("Entrar");
         botaoEntrar.setMaximumSize(new Dimension(300,50));
         // Nome do app (pode ser substituído pelo nome real do seu aplicativo)
-        //JLabel nomeApp = new JLabel(Sistema.nomeApp, SwingConstants.CENTER);
+        //JLabel nomeApp = new JLabel(SistemaGeral.nomeApp, SwingConstants.CENTER);
         //nomeApp.setFont(new Font("Arial", Font.PLAIN, 30));
 
         // Adiciona os componentes ao painel central herdado

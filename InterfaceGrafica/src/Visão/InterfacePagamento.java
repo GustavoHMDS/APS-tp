@@ -1,6 +1,6 @@
 package Visão;
 
-import Controle.Sistema;
+import Controle.SistemaGeral;
 import Modelo.Cliente;
 
 import javax.swing.*;
@@ -17,7 +17,7 @@ public class InterfacePagamento extends InterfaceComum implements Atualizavel {
     JButton cancelar;
     double preco = 15;
     int cartaoSelecionado = 11;
-    public InterfacePagamento(GerenciadorInterfaces gerenciador, Sistema sistema) {
+    public InterfacePagamento(GerenciadorInterfaces gerenciador, SistemaGeral sistema) {
         super(gerenciador, sistema);
         //formatador
         gbc = new GridBagConstraints();

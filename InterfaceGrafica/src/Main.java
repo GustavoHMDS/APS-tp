@@ -1,8 +1,6 @@
 import Controle.FileAnimes;
 import Controle.FileContas;
-import Controle.Sistema;
-import Modelo.Catalogo;
-import Modelo.Convidado;
+import Controle.SistemaGeral;
 import Visão.GerenciadorInterfaces;
 
 import javax.swing.*;
@@ -10,9 +8,9 @@ import java.awt.*;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        Sistema sistema = Sistema.getInstance();
-        Sistema.setScreenSize(Toolkit.getDefaultToolkit().getScreenSize());
-        Sistema.defineDataAtual();
+        SistemaGeral sistema = SistemaGeral.getInstance();
+        SistemaGeral.setScreenSize(Toolkit.getDefaultToolkit().getScreenSize());
+        SistemaGeral.defineDataAtual();
         FileContas sistemaContas = new FileContas(sistema);
         FileAnimes sistemaAnimes = new FileAnimes(sistema);
         sistema.inicializarSistema(sistemaContas, sistemaAnimes);

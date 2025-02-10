@@ -3,9 +3,10 @@ package Persistencia.DAOs;
 import Modelo.Episodio;
 import Modelo.Temporada;
 
+import java.util.List;
+
 public interface EpisodioDAO {
-    Episodio buscaEpisodio(int id);
-    Episodio carregaEpisodios(String nome);
+    List<Episodio> carregaEpisodios(Temporada temporada);
     boolean adicionaEpisodio(Temporada temporada, Episodio episodio);
     boolean removeEpisodio(Temporada temporada, int id);
 }

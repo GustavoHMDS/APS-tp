@@ -1,6 +1,6 @@
 package Visão;
 
-import Controle.Sistema;
+import Controle.SistemaGeral;
 import Modelo.*;
 
 import javax.swing.*;
@@ -14,7 +14,7 @@ public class InterfaceCatalogo extends InterfaceComum implements Atualizavel {
     String pathTemp;
     String pathEp;
 
-    public InterfaceCatalogo(GerenciadorInterfaces gerenciador, Sistema sistema) {
+    public InterfaceCatalogo(GerenciadorInterfaces gerenciador, SistemaGeral sistema) {
         super(gerenciador, sistema);
         atualizarInterface();
     }
@@ -205,8 +205,8 @@ public class InterfaceCatalogo extends InterfaceComum implements Atualizavel {
         empilhamentoPanel.add(assistirButton);
 
         // Configuração dos tamanhos
-        centerPanel.setSize(new Dimension(Sistema.getScreenSize().width, Sistema.getScreenSize().height - 120));
-        empilhamentoPanel.setSize(new Dimension(Sistema.getScreenSize().width, Sistema.getScreenSize().height - 120));
+        centerPanel.setSize(new Dimension(SistemaGeral.getScreenSize().width, SistemaGeral.getScreenSize().height - 120));
+        empilhamentoPanel.setSize(new Dimension(SistemaGeral.getScreenSize().width, SistemaGeral.getScreenSize().height - 120));
 
         // Adiciona o painel principal
         centerPanel.add(empilhamentoPanel);

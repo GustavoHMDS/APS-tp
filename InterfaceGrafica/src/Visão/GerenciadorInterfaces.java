@@ -1,6 +1,6 @@
 package Visão;
 
-import Controle.Sistema;
+import Controle.SistemaGeral;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,9 +43,9 @@ public class GerenciadorInterfaces extends JFrame {
     static final String NOVO_EPISODIO = "novoEpisodio";
     static final String APAGA_ANIME = "apagaAnime";
 
-    public GerenciadorInterfaces(Sistema sistema) {
+    public GerenciadorInterfaces(SistemaGeral sistema) {
         setTitle("PlaceHolder");
-        setSize(Sistema.getScreenSize().width, Sistema.getScreenSize().height);
+        setSize(SistemaGeral.getScreenSize().width, SistemaGeral.getScreenSize().height);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         cardLayout = new CardLayout();

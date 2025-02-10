@@ -1,6 +1,5 @@
 package Controle;
 
-import Modelo.Anime;
 import Persistencia.DAOs.AnimeDAO;
 import Persistencia.DAOs.EpisodioDAO;
 import Persistencia.DAOs.TemporadaDAO;
@@ -11,12 +10,12 @@ import Persistencia.FileDAOs.FileTemporadaDAO;
 import java.io.IOException;
 
 public class FileAnimes implements SistemaAnimes{
-    Sistema sistema;
+    SistemaGeral sistema;
     private AnimeDAO animeDAO;
     private TemporadaDAO temporadaDAO;
     private EpisodioDAO episodioDAO;
 
-    public FileAnimes(Sistema sistema) {
+    public FileAnimes(SistemaGeral sistema) {
         this.sistema = sistema;
         animeDAO = FileAnimeDAO.getInstance();
         temporadaDAO = FileTemporadaDAO.getInstance();

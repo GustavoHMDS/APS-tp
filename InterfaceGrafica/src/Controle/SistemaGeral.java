@@ -5,7 +5,7 @@ import Modelo.*;
 import java.awt.*;
 import java.time.LocalDate;
 
-public class Sistema {
+public class SistemaGeral {
     private Usuario usuario;
     public final String nomeApp = "AniToons";
     private static LocalDate dataAtual;
@@ -15,12 +15,12 @@ public class Sistema {
     private SistemaAnimes sistemaAnimes;
 
 
-    private static Sistema instance;
+    private static SistemaGeral instance;
 
-    private Sistema(){}
+    private SistemaGeral(){}
 
-    public static Sistema getInstance() {
-        if(instance == null) instance = new Sistema();
+    public static SistemaGeral getInstance() {
+        if(instance == null) instance = new SistemaGeral();
         return instance;
     }
 
@@ -124,10 +124,10 @@ public class Sistema {
         return usuario;
     }
     public static Dimension getScreenSize() {
-        return Sistema.screenSize;
+        return SistemaGeral.screenSize;
     }
     public static void setScreenSize(Dimension screenSize) {
-        Sistema.screenSize = screenSize;
+        SistemaGeral.screenSize = screenSize;
     }
 
     void setUsuario(Usuario usuario) {

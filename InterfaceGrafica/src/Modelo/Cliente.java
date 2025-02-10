@@ -1,10 +1,8 @@
 package Modelo;
 
-import Controle.Sistema;
+import Controle.SistemaGeral;
 
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
 
 public class Cliente extends Usuario{
     public static int MAX_CARTOES = 10;
@@ -24,7 +22,7 @@ public class Cliente extends Usuario{
 
     public boolean realizarPagamento(int cartao){
         if(cartao >= this.cartoesQuantidade) return false;
-        if(this.cartoes[cartao] != null && Sistema.verificaData().isBefore(this.cartoes[cartao].validadeCartao)){
+        if(this.cartoes[cartao] != null && SistemaGeral.verificaData().isBefore(this.cartoes[cartao].validadeCartao)){
             this.premium = true;
             LocalDate hoje = LocalDate.now();
             int mes = hoje.getMonthValue();

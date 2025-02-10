@@ -1,6 +1,6 @@
 package Visão;
 
-import Controle.Sistema;
+import Controle.SistemaGeral;
 import Modelo.Anime;
 import Modelo.Temporada;
 
@@ -11,7 +11,7 @@ public class InterfaceApagaAnime extends InterfaceComum implements Atualizavel{
     Anime anime;
     Temporada temporada;
     int episodioIndex, temporadaIndex;
-    InterfaceApagaAnime(GerenciadorInterfaces gerenciadorInterfaces, Sistema sistema){
+    InterfaceApagaAnime(GerenciadorInterfaces gerenciadorInterfaces, SistemaGeral sistema){
         super(gerenciadorInterfaces, sistema);
         atualizarInterface();
     }

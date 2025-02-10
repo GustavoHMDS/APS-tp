@@ -13,11 +13,11 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class FileContas implements SistemaContas{
-    private final Sistema sistema;
+    private final SistemaGeral sistema;
     private final UsuarioDAO usuarioDAO;
     private final CartaoDAO cartaoDAO;
 
-    public FileContas(Sistema sistema) {
+    public FileContas(SistemaGeral sistema) {
         this.sistema = sistema;
         usuarioDAO = FileUsuarioDAO.getInstance();
         cartaoDAO = FileCartaoDAO.getInstance();
@@ -25,18 +25,22 @@ public class FileContas implements SistemaContas{
 
     @Override
     public boolean logIn(String email, String senha) {
-        Usuario novoUsuario = usuarioDAO.logInUsuario(email, senha);
-        if(novoUsuario != null){
-            if(novoUsuario instanceof Cliente cliente) {
-                List<Cartao> cartoes = cartaoDAO.buscaCartoes(cliente.getEmail());
-                if(cartoes != null && !cartoes.isEmpty()) {
-                    for(Cartao cartao : cartoes) {
-                        cliente.adicionarCartao(cartao);
+        try {
+            Usuario novoUsuario = usuarioDAO.logInUsuario(email, senha);
+            if (novoUsuario != null) {
+                if (novoUsuario instanceof Cliente cliente) {
+                    List<Cartao> cartoes = cartaoDAO.buscaCartoes(cliente.getEmail());
+                    if (cartoes != null && !cartoes.isEmpty()) {
+                        for (Cartao cartao : cartoes) {
+                            cliente.adicionarCartao(cartao);
+                        }
                     }
                 }
+                sistema.setUsuario(novoUsuario);
+                return true;
             }
-            sistema.setUsuario(novoUsuario);
-            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return false;
     }

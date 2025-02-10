@@ -1,0 +1,8 @@
+CPF: 123
+Nome: aa
+DataNascimento: 12/12/1212
+Email: aa
+Senha: aa
+Tipo: Cliente
+Assinatura: falso
+Vencimento: 9/2/2025

@@ -1,6 +1,6 @@
 package Visão;
 
-import Controle.Sistema;
+import Controle.SistemaGeral;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,7 +8,7 @@ import java.awt.*;
 public class InterfacePrincipal extends InterfaceComum implements Atualizavel {
     JButton catalogo, dadosUsuario, sair, login, registrar, novoAnime, novaTemporada, novoEpisodio, apagarConteudo;
 
-    public InterfacePrincipal(GerenciadorInterfaces gerenciador, Sistema sistema) {
+    public InterfacePrincipal(GerenciadorInterfaces gerenciador, SistemaGeral sistema) {
         super(gerenciador, sistema);
         atualizarInterface();
     }

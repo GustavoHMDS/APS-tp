@@ -1,16 +1,15 @@
 package Visão;
 
-import Controle.Sistema;
+import Controle.SistemaGeral;
 import Modelo.Cartao;
 import Modelo.Cliente;
 
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class InterfaceRegistraCartao extends InterfaceComum implements Atualizavel {
-    public InterfaceRegistraCartao(GerenciadorInterfaces gerenciador, Sistema sistema) {
+    public InterfaceRegistraCartao(GerenciadorInterfaces gerenciador, SistemaGeral sistema) {
         super(gerenciador, sistema);
         atualizarInterface();
     }

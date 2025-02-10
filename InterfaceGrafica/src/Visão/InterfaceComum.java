@@ -1,6 +1,6 @@
 package Visão;
 
-import Controle.Sistema;
+import Controle.SistemaGeral;
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
@@ -12,9 +12,9 @@ public class InterfaceComum extends JPanel {
     protected JTextField campoMes;
     protected JTextField campoAno;
     protected JPanel centerPanel;
-    protected Sistema sistema;
+    protected SistemaGeral sistema;
 
-    public InterfaceComum(GerenciadorInterfaces gerenciador, Sistema sistema) {
+    public InterfaceComum(GerenciadorInterfaces gerenciador, SistemaGeral sistema) {
         this.gerenciador = gerenciador;
         this.sistema = sistema;
         setSize(1300, 800);

@@ -1,6 +1,5 @@
 package Persistencia.FileDAOs;
 
-import Controle.Sistema;
 import Modelo.Anime;
 import Persistencia.DAOs.AnimeDAO;
 
@@ -61,7 +60,7 @@ public class FileAnimeDAO extends FileDAO implements AnimeDAO {
                                 }
                             }
                             listaAnimes.add(new Anime(nome, codigo, temporadasQtd, path));
-                            //System.out.println(Sistema.catalogo.animes.get(Sistema.catalogo.animes.size() - 1).getTemporadasQuantidade());
+                            //System.out.println(SistemaGeral.catalogo.animes.get(SistemaGeral.catalogo.animes.size() - 1).getTemporadasQuantidade());
                         } catch (Exception e) {
                             System.out.println("Não foi possível recuparar dados do anime. " + e);
                         }

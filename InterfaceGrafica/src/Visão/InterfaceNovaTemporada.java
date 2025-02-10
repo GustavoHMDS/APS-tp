@@ -16,7 +16,7 @@ public class InterfaceNovaTemporada extends InterfaceComum implements Atualizave
 
         JPanel empilhamentoPanel = preparaPainel();
 
-        if(sistema.getCatalogo().animes.size() > 1) {
+        if(sistema.getCatalogo().animes.size() > 0) {
             String[] animes = new String[sistema.getCatalogo().animes.size()];
             for(int i = 0; i < sistema.getCatalogo().animes.size(); i++) {
                 animes[i] = sistema.getCatalogo().animes.get(i).getNome();

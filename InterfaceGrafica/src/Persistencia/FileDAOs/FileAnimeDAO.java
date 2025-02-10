@@ -3,7 +3,9 @@ package Persistencia.FileDAOs;
 import Modelo.Anime;
 import Persistencia.DAOs.AnimeDAO;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -73,6 +75,58 @@ public class FileAnimeDAO extends FileDAO implements AnimeDAO {
             }
         }
         return listaAnimes;
+    }
+
+    public Anime buscaAnime(int id) {
+        File animesDir = new File("animes");
+        if (!animesDir.exists() || !animesDir.isDirectory()) {
+            return null;
+        }
+
+        File[] pastasAnime = animesDir.listFiles(File::isDirectory);
+        if (pastasAnime == null) {
+            return null;
+        }
+
+        for (File pastaAnime : pastasAnime) {
+            File dadosAnime = new File(pastaAnime, "dados.txt");
+            if (dadosAnime.exists()) {
+                try (BufferedReader br = new BufferedReader(new FileReader(dadosAnime))) {
+                    String nome = "";
+                    int codigo = -1;
+                    int temporadasQuantidade = 0;
+                    String path = pastaAnime.getPath() + File.separator;
+
+                    String linha;
+                    while ((linha = br.readLine()) != null) {
+                        String[] partes = linha.split(": ", 2);
+                        if (partes.length == 2) {
+                            switch (partes[0]) {
+                                case "Nome":
+                                    nome = partes[1];
+                                    break;
+                                case "Codigo":
+                                    codigo = Integer.parseInt(partes[1]);
+                                    break;
+                                case "Temporadas":
+                                    temporadasQuantidade = Integer.parseInt(partes[1]);
+                                    break;
+                                case "Path":
+                                    path = partes[1];
+                                    break;
+                            }
+                        }
+                    }
+
+                    if (codigo == id) {
+                        return new Anime(nome, codigo, temporadasQuantidade, path);
+                    }
+                } catch (IOException | NumberFormatException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
     }
 
     @Override

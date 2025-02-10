@@ -24,7 +24,11 @@ public class FileAnimes implements SistemaAnimes{
 
     @Override
     public boolean cadastrarAnime(String nome, int id) {
-        return animeDAO.adicionarAnime(nome, id);
+        if(animeDAO.adicionarAnime(nome, id)) {
+            sistema.getCatalogo().adicionaAnime(animeDAO.buscaAnime(id));
+            return true;
+        }
+        return false;
     }
 
     @Override

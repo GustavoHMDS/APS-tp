@@ -24,9 +24,7 @@ public class SistemaGeral {
         return instance;
     }
 
-    public Catalogo getCatalogo() {
-        return catalogo;
-    }
+    //Usuario
 
     public boolean login(String email, String senha) {
         return sistemaContas.logIn(email, senha);
@@ -68,6 +66,12 @@ public class SistemaGeral {
 
     public boolean editarUsuario(String email, String[] dados) {
         return sistemaContas.editarUsuario(email, dados);
+    }
+
+    //animes
+
+    public Catalogo getCatalogo() {
+        return catalogo;
     }
 
     public boolean cadastrarAnime(String nome, int id) {

@@ -75,6 +75,70 @@ public class FileEpisodioDAO implements EpisodioDAO {
         return episodios;
     }
 
+    @Override
+    public Episodio buscaEpisodio(int id) {
+        File animesDir = new File("animes");
+        if (!animesDir.exists() || !animesDir.isDirectory()) {
+            return null;
+        }
+
+        File[] pastasAnime = animesDir.listFiles(File::isDirectory);
+        if (pastasAnime == null) {
+            return null;
+        }
+
+        for (File pastaAnime : pastasAnime) {
+            File[] pastasTemporada = pastaAnime.listFiles(File::isDirectory);
+            if (pastasTemporada == null) {
+                continue;
+            }
+
+            for (File pastaTemporada : pastasTemporada) {
+                File episodiosDir = new File(pastaTemporada, "episodios");
+                if (!episodiosDir.exists() || !episodiosDir.isDirectory()) {
+                    continue;
+                }
+
+                File[] arquivos = episodiosDir.listFiles((dir, name) -> name.endsWith(".txt"));
+                if (arquivos == null) {
+                    continue;
+                }
+
+                for (File arquivo : arquivos) {
+                    try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
+                        String nome = "";
+                        int codigo = -1;
+                        String path = "";
+
+                        String linha;
+                        while ((linha = br.readLine()) != null) {
+                            String[] partes = linha.split(": ", 2);
+                            if (partes.length == 2) {
+                                switch (partes[0]) {
+                                    case "Nome":
+                                        nome = partes[1];
+                                        break;
+                                    case "Codigo":
+                                        codigo = Integer.parseInt(partes[1]);
+                                        break;
+                                    case "Path":
+                                        path = partes[1];
+                                        break;
+                                }
+                            }
+                        }
+
+                        if (codigo == id) {
+                            return new Episodio(nome, null, codigo, path);
+                        }
+                    } catch (IOException | NumberFormatException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        return null;
+    }
 
     @Override
     public boolean adicionaEpisodio(Temporada temporada, Episodio episodio) {

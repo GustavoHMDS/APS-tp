@@ -81,6 +81,7 @@ public class GerenciadorInterfaces extends JFrame {
         telas.put(APAGA_ANIME,apagaAnime);
 
         interfacesAtualizaveis = new ArrayList<>();
+        interfacesAtualizaveis.add(adicionadorAnime);
         interfacesAtualizaveis.add(login);
         interfacesAtualizaveis.add(principal);
         interfacesAtualizaveis.add(registro);

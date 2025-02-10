@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class InterfaceNovoEpisodio extends InterfaceComum implements Atualizavel{
+    Anime anime;
     InterfaceNovoEpisodio(GerenciadorInterfaces gerenciadorInterfaces, SistemaGeral sistema) {
         super(gerenciadorInterfaces, sistema);
 
@@ -28,9 +29,31 @@ public class InterfaceNovoEpisodio extends InterfaceComum implements Atualizavel
             JComboBox animeSelect = new JComboBox(animes);
             Styles.setLabelStyle(labelAnime);
             animeSelect.setSelectedIndex(0);
+            anime = sistema.getCatalogo().animes.get(0);
 
             JLabel labelTemporada = new JLabel("Temporada");
-            JTextField campoTemporada = new JTextField();
+            JComboBox<String> temporadaComboBox = new JComboBox<>();
+            if(anime.getTemporadasQuantidade() == 0) {
+                temporadaComboBox.addItem("Nenhuma temporada disponível para adicionar episódio");
+            } else {
+                for(int i = 0; i < anime.getTemporadasQuantidade(); i++) {
+                    temporadaComboBox.addItem("Temporada " + (i + 1));
+                }
+            }
+            temporadaComboBox.setSelectedIndex(0);
+
+            animeSelect.addActionListener(e -> {
+                anime = sistema.getCatalogo().getAnime(animeSelect.getSelectedItem().toString());
+                temporadaComboBox.removeAllItems();
+                if(anime.getTemporadasQuantidade() == 0) {
+                    temporadaComboBox.addItem("Nenhuma temporada disponível para adicionar episódio");
+                } else {
+                    for(int i = 0; i < anime.getTemporadasQuantidade(); i++) {
+                        temporadaComboBox.addItem("Temporada " + (i + 1));
+                    }
+                }
+                temporadaComboBox.setSelectedIndex(0);
+            });
             JLabel labelNome = new JLabel("Nome: ");
             JTextField campoNome = new JTextField();
             JLabel labelCodigo = new JLabel("Codigo: ");
@@ -42,30 +65,29 @@ public class InterfaceNovoEpisodio extends InterfaceComum implements Atualizavel
             Styles.setLabelStyle(labelNome);
             Styles.setLabelStyle(labelCodigo);
             Styles.setLabelStyle(labelPath);
-            Styles.setTextFielStyle(campoTemporada);
             Styles.setTextFielStyle(campoNome);
             Styles.setTextFielStyle(campoCodigo);
             Styles.setTextFielStyle(campoPath);
             JButton adicionarEpisodio = CriaBotaoPreDefinido("Adicionar episódio");
 
             empilhaComponentes(
-                    empilhamentoPanel, animeSelect,labelTemporada, campoTemporada,
+                    empilhamentoPanel, animeSelect,labelTemporada, temporadaComboBox,
                     labelNome, campoNome, labelCodigo, campoCodigo, labelPath, campoPath,
                     adicionarEpisodio
             );
 
             adicionarEpisodio.addActionListener(e -> {
-                if(campoNome.getText() == "" || campoTemporada.getText() == "" || campoPath.getText() == "" || campoCodigo.getText() == "") {
+                if(temporadaComboBox.getSelectedItem().toString().equals("Nenhuma temporada disponível para adicionar episódio")) {
+                    JOptionPane.showMessageDialog(null, "Não é possível adicionar episódio sem existir uma temporada");
+                    return;
+                }
+                if(campoNome.getText() == "" || campoPath.getText() == "" || campoCodigo.getText() == "") {
                     JOptionPane.showMessageDialog(null, "Preencha todos os campos");
                     return;
                 }
-                int temporada = Integer.parseInt(campoTemporada.getText());
-                Anime animeSelecionado = sistema.getCatalogo().getAnime(animeSelect.getSelectedItem().toString());
+                int temporada = Integer.parseInt(temporadaComboBox.getSelectedItem().toString().split(" ")[1]);
+                Anime animeSelecionado = anime;
                 System.out.println(animeSelecionado.getNome() + " " + animeSelecionado.getTemporadasQuantidade());
-                if(temporada > animeSelecionado.getTemporadasQuantidade() || temporada <= 0) {
-                    JOptionPane.showMessageDialog(null, "Temporada iválida para o anime " + animeSelecionado.getNome());
-                    return;
-                }
                 String nome = campoNome.getText();
                 int codigo = Integer.parseInt(campoCodigo.getText());
                 String path = campoPath.getText();

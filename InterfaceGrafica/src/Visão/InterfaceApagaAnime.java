@@ -24,7 +24,6 @@ public class InterfaceApagaAnime extends InterfaceComum implements Atualizavel{
         empilhamentoPanel.setLayout(new BoxLayout(empilhamentoPanel, BoxLayout.Y_AXIS));
         empilhamentoPanel.setAlignmentX(Component.CENTER_ALIGNMENT); // Centralizar os botões dentro do empilhamentoPanel
         empilhamentoPanel.setBackground(Styles.background);
-        empilhamentoPanel.setAutoscrolls(true);
         if(sistema.getCatalogo().getSize() > 0) {
             // Texto acima da JComboBox de animes
             JLabel animeComboBoxLabel = new JLabel("Selecione um anime:");

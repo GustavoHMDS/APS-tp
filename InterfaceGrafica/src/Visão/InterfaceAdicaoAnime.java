@@ -18,11 +18,7 @@ public class InterfaceAdicaoAnime extends InterfaceComum implements Atualizavel{
         centerPanel.setSize(new Dimension(SistemaGeral.getScreenSize().width, SistemaGeral.getScreenSize().height - 120));
         centerPanel.setLayout(new GridLayout(6, 1, 10, 15));
 
-        JPanel empilhamentoPanel = new JPanel();
-        empilhamentoPanel.setSize(centerPanel.getSize());
-        empilhamentoPanel.setLayout(new BoxLayout(empilhamentoPanel, BoxLayout.Y_AXIS));
-        empilhamentoPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        empilhamentoPanel.setBackground(Styles.background);
+        JPanel empilhamentoPanel = preparaPainel();
         JLabel animeNome = new JLabel("Nome do anime: ");
         JTextField campoAnimeNome = new JTextField(20);
         JLabel animeID = new JLabel("ID do anime");

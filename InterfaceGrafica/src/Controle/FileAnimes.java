@@ -14,9 +14,9 @@ import java.io.IOException;
 
 public class FileAnimes implements SistemaAnimes{
     SistemaGeral sistema;
-    private AnimeDAO animeDAO;
-    private TemporadaDAO temporadaDAO;
-    private EpisodioDAO episodioDAO;
+    private final AnimeDAO animeDAO;
+    private final TemporadaDAO temporadaDAO;
+    private final EpisodioDAO episodioDAO;
 
     public FileAnimes(SistemaGeral sistema) {
         this.sistema = sistema;

@@ -1,3 +1,0 @@
-Nome: qqqq
-Codigo: 4
-Path: animes/qqqq/temporada1/episodios/teste.mp4

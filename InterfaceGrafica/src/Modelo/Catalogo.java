@@ -12,23 +12,14 @@ public class Catalogo {
         animes.add(anime);
     }
 
-    public int removeAnime(String nome) {
-        int i = 0;
+    public boolean removeAnime(String nome) {
         for(Anime anime : animes) {
             if(anime.getNome().equals(nome)) {
-                File animePasta = new File(anime.getPath());
-                File[] arquivos = animePasta.listFiles();
-                for(File arquivo : arquivos) {
-                    arquivo.delete();
-                }
-                if(animePasta.delete()) {
-                    this.animes.remove(i);
-                    return 1;
-                }
+                animes.remove(anime);
+                return true;
             }
-            i++;
         }
-        return 0;
+        return false;
     }
 
     public Anime getAnime(String nome) {

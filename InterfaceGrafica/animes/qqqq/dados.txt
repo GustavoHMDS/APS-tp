@@ -1,4 +1,0 @@
-Nome: qqqq
-Codigo: 1
-Temporadas: 2
-Path: animes/qqqq/

@@ -1,4 +1,0 @@
-Nome: www
-Codigo: 1
-Episodios: 1
-Path: animes/qqqq/temporada1/

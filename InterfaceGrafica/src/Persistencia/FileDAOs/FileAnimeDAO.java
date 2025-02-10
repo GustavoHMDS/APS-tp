@@ -157,7 +157,7 @@ public class FileAnimeDAO extends FileDAO implements AnimeDAO {
     }
 
     @Override
-    public boolean excluirAnime(Anime anime) throws IOException {
+    public boolean excluirAnime(Anime anime) {
         if (anime == null) {
             System.err.println("O anime não pode ser nulo.");
             return false;

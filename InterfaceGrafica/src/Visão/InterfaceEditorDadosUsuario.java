@@ -35,12 +35,10 @@ public class InterfaceEditorDadosUsuario extends InterfaceComum implements Atual
             Styles.setTextFielStyle(campoEmail);
             Styles.setTextFielStyle(campoSenha);
 
-            empilhamentoPanel.add(labelNome);
-            empilhamentoPanel.add(campoNome);
-            empilhamentoPanel.add(labelEmail);
-            empilhamentoPanel.add(campoEmail);
-            empilhamentoPanel.add(labelSenha);
-            empilhamentoPanel.add(campoSenha);
+            empilhaComponentes(
+                    empilhamentoPanel, labelNome, campoNome,labelEmail, campoEmail,
+                    labelSenha, campoSenha
+            );
 
             JButton salvar = CriaBotaoPreDefinido("Salvar", 200, 25, 16);
             salvar.addActionListener(e -> {
@@ -84,11 +82,10 @@ public class InterfaceEditorDadosUsuario extends InterfaceComum implements Atual
                         //labelValidadeCartao.setText("Validade do cartão: " + validade.getDayOfMonth() + "/" + validade.getMonthValue() + "/" + validade.getYear());
                     });
 
-                    empilhamentoPanel.add(cartaoSelect);
-                    empilhamentoPanel.add(labelNumeroCartao);
-                    empilhamentoPanel.add(campoNumeroCartao);
-                    empilhamentoPanel.add(labelCodigoCartao);
-                    empilhamentoPanel.add(campoCodigoCartao);
+                    empilhaComponentes(
+                            empilhamentoPanel, cartaoSelect, labelNumeroCartao, campoNumeroCartao,
+                            labelCodigoCartao, campoCodigoCartao
+                    );
                     //empilhamentoPanel.add(labelValidadeCartao);
                     salvar.addActionListener(e -> {
                         int cartao = Integer.parseInt((cartaoSelect.getSelectedItem().toString()));
@@ -98,9 +95,7 @@ public class InterfaceEditorDadosUsuario extends InterfaceComum implements Atual
                     });
                 }
             }
-
-            empilhamentoPanel.add(salvar);
-            empilhamentoPanel.add(cancelar);
+            empilhaComponentes(empilhamentoPanel, salvar, cancelar);
         }
         centerPanel.add(empilhamentoPanel);
         empilhamentoPanel.setSize(new Dimension(600, SistemaGeral.getScreenSize().height - 120));

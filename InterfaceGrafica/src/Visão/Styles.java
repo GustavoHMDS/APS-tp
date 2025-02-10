@@ -13,7 +13,9 @@ public class Styles {
         label.setForeground(new Color(254, 244, 129));
         label.setFont(new Font("Coimbra", Font.PLAIN, 25));
         label.setCursor(new Cursor(Cursor.TEXT_CURSOR));
-        label.setAlignmentX(Component.LEFT_ALIGNMENT);
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
+        label.setAlignmentY(Component.TOP_ALIGNMENT);
+        label.setSize(SistemaGeral.getScreenSize().width, 15);
     }
 
     public static void setTextFielStyle(JTextField textField) {
@@ -37,5 +39,6 @@ public class Styles {
         button.setContentAreaFilled(true); // Preencher o conteúdo com a cor de fundo
         button.setBorderPainted(false); // Remove a borda
         button.setMaximumSize(new Dimension((SistemaGeral.getScreenSize().width * 6)/10, 50));
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
     }
 }

@@ -23,7 +23,7 @@ public class InterfaceApagaAnime extends InterfaceComum implements Atualizavel{
         JPanel empilhamentoPanel = new JPanel();
         empilhamentoPanel.setLayout(new BoxLayout(empilhamentoPanel, BoxLayout.Y_AXIS));
         empilhamentoPanel.setAlignmentX(Component.CENTER_ALIGNMENT); // Centralizar os botões dentro do empilhamentoPanel
-        empilhamentoPanel.setBackground(new Color(64, 44, 94));
+        empilhamentoPanel.setBackground(Styles.background);
         empilhamentoPanel.setAutoscrolls(true);
         if(sistema.getCatalogo().getSize() > 0) {
             // Texto acima da JComboBox de animes
@@ -42,9 +42,6 @@ public class InterfaceApagaAnime extends InterfaceComum implements Atualizavel{
 
             // ComboBox para temporadas
             JComboBox<String> temporadaComboBox = new JComboBox<>();
-            JLabel temporadaInfoLabel = new JLabel("");
-            Styles.setLabelStyle(temporadaInfoLabel);
-            temporadaInfoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
             // Texto acima da JComboBox de episódios
             JLabel episodioComboBoxLabel = new JLabel("Selecione um episódio:");
@@ -54,9 +51,8 @@ public class InterfaceApagaAnime extends InterfaceComum implements Atualizavel{
             // ComboBox para episódios
             JComboBox<String> episodioComboBox = new JComboBox<>();
             JButton excluirButton = new JButton("Excluir");
-            JLabel episodioInfoLabel = new JLabel("");
-            Styles.setLabelStyle(episodioInfoLabel);
-            episodioInfoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            Styles.setButtonStyle(excluirButton);
+            excluirButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
             for(int i = 0; i < sistema.getCatalogo().getSize(); i++) {
                 animeComboBox.addItem(sistema.getCatalogo().animes.get(i).getNome());
@@ -122,16 +118,10 @@ public class InterfaceApagaAnime extends InterfaceComum implements Atualizavel{
                 gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL);
             });
 
-            empilhamentoPanel.add(animeComboBoxLabel);
-            empilhamentoPanel.add(animeComboBox);
-            empilhamentoPanel.add(temporadaComboBoxLabel);
-            empilhamentoPanel.add(temporadaComboBox);
-            empilhamentoPanel.add(temporadaInfoLabel);
-            empilhamentoPanel.add(episodioComboBoxLabel);
-            empilhamentoPanel.add(episodioComboBox);
-            empilhamentoPanel.add(episodioInfoLabel);
-            empilhamentoPanel.add(excluirButton);
-
+            empilhaComponentes(
+                    empilhamentoPanel, animeComboBoxLabel, animeComboBox, temporadaComboBoxLabel,
+                    temporadaComboBox, episodioComboBoxLabel, episodioComboBox, excluirButton
+            );
 
         } else {
             JLabel nenhum = new JLabel("Nenhuma anime adicionado");

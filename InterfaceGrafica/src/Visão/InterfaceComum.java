@@ -61,6 +61,12 @@ public class InterfaceComum extends JPanel {
         repaint();
     }
 
+    protected void empilhaComponentes(JPanel panel, Component... componentes) {
+        for(Component componente : componentes) {
+            panel.add(Box.createVerticalStrut(10));
+            panel.add(componente);
+        }
+    }
 
     protected JButton CriaBotaoPreDefinido(String nomeBotao, int largura, int altura, int fonte) {
         JButton novoBotao = new JButton(nomeBotao);

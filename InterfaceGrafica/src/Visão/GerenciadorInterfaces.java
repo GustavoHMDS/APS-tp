@@ -45,12 +45,12 @@ public class GerenciadorInterfaces extends JFrame {
 
     public GerenciadorInterfaces(SistemaGeral sistema) {
         setTitle("PlaceHolder");
-        setSize(SistemaGeral.getScreenSize().width, SistemaGeral.getScreenSize().height);
+        setSize(SistemaGeral.getScreenSize());
+        setMaximumSize(SistemaGeral.getScreenSize());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         cardLayout = new CardLayout();
         telaAtual = new JPanel(cardLayout);
-
         // Inicialize as telas de login e interfaces de usuário
         login = new InterfaceLogin(this, sistema);
         verCatalogo = new InterfaceCatalogo(this, sistema);

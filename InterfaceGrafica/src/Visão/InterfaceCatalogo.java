@@ -58,7 +58,7 @@ public class InterfaceCatalogo extends InterfaceComum implements Atualizavel {
 
         // ComboBox para episódios
         JComboBox<String> episodioComboBox = new JComboBox<>();
-        JButton assistirButton = new JButton("Assistir");
+        JButton assistirButton = CriaBotaoPreDefinido("Assistir");
         JLabel episodioInfoLabel = new JLabel("");
         Styles.setLabelStyle(episodioInfoLabel);
         episodioInfoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -194,14 +194,11 @@ public class InterfaceCatalogo extends InterfaceComum implements Atualizavel {
         episodioComboBox.setAlignmentX(Component.CENTER_ALIGNMENT);
         assistirButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        empilhamentoPanel.add(animeComboBox);
-        empilhamentoPanel.add(temporadaComboBoxLabel);
-        empilhamentoPanel.add(temporadaComboBox);
-        empilhamentoPanel.add(temporadaInfoLabel);
-        empilhamentoPanel.add(episodioComboBoxLabel);
-        empilhamentoPanel.add(episodioComboBox);
-        empilhamentoPanel.add(episodioInfoLabel);
-        empilhamentoPanel.add(assistirButton);
+        empilhaComponentes(
+                empilhamentoPanel, animeComboBox, temporadaComboBoxLabel, temporadaComboBox,
+                temporadaInfoLabel, episodioComboBoxLabel, episodioComboBox, episodioInfoLabel,
+                assistirButton
+        );
 
         // Configuração dos tamanhos
         centerPanel.setSize(new Dimension(SistemaGeral.getScreenSize().width, SistemaGeral.getScreenSize().height - 120));

@@ -61,11 +61,14 @@ public class InterfacePrincipal extends InterfaceComum implements Atualizavel {
     public void atualizarInterface() {
         String tipoUsuario = sistema.getTipoUsuario();
         super.centerPanel.removeAll();
+        centerPanel.setBackground(Color.RED);
+        centerPanel.setSize(new Dimension(SistemaGeral.getScreenSize().width, SistemaGeral.getScreenSize().height - 120));
+
 
         // Criar um painel para empilhar os botões, usando BoxLayout vertical
         JPanel empilhamentoPanel = new JPanel();
         empilhamentoPanel.setLayout(new BoxLayout(empilhamentoPanel, BoxLayout.Y_AXIS));
-        //empilhamentoPanel.setAlignmentX(Component.CENTER_ALIGNMENT); // Centralizar os botões dentro do empilhamentoPanel
+        empilhamentoPanel.setBackground(Styles.background);
 
         // Adicione os botões com base no tipo de usuário
         catalogo = CriaBotaoPreDefinido("Ver catálogo");
@@ -75,8 +78,7 @@ public class InterfacePrincipal extends InterfaceComum implements Atualizavel {
             case "Cliente":
                 dadosUsuario = CriaBotaoPreDefinido("Meus dados");
                 sair = CriaBotaoPreDefinido("Sair");
-                empilhamentoPanel.add(dadosUsuario);
-                empilhamentoPanel.add(sair);
+                empilhaComponentes(empilhamentoPanel, dadosUsuario, sair);
                 InicializaBotoesUsuario();
                 break;
             case "Admin":
@@ -87,22 +89,17 @@ public class InterfacePrincipal extends InterfaceComum implements Atualizavel {
                 novoEpisodio = CriaBotaoPreDefinido("Adicionar Episodio");
                 apagarConteudo = CriaBotaoPreDefinido("Apagar Conteudo");
                 sair = CriaBotaoPreDefinido("Sair");
-                empilhamentoPanel.add(dadosUsuario);
-                empilhamentoPanel.add(registrar);
-                empilhamentoPanel.add(novoAnime);
+                empilhaComponentes(empilhamentoPanel ,dadosUsuario, registrar, novoAnime);
                 if(!sistema.getCatalogo().animes.isEmpty()){
-                    empilhamentoPanel.add(novaTemporada);
-                    empilhamentoPanel.add(novoEpisodio);
-                    empilhamentoPanel.add(apagarConteudo);
+                    empilhaComponentes(empilhamentoPanel, novaTemporada, novoEpisodio, apagarConteudo);
                 }
-                empilhamentoPanel.add(sair);
+                empilhaComponentes(empilhamentoPanel, sair);
                 InicializaBotoesAdmin();
                 break;
             case "Guest":
                 login = CriaBotaoPreDefinido("Login");
                 registrar = CriaBotaoPreDefinido("Registrar");
-                empilhamentoPanel.add(login);
-                empilhamentoPanel.add(registrar);
+                empilhaComponentes(empilhamentoPanel, login, registrar);
                 InicializaBotoesGuest();
                 break;
             default:

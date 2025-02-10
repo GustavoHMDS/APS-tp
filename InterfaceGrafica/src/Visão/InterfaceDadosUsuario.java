@@ -32,12 +32,12 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
             JLabel labelSenha = new JLabel("Senha: " + senha);
             LocalDate data = sistema.getUsuario().getDataNascimento();
             JLabel labelDataNascimento = new JLabel("Data Nascimento: " + data.getDayOfMonth() + "/" + data.getMonthValue() + "/" + data.getYear());
-
             Styles.setLabelStyle(labelNome);
             Styles.setLabelStyle(labelCPF);
             Styles.setLabelStyle(labelEmail);
             Styles.setLabelStyle(labelSenha);
             Styles.setLabelStyle(labelDataNascimento);
+
 
             //salvarNome.addActionListener(e -> sistema.editarUsuario(sistema.getUsuario().getCPF(), "Nome", campoNome.getText()));
             //salvarEmail.addActionListener(e -> sistema.editarUsuario(sistema.getUsuario().getCPF(), "Email", campoEmail.getText()));
@@ -161,8 +161,6 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
             sistema.logOffUsuario();
             gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL);
         });
-        empilhamentoPanel.add(excluirConta);
-        empilhamentoPanel.add(Box.createVerticalStrut(10));
 
         JButton voltar = CriaBotaoPreDefinido("Voltar", 250, 30, 16);
         voltar.addActionListener(e -> {
@@ -171,7 +169,7 @@ public class InterfaceDadosUsuario extends InterfaceComum implements Atualizavel
         empilhamentoPanel.add(voltar);
 
         centerPanel.add(empilhamentoPanel);
-        empilhamentoPanel.setSize(new Dimension(800, SistemaGeral.getScreenSize().height - 120));
+        //empilhamentoPanel.setSize(new Dimension(800, SistemaGeral.getScreenSize().height - 120));
         //empilhamentoPanel.setPreferredSize(new Dimension(350, 600));
         centerPanel.setPreferredSize(new Dimension(600, 600));
         centerPanel.setMaximumSize(new Dimension(800, SistemaGeral.getScreenSize().height - 120));

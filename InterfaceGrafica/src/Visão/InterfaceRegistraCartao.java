@@ -70,14 +70,11 @@ public class InterfaceRegistraCartao extends InterfaceComum implements Atualizav
         cancelar.addActionListener(e -> gerenciador.trocarParaTela(GerenciadorInterfaces.DADOS_USUARIO));
 
         //empilhamentoPanel.add(cartaoSelect);
-        empilhamentoPanel.add(labelNumeroCartao);
-        empilhamentoPanel.add(campoNumeroCartao);
-        empilhamentoPanel.add(labelCodigoCartao);
-        empilhamentoPanel.add(campoCodigoCartao);
-        empilhamentoPanel.add(labelDataValidade);
-        empilhamentoPanel.add(painelDataValidade);
-        empilhamentoPanel.add(salvarCartao);
-        empilhamentoPanel.add(cancelar);
+        empilhaComponentes(
+                empilhamentoPanel, labelNumeroCartao, campoNumeroCartao,
+                labelCodigoCartao, campoCodigoCartao, labelDataValidade,
+                painelDataValidade, salvarCartao, cancelar
+        );
 
         centerPanel.add(empilhamentoPanel);
         empilhamentoPanel.setMaximumSize(new Dimension(400, 500));

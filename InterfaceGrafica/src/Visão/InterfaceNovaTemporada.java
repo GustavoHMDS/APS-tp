@@ -36,13 +36,12 @@ public class InterfaceNovaTemporada extends InterfaceComum implements Atualizave
             Styles.setTextFielStyle(campoNome);
             Styles.setTextFielStyle(campoCodigo);
 
-            empilhamentoPanel.add(animeSelect);
-            empilhamentoPanel.add(labelNome);
-            empilhamentoPanel.add(campoNome);
-            empilhamentoPanel.add(labelCodigo);
-            empilhamentoPanel.add(campoCodigo);
-
             JButton adicionarTemporada = CriaBotaoPreDefinido("Adicionar temporada", 250, 30, 16);
+            empilhaComponentes(
+                    empilhamentoPanel, animeSelect, labelNome, campoNome,
+                    labelCodigo, campoCodigo, adicionarTemporada
+            );
+
             adicionarTemporada.addActionListener(e -> {
                 String nome = campoNome.getText();
                 int codigo = Integer.parseInt(campoCodigo.getText());
@@ -52,7 +51,6 @@ public class InterfaceNovaTemporada extends InterfaceComum implements Atualizave
                 sistema.cadastrarTemporada(animeSelecionado, novaTemporada);
                 gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL);
             });
-            empilhamentoPanel.add(adicionarTemporada);
         } else {
             JLabel nenhum = new JLabel("Nenhuma anime adicionado");
             Styles.setLabelStyle(nenhum);

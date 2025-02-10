@@ -60,6 +60,8 @@ public class InterfaceRegistro extends InterfaceComum implements Atualizavel {
 
         JButton botaoRegistrar = CriaBotaoPreDefinido("Registrar");
         empilhamentoPanel.add(botaoRegistrar);
+
+        empilhaComponentes(empilhamentoPanel, botaoRegistrar);
         botaoRegistrar.addActionListener(_ -> {
             String nome = campoNome.getText();
             String cpf = campoCPF.getText();

@@ -51,17 +51,10 @@ public class InterfaceAdicaoAnime extends InterfaceComum implements Atualizavel{
         Styles.setTextFielStyle(campoAnimeNome);
         Styles.setTextFielStyle(campoAnimeID);
 
-        empilhamentoPanel.add(animeNome);
-        empilhamentoPanel.add(campoAnimeNome);
-        empilhamentoPanel.add(Box.createVerticalStrut(10));
-        empilhamentoPanel.add(animeID);
-        empilhamentoPanel.add(campoAnimeID);
-        empilhamentoPanel.add(Box.createVerticalStrut(10));
-        empilhamentoPanel.add(salvar);
-        empilhamentoPanel.add(Box.createVerticalStrut(10));
-        empilhamentoPanel.add(cancelar);
-        empilhamentoPanel.add(Box.createVerticalStrut(10));
-
+        empilhaComponentes(
+                empilhamentoPanel, animeNome, campoAnimeNome,
+                animeID, campoAnimeID, salvar, cancelar
+        );
         centerPanel.add(empilhamentoPanel);
     }
 }

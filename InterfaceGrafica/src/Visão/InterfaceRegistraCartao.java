@@ -28,15 +28,6 @@ public class InterfaceRegistraCartao extends InterfaceComum implements Atualizav
         JLabel labelNumeroCartao, labelCodigoCartao, labelDataValidade;
         JTextField campoNumeroCartao, campoCodigoCartao;
         JPanel painelDataValidade;
-        /*
-        if(cliente != null && cliente.getCartaoPagamento(selecionado - 1) != null) {
-            labelNumeroCartao = new JLabel("Numero do cartao: " + cliente.getCartaoPagamento(selecionado-1).getNumeroCartao());
-            labelCodigoCartao = new JLabel("Codigo do cartao: " + cliente.getCartaoPagamento(selecionado-1).getCodigoCartao());
-            labelDataValidade = new JLabel("Data de validade: " + cliente.getCartaoPagamento(selecionado-1).getCodigoCartao());
-            campoNumeroCartao = new JTextField(String.valueOf(cliente.getCartaoPagamento(selecionado-1).getNumeroCartao()));
-            campoCodigoCartao = new JTextField(cliente.getCartaoPagamento(selecionado-1).getCodigoCartao());
-            painelDataValidade = painelData(cliente.getCartaoPagamento(selecionado-1).getValidadeCartao());
-            */
 
         labelNumeroCartao = new JLabel("Numero do cartao: ");
         labelCodigoCartao = new JLabel("Codigo do cartao: ");
@@ -61,7 +52,6 @@ public class InterfaceRegistraCartao extends InterfaceComum implements Atualizav
             Cartao cartao = new Cartao(Integer.parseInt(campoNumeroCartao.getText()), Integer.parseInt(campoCodigoCartao.getText()), data);
             try {
                 sistema.adicionarCartao(sistema.getUsuario().getEmail(), cartao);
-                sistema.getCliente().adicionarCartao(cartao);
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }

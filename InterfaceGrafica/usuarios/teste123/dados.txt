@@ -1,0 +1,8 @@
+CPF: 123
+Nome: teste
+DataNascimento: 8/9/1995
+Email: teste123
+Senha: teste123
+Tipo: Cliente
+Assinatura: falso
+Vencimento: 11/2/2025

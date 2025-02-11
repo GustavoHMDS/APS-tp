@@ -77,8 +77,5 @@ public class InterfaceRegistro extends InterfaceComum implements Atualizavel {
             gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL);
         });
         centerPanel.add(empilhamentoPanel);
-        empilhamentoPanel.setMaximumSize(new Dimension(800, 500));
-        empilhamentoPanel.setPreferredSize(new Dimension(550, 400));
-        centerPanel.setPreferredSize(new Dimension(800, 500));
     }
 }

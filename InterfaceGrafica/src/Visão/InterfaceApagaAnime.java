@@ -52,6 +52,7 @@ public class InterfaceApagaAnime extends InterfaceComum implements Atualizavel{
             JButton excluirButton = new JButton("Excluir");
             Styles.setButtonStyle(excluirButton);
             excluirButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            JButton cancelarButton = CriaBotaoPreDefinido("Cancelar");
 
             for(int i = 0; i < sistema.getCatalogo().getSize(); i++) {
                 animeComboBox.addItem(sistema.getCatalogo().animes.get(i).getNome());
@@ -116,10 +117,11 @@ public class InterfaceApagaAnime extends InterfaceComum implements Atualizavel{
                 }
                 gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL);
             });
+            cancelarButton.addActionListener(e -> gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL));
 
             empilhaComponentes(
                     empilhamentoPanel, animeComboBoxLabel, animeComboBox, temporadaComboBoxLabel,
-                    temporadaComboBox, episodioComboBoxLabel, episodioComboBox, excluirButton
+                    temporadaComboBox, episodioComboBoxLabel, episodioComboBox, excluirButton, cancelarButton
             );
 
         } else {

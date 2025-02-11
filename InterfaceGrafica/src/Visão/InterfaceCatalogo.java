@@ -62,6 +62,7 @@ public class InterfaceCatalogo extends InterfaceComum implements Atualizavel {
         JLabel episodioInfoLabel = new JLabel("");
         Styles.setLabelStyle(episodioInfoLabel);
         episodioInfoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JButton voltar = CriaBotaoPreDefinido("Voltar");
 
         if (!sistema.getCatalogo().animes.isEmpty()) {
             // Preenche a ComboBox de animes
@@ -170,6 +171,7 @@ public class InterfaceCatalogo extends InterfaceComum implements Atualizavel {
                     JOptionPane.showMessageDialog(null, "Usuário deve ser um cliente com assinatura premium", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
             });
+            voltar.addActionListener(e -> gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL));
 
             // Seleção inicial do primeiro anime
             animeComboBox.setSelectedIndex(0);
@@ -197,7 +199,7 @@ public class InterfaceCatalogo extends InterfaceComum implements Atualizavel {
         empilhaComponentes(
                 empilhamentoPanel, animeComboBox, temporadaComboBoxLabel, temporadaComboBox,
                 temporadaInfoLabel, episodioComboBoxLabel, episodioComboBox, episodioInfoLabel,
-                assistirButton
+                assistirButton, voltar
         );
 
         // Configuração dos tamanhos

@@ -95,12 +95,10 @@ public class InterfaceEditorDadosUsuario extends InterfaceComum implements Atual
                     });
                 }
             }
-            empilhaComponentes(empilhamentoPanel, salvar, cancelar);
+            empilhamentoPanel.add(salvar);
+            empilhamentoPanel.add(Box.createVerticalStrut(10));
+            empilhamentoPanel.add(cancelar);
         }
         centerPanel.add(empilhamentoPanel);
-        empilhamentoPanel.setSize(new Dimension(600, SistemaGeral.getScreenSize().height - 120));
-        //empilhamentoPanel.setPreferredSize(new Dimension(350, 400));
-        centerPanel.setPreferredSize(new Dimension(600, 500));
-        centerPanel.setMaximumSize(new Dimension(800, SistemaGeral.getScreenSize().height - 120));
     }
 }

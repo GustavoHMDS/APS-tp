@@ -69,11 +69,12 @@ public class InterfaceNovoEpisodio extends InterfaceComum implements Atualizavel
             Styles.setTextFielStyle(campoCodigo);
             Styles.setTextFielStyle(campoPath);
             JButton adicionarEpisodio = CriaBotaoPreDefinido("Adicionar episódio");
+            JButton cancelarButton = CriaBotaoPreDefinido("Cancelar");
 
             empilhaComponentes(
                     empilhamentoPanel, animeSelect,labelTemporada, temporadaComboBox,
                     labelNome, campoNome, labelCodigo, campoCodigo, labelPath, campoPath,
-                    adicionarEpisodio
+                    adicionarEpisodio, cancelarButton
             );
 
             adicionarEpisodio.addActionListener(e -> {
@@ -97,7 +98,7 @@ public class InterfaceNovoEpisodio extends InterfaceComum implements Atualizavel
 
                 gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL);
             });
-            //empilhamentoPanel.add(adicionarEpisodio);
+            cancelarButton.addActionListener(e -> gerenciador.trocarParaTela(GerenciadorInterfaces.PRINCIPAL));
         } else {
             JLabel nenhum = new JLabel("Nenhuma anime adicionado");
             Styles.setLabelStyle(nenhum);
